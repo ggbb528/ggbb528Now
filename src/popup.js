@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/js/brands';
 
 import $ from 'jquery';
 
-$(document).ready(function () {
+$(function () {
   $('body').on('click', 'a', function () {
     chrome.tabs.create({ url: $(this).attr('href') });
     return false;
