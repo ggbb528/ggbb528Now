@@ -1,32 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html>
+  <head>
+    <meta charset="UTF-8" />
     <title>My Chrome Extension</title>
     <link rel="stylesheet" href="popup.css" />
-</head>
-<body>
-  <div class="app">
-    <p class="counter-label">Counter</p>
-    <div id="counter" class="counter"></div>
-    <div class="button-container">
-      <button id="decrementBtn" class="button">-</button>
-      <button id="incrementBtn" class="button">+</button>
+  </head>
+  <body>
+    <div class="app">
+      <div
+        class="btn-group btn-group-justified w-100"
+        role="group"
+        aria-label=""
+      >
+        <a
+          class="btn btn-outline-secondary w-25"
+          href="https://www.twitch.tv/ggbb528"
+          role="button"
+          ><i
+            class="fa-brands fa-twitch"
+            style="color: #6441a5; font-size: 25px"
+          ></i
+        ></a>
+        <a
+          class="btn btn-outline-secondary bg-primary w-25"
+          href="https://www.op.gg/summoners/kr/ShengBai"
+          role="button"
+          ><img src="images/opgglogo.svg" width="45px"
+        /></a>
+        <a
+          class="btn btn-outline-secondary w-25"
+          href="https://www.youtube.com/c/ggbb528"
+          role="button"
+          ><i
+            class="fa-brands fa-youtube"
+            style="color: #ff0000; font-size: 25px"
+          ></i
+        ></a>
+        <a
+          class="btn btn-outline-secondary w-25"
+          href="https://www.facebook.com/JeffeRy0821"
+          role="button"
+          ><i
+            class="fa-brands fa-facebook"
+            style="color: #4267b2; font-size: 25px"
+          ></i
+        ></a>
+      </div>
     </div>
 
-    <hr class="divider" />
+    <script src="popup.js"></script>
 
-    <p class="title">Chrome Extension is Ready!</p>
-    <p class="subtitle">Start by updating <code>popup.html</code></p>
-  </div>
-
-  <script src="popup.js"></script>
-
-  <!--
+    <!--
     This HTML file opens when you click on icon from the toolbar.
 
     To begin the development, run `npm run watch`.
     To create a production bundle, use `npm run build`.
-  -->
-</body>
+  --></body>
 </html>
