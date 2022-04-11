@@ -57,13 +57,21 @@
             aria-labelledby="profile-tab"
           >
             <!-- LOL牌位  -->
-			<table class="table table-sm">
+			<table id="rank" class="table table-sm">
 				<thead>
-					<tr><td colspan="5"><font size="3" id="accName">Loading...</font></td></tr>
+					<tr class="table-secondary"><td colspan="5" id="accName" style="font-size:16px">Loading...</td></tr>
 				</thead>
 				<tbody>
 					<tr><td rowspan="2">排位<br><font id="tier" size="2">Loading...</font></td><td>分數</td><td id="lp">Loading...</td><td>勝率</td><td id="percentage">Loading...</td></tr>
 					<tr><td>勝場</td><td id="win">Loading...</td><td>敗場</td><td id="lose">Loading...</td></tr>
+					<!--<tr id="bo5"><td id="bo">Loading</td><td colspan="4"><i class="fa-solid fa-xmark" style="color: #6441a5; font-size: 16px"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i></td></tr>-->
+				</tbody>
+			</table>
+			<table id="recentStat" class="table table-sm">
+				<thead>
+					<tr class="table-secondary"><td colspan="5" style="font-size:14px">最近KR積分記錄</td></tr>
+				</thead>
+				<tbody id="recentStats">
 				</tbody>
 			</table>
           </div>
