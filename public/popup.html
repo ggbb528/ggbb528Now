@@ -7,157 +7,206 @@
   </head>
   <body>
     <div class="app">
+      <!-- title -->
+      <div class="row w-100">
+        <div
+          class="col-12 p-1 align-items-center d-flex justify-content-center title-container"
+          style="background-color: #d8c9f3"
+        >
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <span class="title mx-2">勝敗難免</span>
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+          <img src="images/ggbb528cheer.gif" width="24px" />
+        </div>
+      </div>
       <!-- buttons -->
-      <div
-        class="btn-group btn-group-justified w-100"
-        role="group"
-        aria-label=""
-      >
-        <a
-          class="btn btn-outline-secondary w-25"
-          href="https://www.twitch.tv/ggbb528"
-          role="button"
-          ><i
-            class="fa-brands fa-twitch"
-            style="color: #6441a5; font-size: 25px"
-          ></i
-        ></a>
-        <a
-          class="btn btn-outline-secondary w-25"
-          href="https://www.op.gg/summoners/kr/ShengBai"
-          role="button"
-          ><img src="images/opgglogo.svg" width="60px"
-        /></a>
-        <a
-          class="btn btn-outline-secondary w-25"
-          href="https://www.youtube.com/c/ggbb528"
-          role="button"
-          ><i
-            class="fa-brands fa-youtube"
-            style="color: #ff0000; font-size: 25px"
-          ></i
-        ></a>
-        <a
-          class="btn btn-outline-secondary w-25"
-          href="https://www.facebook.com/JeffeRy0821"
-          role="button"
-          ><i
-            class="fa-brands fa-facebook"
-            style="color: #4267b2; font-size: 25px"
-          ></i
-        ></a>
+      <div class="row w-100">
+        <div
+          class="col-12 btn-group btn-group-justified w-100 px-0 buttons-container"
+          role="group"
+          aria-label=""
+        >
+          <a
+            class="btn btn-outline-secondary w-25"
+            href="https://www.twitch.tv/ggbb528"
+            role="button"
+            ><i
+              class="fa-brands fa-twitch"
+              style="color: #6441a5; font-size: 22px"
+            ></i
+          ></a>
+          <a
+            class="btn btn-outline-secondary w-25"
+            id="opggLink"
+            href=""
+            role="button"
+            ><img src="images/opgglogo.svg" width="60px"
+          /></a>
+          <a
+            class="btn btn-outline-secondary w-25"
+            href="https://www.youtube.com/c/ggbb528"
+            role="button"
+            ><i
+              class="fa-brands fa-youtube"
+              style="color: #ff0000; font-size: 22px"
+            ></i
+          ></a>
+          <a
+            class="btn btn-outline-secondary w-25"
+            href="https://www.facebook.com/JeffeRy0821"
+            role="button"
+            ><i
+              class="fa-brands fa-facebook"
+              style="color: #4267b2; font-size: 22px"
+            ></i
+          ></a>
+        </div>
       </div>
       <!-- tabs -->
-      <div class="w-100">
-        <div class="tab-content" id="infoTabContent">
-          <div
-            class="tab-pane fade show active"
-            id="profile"
-            role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
-            <!-- LOL牌位  -->
-			<table id="rank" class="table table-sm">
-				<thead>
-					<tr class="table-secondary"><td colspan="5" id="accName" style="font-size:16px">Loading...</td></tr>
-				</thead>
-				<tbody>
-					<tr><td rowspan="2">排位<br><font id="tier" size="2">Loading...</font></td><td>分數</td><td id="lp">Loading...</td><td>勝率</td><td id="percentage">Loading...</td></tr>
-					<tr><td>勝場</td><td id="win">Loading...</td><td>敗場</td><td id="lose">Loading...</td></tr>
-					<!--<tr id="bo5"><td id="bo">Loading</td><td colspan="4"><i class="fa-solid fa-xmark" style="color: #6441a5; font-size: 16px"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i><i class="fa-solid fa-xmark"> </i></td></tr>-->
-				</tbody>
-			</table>
-			<table id="recentStat" class="table table-sm">
-				<thead>
-					<tr class="table-secondary"><td colspan="5" style="font-size:14px">最近KR積分記錄</td></tr>
-				</thead>
-				<tbody id="recentStats">
-				</tbody>
-			</table>
+      <div class="row w-100">
+        <div class="col-12 tab-container px-0">
+          <div class="tab-content w-100" id="infoTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="profile"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <!-- LOL牌位  -->
+              <table id="rank" class="table table-sm w-100 mb-0 align-middle">
+                <thead>
+                  <tr class="table-secondary">
+                    <th
+                      colspan="5"
+                      id="accName"
+                      style="font-size: 16px"
+                      class="p-2"
+                    >
+                      Loading...
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td rowspan="2" style="width: 30%">
+                      排位<br /><span id="tier" size="2">Loading...</span>
+                    </td>
+                    <td style="width: 10%">分數</td>
+                    <td style="width: 25%" id="lp">Loading...</td>
+                    <td style="width: 10%">勝率</td>
+                    <td style="width: 25%" id="percentage">Loading...</td>
+                  </tr>
+                  <tr>
+                    <td>勝場</td>
+                    <td id="win">Loading...</td>
+                    <td>敗場</td>
+                    <td id="lose">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table
+                id="recentStat"
+                class="table table-sm w-100 mb-0 text-center align-middle"
+              >
+                <thead>
+                  <tr class="table-secondary">
+                    <th colspan="5" style="font-size: 16px" class="p-2">
+                      近10場積分記錄
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="recentStats"></tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="statistics"
+              role="tabpanel"
+              aria-labelledby="statistics-tab"
+            >
+              <!-- LOL數據  -->
+            </div>
+            <div
+              class="tab-pane fade"
+              id="message"
+              role="tabpanel"
+              aria-labelledby="message-tab"
+            >
+              <!-- 聊天室紀錄  -->
+            </div>
+            <div
+              class="tab-pane fade"
+              id="vod"
+              role="tabpanel"
+              aria-labelledby="vod-tab"
+            >
+              <!-- VOD  -->
+            </div>
           </div>
-          <div
-            class="tab-pane fade"
-            id="statistics"
-            role="tabpanel"
-            aria-labelledby="statistics-tab"
-          >
-            <!-- LOL數據  -->
-          </div>
-          <div
-            class="tab-pane fade"
-            id="message"
-            role="tabpanel"
-            aria-labelledby="message-tab"
-          >
-            <!-- 聊天室紀錄  -->
-          </div>
-          <div
-            class="tab-pane fade"
-            id="vod"
-            role="tabpanel"
-            aria-labelledby="vod-tab"
-          >
-            <!-- VOD  -->
-          </div>
+          <ul class="nav nav-tabs w-100" id="infoTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#profile"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="true"
+              >
+                LOL牌位
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="statistics-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#statistics"
+                type="button"
+                role="tab"
+                aria-controls="statistics"
+                aria-selected="false"
+              >
+                LOL數據
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="message-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#message"
+                type="button"
+                role="tab"
+                aria-controls="message"
+                aria-selected="false"
+              >
+                聊天室紀錄
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="vod-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#vod"
+                type="button"
+                role="tab"
+                aria-controls="vod"
+                aria-selected="false"
+              >
+                VOD
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul class="nav nav-tabs fixed-bottom" id="infoTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link active"
-              id="profile-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#profile"
-              type="button"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="true"
-            >
-              LOL牌位
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              id="statistics-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#statistics"
-              type="button"
-              role="tab"
-              aria-controls="statistics"
-              aria-selected="false"
-            >
-              LOL數據
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              id="message-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#message"
-              type="button"
-              role="tab"
-              aria-controls="message"
-              aria-selected="false"
-            >
-              聊天室紀錄
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              id="vod-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#vod"
-              type="button"
-              role="tab"
-              aria-controls="vod"
-              aria-selected="false"
-            >
-              VOD
-            </button>
-          </li>
-        </ul>
       </div>
     </div>
 
