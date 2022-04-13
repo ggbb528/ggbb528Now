@@ -31,7 +31,7 @@ $(function () {
   const [server, account] = OPGG_LINK.split(/\/summoners\//)[1].split('/', 2);
 
   // Get data from opgg
-  axios.get(CONFIG.OPGG_LINK).then(function (r) {
+  axios.get(OPGG_LINK).then(function (r) {
     if (r.status == 200) {
       const htmlData = r.data;
       const buildId = htmlData.split('"buildId":"')[1].split('"')[0];
