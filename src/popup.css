@@ -16,7 +16,6 @@ html {
 
 body {
   width: 350px;
-  height: 450px;
   font-size: 12px !important;
 }
 
@@ -29,29 +28,30 @@ body {
   text-align: center;
 }
 
+.title-container {
+  height: 35px;
+}
+
+.buttons-container {
+  height: 35px;
+}
+
 .title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 10px;
+  line-height: 100%;
 }
 
-.subtitle {
-  font-size: 12px;
+.tab-container {
+  height: 450px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  flex-direction: column;
 }
 
-code {
-  font-size: 12px;
-  font-family: inherit;
-  background-color: rgba(254, 237, 185, 0.3);
-  padding: 2px 4px;
-  border-radius: 2px;
-}
-
-.divider {
-  margin: 30px auto 25px;
-  width: 50px;
-  border: 0.5px dashed #000;
-  opacity: 0.1;
+.tab-container > div:first-child {
+  flex-grow: 1;
 }
 
 /* custom bootstrap css start */
@@ -74,18 +74,35 @@ code {
 .nav-tabs .nav-link.active {
   border-color: #fff #dee2e6 #dee2e6 #dee2e6 !important;
 }
-
-ul.nav.nav-tabs {
-  margin-top: 1rem;
-}
-
-#rank {
-  width: 100%;
-  margin-bottom: 0px;
-}
-#infoTabContent {
-  width: 100%;
-  margin-bottom: 40px;
-}
-
 /* custom bootstrap css end */
+
+.skeleton-box {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  overflow: hidden;
+  background-color: #dddbdd;
+  border-radius: 1rem;
+}
+.skeleton-box::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2s infinite;
+  content: '';
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
