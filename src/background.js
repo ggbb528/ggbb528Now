@@ -1,21 +1,39 @@
 'use strict';
 
-// With background scripts you can communicate with popup
-// and contentScript files.
-// For more information on background script,
-// See https://developer.chrome.com/extensions/background_pages
+const streams = require("./func/streams")();
+const notification = require("./func/notification")();
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'GREETINGS') {
-    const message = `Hi ${
-      sender.tab ? 'Con' : 'Pop'
-    }, my name is Bac. I am from Background. It's great to hear from you.`;
+// set alarms
+chrome.alarms.clearAll();
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if (alarm.name == 'streamCheckAlarm') {
+    streams.checkStreams();
+  }
+});
+chrome.alarms.create('streamCheckAlarm',  {delayInMinutes: 1, periodInMinutes: 1});
 
-    // Log message coming from the `request` parameter
-    console.log(request.payload.message);
-    // Send a response message
-    sendResponse({
-      message,
-    });
+// init check
+chrome.storage.local.clear();
+chrome.storage.local.get({
+  ggbb528Open: false,
+}, function(items) {
+    setTimeout(function(){streams.checkStreams();}, 2000);
+});
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+  if (changes.ggbb528Open.newValue == true) {
+    notification.streamOpen("ggbb528", "ggbb528 開台囉!!!", "趕快前往實況台~~~");
+  }
+});
+
+chrome.notifications.onClicked.addListener(function(id) {
+  switch (id) {
+    case "ggbb528":
+      chrome.notifications.clear("ggbb528", function(message) {
+          chrome.tabs.create({ "url": "https://www.twitch.tv/ggbb528" });
+      });
+      break;
+    default:
+      break;
   }
 });
