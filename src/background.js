@@ -13,11 +13,10 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 chrome.alarms.create('streamCheckAlarm',  {delayInMinutes: 1, periodInMinutes: 1});
 
 // init check
-chrome.storage.local.clear();
 chrome.storage.local.get({
   ggbb528Open: false,
 }, function(items) {
-    setTimeout(function(){streams.checkStreams();}, 2000);
+    streams.checkStreams();
 });
 
 chrome.storage.onChanged.addListener(function(changes, areaName) {
