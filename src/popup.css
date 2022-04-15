@@ -74,6 +74,10 @@ body {
 .nav-tabs .nav-link.active {
   border-color: #fff #dee2e6 #dee2e6 #dee2e6 !important;
 }
+
+.nav-link{
+  padding: 10px 10px 10px 10px;
+}
 /* custom bootstrap css end */
 
 .skeleton-box {

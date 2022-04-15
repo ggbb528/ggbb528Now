@@ -15,6 +15,7 @@ import './popup.css';
 
 const CONFIG = {
   OPGG_LINK: 'https://www.op.gg/summoners/kr/%EC%A4%80%20%EB%B0%9B',
+  OPGG_INGAME_LINK: 'https://www.op.gg/api/spectates/8YQfn73hCIePhQZxcdzhtJFl3HBLPFGD6RM-QVvUMheuw1M?region=kr&hl=zh_TW',
 };
 
 $(function () {
@@ -51,15 +52,12 @@ $(function () {
             rankObj.forEach((obj) => {
               if (obj.queue_info.game_type == 'SOLORANKED') {
                 $('#tier').html(
-                  `<span class="text-primary font-weight-bold">${obj.tier_info.tier} ${obj.tier_info.division}</span>`
+                  `<span class="text-primary font-weight-bold">${getTierString(obj.tier_info.tier.toUpperCase(),obj.tier_info.division)}</span>`
                 );
                 $('#lp').text(obj.tier_info.lp);
                 $('#win').text(obj.win);
                 $('#lose').text(obj.lose);
-                $('#percentage').text(
-                  Math.round((obj.win / (obj.win + obj.lose)) * 10000) / 100 +
-                    ' %'
-                );
+                $('#percentage').text(getWinLosePercentage(obj.win,obj.lose));
               }
             });
             const gameObj = response.data.pageProps.games.data;
@@ -109,7 +107,98 @@ $(function () {
         });
     }
   });
+  
+  getCurTeamStat();
 });
+
+function getCurTeamStat(){
+  // get current team stat from opgg
+  const { OPGG_INGAME_LINK } = CONFIG;
+  axios.get(OPGG_INGAME_LINK).then(function (response){
+    if (response.status == 200){
+      const startTime = response.data.data.created_at;
+      $('#curStartTime').html(`<span>${moment(startTime).format('YYYY-MM-DD HH:mm:ss')}</span>`);
+      var participantArray = response.data.data.participants;
+      participantArray.forEach((obj) => {
+        var rowId=`#${obj.team_key.toLowerCase()}-${obj.position.toLowerCase()}`;
+        var bgColor=obj.team_key.toUpperCase()==="BLUE"?"bg-primary":"bg-danger";
+        var championId = obj.champion_id;
+        var championById = response.data.data.championsById;
+        var rankTier = "N/A";
+        var win = 0;
+        var lose = 0;
+        var winRate = 0;
+        var statObj = obj.summoner.league_stats;
+        var isGGBB528 = obj.summoner.summoner_id === OPGG_INGAME_LINK.split('/')[5].split('?')[0]? true: false;
+        
+        statObj.forEach((o) => {
+          if (o.queue_info.game_type === response.data.data.queue_info.game_type){
+            rankTier = getTierString(o.tier_info.tier.toUpperCase(),o.tier_info.division);
+            win = o.win;
+            lose = o.lose;
+            winRate = getWinLosePercentage(win,lose);
+          }
+        });
+
+        const htmlString = 
+        `<td style="width:20%"><span class="badge rounded-pill ${bgColor}">${positionMap(obj.position.toUpperCase())}</span></td>` + 
+        `<td style="width:25%;font-weight: bold">${championById[championId].name}</td>` + 
+        `<td style="width:30%">${rankTier}</td>` + 
+        `<td style="width:25%">勝率: ${winRate}</td>`;
+        $(rowId).html(htmlString);
+        if (isGGBB528){
+          const color = obj.team_key.toUpperCase()==="BLUE"?"table-primary":"table-danger";
+          $(rowId).addClass(color);
+        }
+      });
+    }
+  });
+}
+
+function getTierString(tier, division){
+  var tierString = null;
+
+  switch (tier.toUpperCase()){
+    case "CHALLENGER":
+    case "GRANDMASTER":
+    case "MASTER":
+      tierString = tier;
+      break;
+    default:
+      tierString = tier + ' ' + division;
+  }
+
+  return tierString;
+}
+
+function positionMap(p){
+  var returnString = null;
+  switch(p.toUpperCase()){
+    case 'TOP':
+      returnString = p;
+      break;
+    case 'JUNGLE':
+      returnString = 'JG';
+      break;
+    case 'MID':
+      returnString = 'MID';
+      break;
+    case 'ADC':
+      returnString = "ADC";
+      break;
+    case 'SUPPORT':
+      returnString = "SUP";
+      break;
+  }
+  return returnString;
+}
+
+function getWinLosePercentage(win,lose){
+  if (win === null || lose === null || win === 0 || lose === 0)
+    return "N/A";
+  else
+    return Math.round((win / (win + lose)) * 10000) / 100 + ' %';
+}
 
 function getKDA(k, d, a) {
   if (d == 0) return 'KDA: <i class="fa-solid fa-infinity"></i>';
