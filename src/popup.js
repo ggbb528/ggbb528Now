@@ -60,9 +60,18 @@ function getRankInfo(){
              `<span class="badge rounded-pill bg-warning mx-2">${server.toUpperCase()}</span>${accountName}`
            );
 
-           const rankObj = response.data.pageProps.data.league_stats;
+           const rankObj = pageProps.data.league_stats;
+           const boObj = new Object();
            rankObj.forEach((obj) => {
-             if (obj.queue_info.game_type == 'SOLORANKED') {
+             if (obj.queue_info.game_type === "SOLORANKED") {
+               boObj.isBo = obj.series !== null;
+               if (boObj.isBo){
+                boObj.target = obj.series.target;
+                boObj.win = obj.series.win;
+                boObj.lose = obj.series.lose;
+                boObj.boArr = new Array();
+              }
+              
                $('#tier').html(
                  `<span class="text-primary font-weight-bold">${getTierString(obj.tier_info.tier.toUpperCase(),obj.tier_info.division)}</span>`
                );
@@ -72,6 +81,7 @@ function getRankInfo(){
                $('#percentage').text(getWinLosePercentage(obj.win,obj.lose));
              }
            });
+           
            const gameObj = response.data.pageProps.games.data;
            let htmlString;
            let count = 0;
@@ -86,8 +96,20 @@ function getRankInfo(){
              const a = obj.myData.stats.assist;
              const championId = obj.myData.champion_id;
              const championById = response.data.pageProps.data.championsById;
+             const isRemake = obj.is_remake;
+             if (boObj.isBo && !isRemake && obj.queue_info.game_type === "SOLORANKED" && obj.myData.tier_info.lp === 100){
+               if (result === 'W' && boObj.win>0){
+                 boObj.boArr.splice(0,0,'<i class="fa-solid fa-check"></i>');
+                 boObj.win--;
+               } else if (result === 'L' && boObj.lose>0){
+                 boObj.boArr.splice(0,0,'<i class="fa-solid fa-xmark"></i>');
+                 boObj.lose--;
+               }
+             }
 
              htmlString +=
+               (isRemake? 
+                '<tr class="table-light"><td><span class="badge rounded-pill bg-secondary">R':
                (result === 'W'
                  ? '<tr class="table-primary">'
                  : '<tr class="table-danger">') +
@@ -95,7 +117,8 @@ function getRankInfo(){
                (result === 'W'
                  ? '<span class="badge rounded-pill bg-primary">'
                  : '<span class="badge rounded-pill bg-danger">') +
-               result +
+               result)
+                +
                '</span>' +
                '</td><td>' +
                moment(time).format('YYYY-MM-DD HH:mm:ss') +
@@ -115,6 +138,24 @@ function getRankInfo(){
              return true;
            });
            $('#recentStats').html(htmlString);
+           if(boObj.isBo){
+             var boHtml = "";
+             var boNumber = 0;
+             boObj.boArr.forEach((obj) => {
+              boHtml += obj;
+             });
+             if (boObj.target === 3){ //BO5
+               boNumber = 5;
+             } else if (boObj.target === 2) { //BO3
+               boNumber = 3;
+             }
+             if (boNumber > boObj.boArr.length){
+               for (let i = 1; i <= (boNumber - boObj.boArr.length); i++){
+                 boHtml += '<i class="fa-solid fa-question"></i>';
+               }
+             }
+             $('#bo').html(boHtml);
+           }
          }
        });
    }
@@ -137,22 +178,7 @@ function getRankEloTrendByDay(){
         dataObj.date = momentTZ(new Date(obj.created_at)).tz("Asia/Seoul").format('MM/DD');
         dataObj.date2 = momentTZ(new Date(obj.created_at)).tz("Asia/Seoul").format('YYYY-MM-DD');
         dataObj.tier = `${getTierString(obj.tier_info.tier, obj.tier_info.division)} ${obj.tier_info.lp}LP`;
-
-        chrome.runtime.sendMessage(
-          {
-            type: 'GREETINGS',
-            payload: {
-            message: dataObj,
-            },
-          },
-          response => {
-            console.log(response.message);
-          }
-        );
-
         dataArr.splice(0,0,dataObj);
-        
-
         count++;
         return true;
       });
