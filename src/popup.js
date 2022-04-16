@@ -1,7 +1,10 @@
 'use strict';
 
 import moment from 'moment';
+import momentTZ from 'moment-timezone';
 import axios from 'axios';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,6 +19,7 @@ import './popup.css';
 const CONFIG = {
   OPGG_LINK: 'https://www.op.gg/summoners/kr/%EC%A4%80%20%EB%B0%9B',
   OPGG_INGAME_LINK: 'https://www.op.gg/api/spectates/8YQfn73hCIePhQZxcdzhtJFl3HBLPFGD6RM-QVvUMheuw1M?region=kr&hl=zh_TW',
+  OPGG_RANK_ELO_TREND_LINK: 'https://www.op.gg/api/summoners/kr/8YQfn73hCIePhQZxcdzhtJFl3HBLPFGD6RM-QVvUMheuw1M/lp-histories?type=DAY',
 };
 
 $(function () {
@@ -24,92 +28,172 @@ $(function () {
     return false;
   });
 
-  // Set opgg link
-  const { OPGG_LINK } = CONFIG;
-  $('#opggLink').attr('href', OPGG_LINK);
+  getRankInfo();
 
-  // Get account info from OPGG_LINK
-  const [server, account] = OPGG_LINK.split(/\/summoners\//)[1].split('/', 2);
-
-  // Get data from opgg
-  axios.get(OPGG_LINK).then(function (r) {
-    if (r.status == 200) {
-      const htmlData = r.data;
-      const buildId = htmlData.split('"buildId":"')[1].split('"')[0];
-      axios
-        .get(
-          `https://www.op.gg/_next/data/${buildId}/summoners/${server}/${account}.json`
-        )
-        .then(function (response) {
-          if (response.status == 200) {
-            const pageProps = response.data.pageProps;
-            const accountName = pageProps.data.name;
-            $('#accName').html(
-              `<span class="badge rounded-pill bg-warning mx-2">${server.toUpperCase()}</span>${accountName}`
-            );
-
-            const rankObj = response.data.pageProps.data.league_stats;
-            rankObj.forEach((obj) => {
-              if (obj.queue_info.game_type == 'SOLORANKED') {
-                $('#tier').html(
-                  `<span class="text-primary font-weight-bold">${getTierString(obj.tier_info.tier.toUpperCase(),obj.tier_info.division)}</span>`
-                );
-                $('#lp').text(obj.tier_info.lp);
-                $('#win').text(obj.win);
-                $('#lose').text(obj.lose);
-                $('#percentage').text(getWinLosePercentage(obj.win,obj.lose));
-              }
-            });
-            const gameObj = response.data.pageProps.games.data;
-            let htmlString;
-            let count = 0;
-            gameObj.every((obj) => {
-              if (count >= 10) {
-                return false;
-              }
-              const time = new Date(obj.created_at);
-              const result = obj.myData.stats.result.substring(0, 1);
-              const k = obj.myData.stats.kill;
-              const d = obj.myData.stats.death;
-              const a = obj.myData.stats.assist;
-              const championId = obj.myData.champion_id;
-              const championById = response.data.pageProps.data.championsById;
-
-              htmlString +=
-                (result === 'W'
-                  ? '<tr class="table-primary">'
-                  : '<tr class="table-danger">') +
-                '<td>' +
-                (result === 'W'
-                  ? '<span class="badge rounded-pill bg-primary">'
-                  : '<span class="badge rounded-pill bg-danger">') +
-                result +
-                '</span>' +
-                '</td><td>' +
-                moment(time).format('YYYY-MM-DD HH:mm:ss') +
-                '</td><td>' +
-                championById[championId].name +
-                '</td><td>' +
-                k +
-                '/' +
-                d +
-                '/' +
-                a +
-                '</td><td class="text-start">' +
-                getKDA(k, d, a) +
-                '</td></tr>';
-
-              count++;
-              return true;
-            });
-            $('#recentStats').html(htmlString);
-          }
-        });
-    }
-  });
+  getRankEloTrendByDay();
   
   getCurTeamStat();
 });
+
+function getRankInfo(){
+ // Set opgg link
+ const { OPGG_LINK } = CONFIG;
+ $('#opggLink').attr('href', OPGG_LINK);
+
+ // Get account info from OPGG_LINK
+ const [server, account] = OPGG_LINK.split(/\/summoners\//)[1].split('/', 2);
+
+ // Get data from opgg
+ axios.get(OPGG_LINK).then(function (r) {
+   if (r.status == 200) {
+     const htmlData = r.data;
+     const buildId = htmlData.split('"buildId":"')[1].split('"')[0];
+     axios
+       .get(
+         `https://www.op.gg/_next/data/${buildId}/summoners/${server}/${account}.json`
+       )
+       .then(function (response) {
+         if (response.status == 200) {
+           const pageProps = response.data.pageProps;
+           const accountName = pageProps.data.name;
+           $('#accName').html(
+             `<span class="badge rounded-pill bg-warning mx-2">${server.toUpperCase()}</span>${accountName}`
+           );
+
+           const rankObj = response.data.pageProps.data.league_stats;
+           rankObj.forEach((obj) => {
+             if (obj.queue_info.game_type == 'SOLORANKED') {
+               $('#tier').html(
+                 `<span class="text-primary font-weight-bold">${getTierString(obj.tier_info.tier.toUpperCase(),obj.tier_info.division)}</span>`
+               );
+               $('#lp').text(obj.tier_info.lp);
+               $('#win').text(obj.win);
+               $('#lose').text(obj.lose);
+               $('#percentage').text(getWinLosePercentage(obj.win,obj.lose));
+             }
+           });
+           const gameObj = response.data.pageProps.games.data;
+           let htmlString;
+           let count = 0;
+           gameObj.every((obj) => {
+             if (count >= 10) {
+               return false;
+             }
+             const time = new Date(obj.created_at);
+             const result = obj.myData.stats.result.substring(0, 1);
+             const k = obj.myData.stats.kill;
+             const d = obj.myData.stats.death;
+             const a = obj.myData.stats.assist;
+             const championId = obj.myData.champion_id;
+             const championById = response.data.pageProps.data.championsById;
+
+             htmlString +=
+               (result === 'W'
+                 ? '<tr class="table-primary">'
+                 : '<tr class="table-danger">') +
+               '<td>' +
+               (result === 'W'
+                 ? '<span class="badge rounded-pill bg-primary">'
+                 : '<span class="badge rounded-pill bg-danger">') +
+               result +
+               '</span>' +
+               '</td><td>' +
+               moment(time).format('YYYY-MM-DD HH:mm:ss') +
+               '</td><td>' +
+               championById[championId].name +
+               '</td><td>' +
+               k +
+               '/' +
+               d +
+               '/' +
+               a +
+               '</td><td class="text-start">' +
+               getKDA(k, d, a) +
+               '</td></tr>';
+
+             count++;
+             return true;
+           });
+           $('#recentStats').html(htmlString);
+         }
+       });
+   }
+ });
+}
+
+function getRankEloTrendByDay(){
+  const { OPGG_RANK_ELO_TREND_LINK } = CONFIG;
+  axios.get(OPGG_RANK_ELO_TREND_LINK).then(function (response){
+    if (response.status == 200){
+      var eloObj = response.data.data;
+      var count = 0;
+      var dataArr = new Array();
+      eloObj.slice().reverse().every((obj) => {
+        if (count>=7){
+          return false;
+        }
+        var dataObj = new Object();
+        dataObj.elo = obj.elo_point;
+        dataObj.date = momentTZ(new Date(obj.created_at)).tz("Asia/Seoul").format('MM/DD');
+        dataObj.date2 = momentTZ(new Date(obj.created_at)).tz("Asia/Seoul").format('YYYY-MM-DD');
+        dataObj.tier = `${getTierString(obj.tier_info.tier, obj.tier_info.division)} ${obj.tier_info.lp}LP`;
+
+        chrome.runtime.sendMessage(
+          {
+            type: 'GREETINGS',
+            payload: {
+            message: dataObj,
+            },
+          },
+          response => {
+            console.log(response.message);
+          }
+        );
+
+        dataArr.splice(0,0,dataObj);
+        
+
+        count++;
+        return true;
+      });
+
+      const ctx = $('#lolChart')
+      const lolChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'Rank ELO Trend',
+            data: dataArr,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }],
+        }, 
+        options: {
+          parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'elo'
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: function(contextA) {
+
+                  return contextA[0].raw.date2;
+                },
+                label: function(context) {
+                  return context.raw.tier;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+  });
+  
+  
+}
 
 function getCurTeamStat(){
   // get current team stat from opgg
