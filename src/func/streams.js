@@ -77,7 +77,14 @@ module.exports = () => {
       };
 
       fetch(url, option)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status == 401) {
+            refreshAccessToken();
+            checkStreams();
+            return false;
+          }
+          return response.json();
+        })
         .then((response) => {
           if (response.data && response.data.length > 0) {
             chrome.action.setIcon({ path: Icons.online });
@@ -111,7 +118,14 @@ module.exports = () => {
       };
 
       fetch(url, option)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status == 401) {
+            refreshAccessToken();
+            syncVOD();
+            return false;
+          }
+          return response.json();
+        })
         .then((response) => {
           chrome.storage.local.set({ vodList: response.data });
         });
