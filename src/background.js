@@ -20,7 +20,7 @@ chrome.storage.local.get({
 });
 
 chrome.storage.onChanged.addListener(function(changes, areaName) {
-  if (changes.ggbb528Open.newValue == true) {
+  if (changes.ggbb528Open && changes.ggbb528Open.newValue == true) {
     notification.streamOpen("ggbb528", "ggbb528 開台囉!!!", "趕快前往實況台~~~");
   }
 });
