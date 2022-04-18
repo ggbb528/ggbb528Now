@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
     "build": "webpack --mode=production --config config/webpack.config.js",
-    "release": "cd build/ && bestzip ../ggbb528.zip *"
+    "release": "cd build/ && bestzip ../ggbb528now.zip *"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
