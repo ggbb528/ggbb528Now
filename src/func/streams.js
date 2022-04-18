@@ -67,7 +67,6 @@ module.exports = () => {
 
       var url = new URL(twitchAPIUrl + '/streams');
       searchParams = new URLSearchParams({ user_login: 'ggbb528' });
-
       url.search = searchParams.toString();
       var option = {
         method: 'GET',
@@ -90,10 +89,39 @@ module.exports = () => {
         });
 
     });
-  };
+  }
+
+  const syncVOD = () => {
+    validateToken();
+
+    chrome.storage.local.get({
+      twitchAccessToken:{accessToken: "", expired: ""}
+    }, function(items) {
+      accessToken = items.twitchAccessToken.accessToken;
+
+      var url = new URL(twitchAPIUrl + '/videos');      
+      searchParams = new URLSearchParams({ user_id: '35154593', first: '20', type: 'highlight' });
+      url.search = searchParams.toString();
+      var option = {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Client-ID': clientId,
+        },
+      };
+
+      fetch(url, option)
+        .then((response) => response.json())
+        .then((response) => {
+          chrome.storage.local.set({ vodList: response.data });
+        });
+
+    });
+  }
 
   return {
     checkStreams,
+    syncVOD,
     Icons,
   };
 };
