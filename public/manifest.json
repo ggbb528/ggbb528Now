@@ -16,14 +16,8 @@
     "default_title": "Ggbb528now",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "alarms",
-    "notifications",
-    "storage",
-    "webNavigation",
-    "*://*.twitch.tv/*",
-    "*://*.op.gg/"
-  ],
+  "permissions": ["alarms", "notifications", "storage", "webNavigation"],
+  "host_permissions": ["*://*.twitch.tv/*", "*://*.op.gg/"],
   "content_scripts": [
     {
       "matches": ["*://*.twitch.tv/*"],
