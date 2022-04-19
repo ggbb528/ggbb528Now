@@ -4,6 +4,7 @@ const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 const PATHS = require('./paths');
 
@@ -65,6 +66,8 @@ const common = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
+    // support .env variables
+    new Dotenv(),
   ],
 };
 

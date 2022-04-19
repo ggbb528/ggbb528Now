@@ -11,3 +11,6 @@ npm-debug.log*
 
 # release file
 ggbb528now.zip
+
+# ignore environment variables file
+.env
