@@ -1,19 +1,28 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Ggbb528now
 
-My Chrome Extension
+勝敗難免開台通知
 
-## Features
+## 功能
 
-- Feature 1
-- Feature 2
+- 勝敗帳號 OP.GG 最新排位資訊
+- 勝敗 Twitch 開台通知
+- 勝敗 Twitch Vod 連結
 
-## Install
+## 安裝
 
-[**Chrome** extension](https://github.com/ggbb528/ggbb528now/releases/latest)
+[**Chrome 商店**]() | [**Github**](https://github.com/ggbb528/ggbb528now/releases/latest)
 
-## Contribution
+## 功能建議
 
-Suggestions and pull requests are welcomed!.
+歡迎到 [專案 Issues](https://github.com/ggbb528/ggbb528now/issues) 提供任何功能上的建議
+
+## 授權
+
+本套件參考 [GodJJNow](https://github.com/kakapontw/GodJJNow) 並取得 kakapontw 授權
+
+## 版本更新資訊
+
+[更新日誌](CHANGELOG.md)
 
 ---
 
