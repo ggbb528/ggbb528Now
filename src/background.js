@@ -6,11 +6,19 @@ const notification = require("./func/notification")();
 // set alarms
 chrome.alarms.clearAll();
 chrome.alarms.onAlarm.addListener(function(alarm) {
-  if (alarm.name == 'streamCheckAlarm') {
-    streams.checkStreams();
-  }
+  switch (alarm.name) {
+    case 'streamCheckAlarm':
+      streams.checkStreams();
+      break;
+    case 'vodSyncAlarm':
+      streams.syncVOD();
+      break;
+    default:
+      break;
+  }  
 });
 chrome.alarms.create('streamCheckAlarm',  {delayInMinutes: 1, periodInMinutes: 1});
+chrome.alarms.create('vodSyncAlarm',  {when : Date.now() + 1000, periodInMinutes: 60});
 
 // init check
 chrome.storage.local.get({
