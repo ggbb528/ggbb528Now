@@ -1,5 +1,7 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Ggbb528now
 
+[![build-test](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml) [![Create Release](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml)
+
 勝敗難免開台通知
 
 ## 功能
