@@ -24,8 +24,6 @@ const CONFIG = {
     'https://www.op.gg/api/summoners/kr/8YQfn73hCIePhQZxcdzhtJFl3HBLPFGD6RM-QVvUMheuw1M/lp-histories?type=DAY',
 };
 
-//
-
 $(function () {
   $('body').on('click', 'a', function () {
     chrome.tabs.create({ url: $(this).attr('href') });
@@ -248,62 +246,67 @@ function getRankEloTrendByDay() {
 function getCurTeamStat() {
   // get current team stat from opgg
   const { OPGG_INGAME_LINK } = CONFIG;
-  axios.get(OPGG_INGAME_LINK).then(function (response) {
-    if (response.status == 200) {
-      const startTime = response.data.data.created_at;
-      $('#curStartTime').html(
-        `<span>${moment(startTime).format('YYYY-MM-DD HH:mm:ss')}</span>`
-      );
-      var participantArray = response.data.data.participants;
-      participantArray.forEach((obj) => {
-        var rowId = `#${obj.team_key.toLowerCase()}-${obj.position.toLowerCase()}`;
-        var bgColor =
-          obj.team_key.toUpperCase() === 'BLUE' ? 'bg-primary' : 'bg-danger';
-        var championId = obj.champion_id;
-        var championById = response.data.data.championsById;
-        var rankTier = 'N/A';
-        var win = 0;
-        var lose = 0;
-        var winRate = 0;
-        var statObj = obj.summoner.league_stats;
-        var isGGBB528 =
-          obj.summoner.summoner_id ===
-          OPGG_INGAME_LINK.split('/')[5].split('?')[0]
-            ? true
-            : false;
+  axios
+    .get(OPGG_INGAME_LINK)
+    .then(function (response) {
+      if (response.status == 200) {
+        const startTime = response.data.data.created_at;
+        $('#curStartTime').html(
+          `<span>${moment(startTime).format('YYYY-MM-DD HH:mm:ss')}</span>`
+        );
+        var participantArray = response.data.data.participants;
+        participantArray.forEach((obj) => {
+          var rowId = `#${obj.team_key.toLowerCase()}-${obj.position.toLowerCase()}`;
+          var bgColor =
+            obj.team_key.toUpperCase() === 'BLUE' ? 'bg-primary' : 'bg-danger';
+          var championId = obj.champion_id;
+          var championById = response.data.data.championsById;
+          var rankTier = 'N/A';
+          var win = 0;
+          var lose = 0;
+          var winRate = 0;
+          var statObj = obj.summoner.league_stats;
+          var isGGBB528 =
+            obj.summoner.summoner_id ===
+            OPGG_INGAME_LINK.split('/')[5].split('?')[0]
+              ? true
+              : false;
 
-        statObj.forEach((o) => {
-          if (
-            o.queue_info.game_type === response.data.data.queue_info.game_type
-          ) {
-            rankTier = getTierString(
-              o.tier_info.tier.toUpperCase(),
-              o.tier_info.division
-            );
-            win = o.win;
-            lose = o.lose;
-            winRate = getWinLosePercentage(win, lose);
+          statObj.forEach((o) => {
+            if (
+              o.queue_info.game_type === response.data.data.queue_info.game_type
+            ) {
+              rankTier = getTierString(
+                o.tier_info.tier.toUpperCase(),
+                o.tier_info.division
+              );
+              win = o.win;
+              lose = o.lose;
+              winRate = getWinLosePercentage(win, lose);
+            }
+          });
+
+          const htmlString =
+            `<td style="width:20%"><span class="badge rounded-pill ${bgColor}">${positionMap(
+              obj.position.toUpperCase()
+            )}</span></td>` +
+            `<td style="width:25%;font-weight: bold">${championById[championId].name}</td>` +
+            `<td style="width:30%">${rankTier}</td>` +
+            `<td style="width:25%">勝率: ${winRate}</td>`;
+          $(rowId).html(htmlString);
+          if (isGGBB528) {
+            const color =
+              obj.team_key.toUpperCase() === 'BLUE'
+                ? 'table-primary'
+                : 'table-danger';
+            $(rowId).addClass(color);
           }
         });
-
-        const htmlString =
-          `<td style="width:20%"><span class="badge rounded-pill ${bgColor}">${positionMap(
-            obj.position.toUpperCase()
-          )}</span></td>` +
-          `<td style="width:25%;font-weight: bold">${championById[championId].name}</td>` +
-          `<td style="width:30%">${rankTier}</td>` +
-          `<td style="width:25%">勝率: ${winRate}</td>`;
-        $(rowId).html(htmlString);
-        if (isGGBB528) {
-          const color =
-            obj.team_key.toUpperCase() === 'BLUE'
-              ? 'table-primary'
-              : 'table-danger';
-          $(rowId).addClass(color);
-        }
-      });
-    }
-  });
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 function getTierString(tier, division) {
@@ -360,7 +363,6 @@ function getVodList() {
     let vodListHtml = '';
     if (Array.isArray(vodList)) {
       vodList.forEach((vod) => {
-        console.log('vod', vod);
         vodListHtml += getVodHtmlTemplate(vod);
       });
     }
