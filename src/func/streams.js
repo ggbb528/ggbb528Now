@@ -122,6 +122,7 @@ module.exports = () => {
           first: '20',
           type: 'highlight',
         });
+        
         url.search = searchParams.toString();
         var option = {
           method: 'GET',
