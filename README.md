@@ -9,7 +9,7 @@ My Chrome Extension
 
 ## Install
 
-[**Chrome** extension]() <!-- TODO: Add chrome extension link inside parenthesis -->
+[**Chrome** extension](https://github.com/ggbb528/ggbb528now/releases/latest)
 
 ## Contribution
 
@@ -18,4 +18,3 @@ Suggestions and pull requests are welcomed!.
 ---
 
 This project was bootstrapped with [Chrome Extension CLI](https://github.com/dutiyesh/chrome-extension-cli)
-

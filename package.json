@@ -5,12 +5,15 @@
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
-    "build": "webpack --mode=production --config config/webpack.config.js"
+    "build": "webpack --mode=production --config config/webpack.config.js",
+    "release": "cd build/ && bestzip ../ggbb528now.zip *"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
+    "bestzip": "^2.2.1",
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
+    "dotenv-webpack": "^7.1.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^0.10.1",
     "size-plugin": "^2.0.2",
