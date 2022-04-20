@@ -3,15 +3,12 @@
 import moment from 'moment';
 import momentTZ from 'moment-timezone';
 import axios from 'axios';
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import Chart from 'chart.js/auto';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '@fortawesome/fontawesome-free/js/fontawesome';
-import '@fortawesome/fontawesome-free/js/solid';
-import '@fortawesome/fontawesome-free/js/regular';
 import '@fortawesome/fontawesome-free/js/brands';
 
 import './popup.css';
