@@ -12,7 +12,7 @@
 
 ## 安裝
 
-[**Chrome 商店**]() | [**Github**](https://github.com/ggbb528/ggbb528now/releases/latest)
+[**Chrome 商店**](https://chrome.google.com/webstore/detail/ggbb528now/dhhfpfobgcgjpecokdfpdjnkhejelfko) | [**Github**](https://github.com/ggbb528/ggbb528now/releases/latest)
 
 ## 功能建議
 
