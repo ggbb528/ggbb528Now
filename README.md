@@ -1,6 +1,8 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Ggbb528now
 
-[![build-test](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml) [![Create Release](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml)
+[![build-test](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml)
+[![Create Release](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dhhfpfobgcgjpecokdfpdjnkhejelfko)](https://chrome.google.com/webstore/detail/ggbb528now/dhhfpfobgcgjpecokdfpdjnkhejelfko)
 
 勝敗難免開台通知
 

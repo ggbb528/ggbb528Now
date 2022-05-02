@@ -9,7 +9,10 @@
     "release": "cd build/ && bestzip ../ggbb528now.zip *"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "bestzip": "^2.2.1",
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
