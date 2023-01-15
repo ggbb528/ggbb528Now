@@ -42,6 +42,6 @@ export default defineConfig({
       'https://www.twitch.tv/ggbb528'
     ),
     __APP_CONFIG_TWITCH_API__: JSON.stringify('https://api.twitch.tv/helix'),
-    __APP_CONFIG_TWITCH_ID__: JSON.stringify('https://id.twitch.tv/oauth2'),
+    __APP_CONFIG_TWITCH_ID_API__: JSON.stringify('https://id.twitch.tv/oauth2'),
   },
 });

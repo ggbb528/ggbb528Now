@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
+import { VOD } from '../models/vod-type';
 
 export const useVodList = () => {
-  const [vods, setVods] = useState([]);
+  const [vods, setVods] = useState<VOD[]>([]);
 
   useEffect(() => {
-    console.log('get vod list');
     chrome.storage?.local?.get('vodList', ({ vodList }) => {
       if (Array.isArray(vodList)) {
-        console.log('vodList', vodList);
-        setVods(vodList as []);
+        setVods(vodList);
       }
     });
   }, []);

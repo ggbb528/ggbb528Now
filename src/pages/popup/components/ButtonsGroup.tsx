@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import opggLogo from '@assets/img/opgglogo.svg';
+import { openURL } from '../utils/utility';
 
 // Button
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +18,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 function Button(props: ButtonProps) {
   const handleOnClick = () => {
     if (props.href) {
-      chrome.tabs.create({ url: props.href });
+      openURL(props.href);
     }
   };
   return (
@@ -88,7 +89,7 @@ export default function ButtonsGroup() {
       <div className="container inline-flex" role="group">
         <Button
           className="border rounded-l"
-          href="https://www.twitch.tv/ggbb528"
+          href={__APP_CONFIG_TWITCH_CHANNEL__}
         >
           <FontAwesomeIcon icon={faTwitch} size={'2xl'} color={'#6441a5'} />
         </Button>

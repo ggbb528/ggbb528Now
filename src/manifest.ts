@@ -7,6 +7,7 @@ const manifest: ManifestType = {
   version: pkg.version,
   description: pkg.description,
   options_page: 'src/pages/options/index.html',
+  permissions: ['alarms', 'storage', 'notifications'],
   background: {
     service_worker: 'src/pages/background/index.js',
     type: 'module',

@@ -24,9 +24,9 @@ function TabPane(props: TabPaneProps) {
   );
 }
 
-export default function Content() {
+export default function Content({ className = '' }: { className?: string }) {
   return (
-    <div className="tab-content" id="tabs-tabContent">
+    <div className={`tab-content ${className}`} id="tabs-tabContent">
       <TabPane target="ranking" active>
         <TabRanking />
       </TabPane>

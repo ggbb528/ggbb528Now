@@ -4,6 +4,11 @@
   "version": "1.0.2",
   "description": "勝敗難免開台通知",
   "options_page": "src/pages/options/index.html",
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications"
+  ],
   "background": {
     "service_worker": "src/pages/background/index.js",
     "type": "module"
