@@ -29,6 +29,7 @@ export default defineConfig({
         background: resolve(pagesDir, 'background', 'index.ts'),
         popup: resolve(pagesDir, 'popup', 'index.html'),
         options: resolve(pagesDir, 'options', 'index.html'),
+        updates: resolve(pagesDir, 'updates', 'index.html'),
       },
       output: {
         entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
