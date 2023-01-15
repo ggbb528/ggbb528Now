@@ -1,6 +1,26 @@
 import React from 'react';
 import '@pages/updates/Updates.css';
+import ggbb528cheer from '@assets/img/ggbb528cheer.gif';
+import ChangeLogItem from './components/ChangeLogItem';
 
 export default function Updates(): JSX.Element {
-  return <div className="container">Updates</div>;
+  return (
+    <div className="container mx-auto">
+      <div className="flex flex-row p-2 mx-auto justify-center items-center">
+        <div className="mx-4">
+          <img
+            src={ggbb528cheer}
+            className="pointer-events-none h-12 w-12"
+            alt="ggbb528cheer"
+          />
+        </div>
+        <div className="mx-4">
+          <h1 className="text-4xl">ggbb528now 更新紀錄</h1>
+        </div>
+      </div>
+      <section>
+        <ChangeLogItem />
+      </section>
+    </div>
+  );
 }
