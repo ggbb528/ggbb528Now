@@ -5,8 +5,8 @@ import ChangeLogSection from './components/ChangeLogSection';
 
 export default function Updates(): JSX.Element {
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-row p-2 mx-auto justify-center items-center">
+    <div className="container mx-auto max-w-5xl">
+      <div className="flex flex-row p-4 mx-auto justify-center items-center">
         <div className="mx-4">
           <img
             src={ggbb528cheer}

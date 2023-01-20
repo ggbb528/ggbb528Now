@@ -7,7 +7,10 @@ export default function ChangeLogSection() {
   return (
     <section>
       {changeLogs.map((changeLog, index) => (
-        <ChangeLogItem key={index} {...changeLog} />
+        <>
+          <ChangeLogItem key={index} {...changeLog} />
+          {index !== changeLogs.length - 1 && <hr />}
+        </>
       ))}
     </section>
   );
