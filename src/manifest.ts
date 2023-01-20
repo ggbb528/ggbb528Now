@@ -8,6 +8,7 @@ const manifest: ManifestType = {
   description: pkg.description,
   options_page: 'src/pages/options/index.html',
   permissions: ['alarms', 'storage', 'notifications'],
+  host_permissions: ['*://*.twitch.tv/*', '*://*.op.gg/'],
   background: {
     service_worker: 'src/pages/background/index.js',
     type: 'module',
@@ -25,9 +26,10 @@ const manifest: ManifestType = {
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
+      matches: ['*://*.twitch.tv/*'],
       js: ['src/pages/content/index.js'],
       css: ['contentStyle.css'],
+      run_at: 'document_idle',
     },
   ],
   web_accessible_resources: [
