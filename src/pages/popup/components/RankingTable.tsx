@@ -10,6 +10,7 @@ import Pill from './Pill';
 import { Account } from '../models/account-type';
 import useOPGGProfile from '../hooks/useOPGGProfile';
 import { LeagueStat } from '../models/profile-type';
+import { times } from 'lodash';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -86,15 +87,9 @@ function RecordRow({ borderB = true, myData, created_at }: RecordRowProps) {
 function LoadingRows() {
   return (
     <>
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
-      <LoadingRow />
+      {times(9, (id) => (
+        <LoadingRow key={id} />
+      ))}
       <LoadingRow borderB={false} />
     </>
   );
