@@ -18,11 +18,11 @@ function VodItem({ vod }: { vod: VOD }) {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full">
+    <div className="flex flex-col justify-center ">
       <a href={vod.url} title={vod.title} onClick={handleOnClick}>
         <img src={thumbnailURL} alt={vod.title} />
       </a>
-      <div className="px-2 flex flex-row w-full">
+      <div className="px-2 flex flex-row">
         <div className="p-1 flex justify-center items-center w-1/12 mx-1">
           <FontAwesomeIcon
             className="m-auto"
@@ -31,7 +31,7 @@ function VodItem({ vod }: { vod: VOD }) {
             color={'#6441a5'}
           />
         </div>
-        <div className="p-1 flex flex-col w-10/12 text-left">
+        <div className="p-1 flex flex-col w-11/12 text-left">
           <div className="truncate text-base ">
             <a
               onClick={handleOnClick}

@@ -1,7 +1,7 @@
 import React from 'react';
 import '@pages/updates/Updates.css';
 import ggbb528cheer from '@assets/img/ggbb528cheer.gif';
-import ChangeLogItem from './components/ChangeLogItem';
+import ChangeLogSection from './components/ChangeLogSection';
 
 export default function Updates(): JSX.Element {
   return (
@@ -18,9 +18,7 @@ export default function Updates(): JSX.Element {
           <h1 className="text-4xl">ggbb528now 更新紀錄</h1>
         </div>
       </div>
-      <section>
-        <ChangeLogItem />
-      </section>
+      <ChangeLogSection />
     </div>
   );
 }

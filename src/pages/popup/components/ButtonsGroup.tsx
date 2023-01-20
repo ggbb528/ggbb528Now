@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import opggLogo from '@assets/img/opgglogo.svg';
 import { openURL } from '../utils/utility';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { Constants } from '@src/configs/constants';
 
 // Button
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -89,34 +91,35 @@ export default function ButtonsGroup() {
       <div className="container inline-flex" role="group">
         <Button
           className="border rounded-l"
-          href={__APP_CONFIG_TWITCH_CHANNEL__}
+          href={Constants.TWITCH_CHANNEL_URL}
         >
           <FontAwesomeIcon icon={faTwitch} size={'2xl'} color={'#6441a5'} />
         </Button>
         <Button
-          className="border-t border-b border-r"
+          className="border-t border-b border-r flex justify-center items-center"
           data-bs-toggle="dropdown"
           id="dropdownMenuButton"
         >
-          <img alt="opgg logo" src={opggLogo} className="m-auto w-4/5" />
+          <img alt="opgg logo" src={opggLogo} className="p-1 w-4/5" />
+          <FontAwesomeIcon icon={faCaretDown} className="p-1" />
         </Button>
         <Dropdown ariaLabelledby="dropdownMenuButton">
-          <DropdownItem href="https://www.op.gg/summoners/kr/%EC%A4%80%20%EB%B0%9B">
-            韓服 - 준 받
+          <DropdownItem href={Constants.OPGG_KR_URL}>
+            韓服 - {Constants.LOL_KR_ACCOUNT_ID}
           </DropdownItem>
-          <DropdownItem href="https://www.op.gg/summoners/tw/Twitch%E5%8B%9D%E6%95%97%E9%9B%A3%E5%85%8D">
-            台服 - Twitch勝敗難免
+          <DropdownItem href={Constants.OPGG_TW_URL}>
+            台服 - {Constants.LOL_TW_ACCOUNT_ID}
           </DropdownItem>
         </Dropdown>
         <Button
           className="border-t border-b"
-          href="https://www.youtube.com/c/ggbb528"
+          href={Constants.YOUTUBE_CHANNEL_URL}
         >
           <FontAwesomeIcon icon={faYoutube} size={'2xl'} color={'#ff0000'} />
         </Button>
         <Button
           className="border rounded-r"
-          href="https://www.facebook.com/JeffeRy0821"
+          href={Constants.FACEBOOK_FANPAGE_URL}
         >
           <FontAwesomeIcon icon={faFacebook} size={'2xl'} color={'#4267b2'} />
         </Button>

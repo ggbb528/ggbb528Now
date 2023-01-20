@@ -7,6 +7,7 @@ import copyContentStyle from './utils/plugins/copy-content-style';
 const root = resolve(__dirname, 'src');
 const pagesDir = resolve(root, 'pages');
 const assetsDir = resolve(root, 'assets');
+const configsDir = resolve(__dirname, 'configs');
 const outDir = resolve(__dirname, 'dist');
 const publicDir = resolve(__dirname, 'public');
 
@@ -16,6 +17,7 @@ export default defineConfig({
       '@src': root,
       '@assets': assetsDir,
       '@pages': pagesDir,
+      '@configs': configsDir,
     },
   },
   plugins: [react(), makeManifest(), copyContentStyle()],
@@ -39,10 +41,5 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     __APP_NAME__: JSON.stringify('ggbb528now'),
-    __APP_CONFIG_TWITCH_CHANNEL__: JSON.stringify(
-      'https://www.twitch.tv/ggbb528'
-    ),
-    __APP_CONFIG_TWITCH_API__: JSON.stringify('https://api.twitch.tv/helix'),
-    __APP_CONFIG_TWITCH_ID_API__: JSON.stringify('https://id.twitch.tv/oauth2'),
   },
 });

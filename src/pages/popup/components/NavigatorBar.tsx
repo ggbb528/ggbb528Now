@@ -1,4 +1,7 @@
+import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { openURL } from '../utils/utility';
 
 interface TabItemProps {
   target: string;
@@ -44,6 +47,14 @@ function Tab(props: TabProps) {
 }
 
 export default function NavigatorBar() {
+  const handleClickVersion = () => {
+    openURL('src/pages/updates/index.html');
+  };
+
+  const handleClickOptions = () => {
+    openURL('src/pages/options/index.html');
+  };
+
   return (
     <div className="flex flex-row justify-start items-center">
       <div className="mr-auto">
@@ -55,8 +66,20 @@ export default function NavigatorBar() {
           <TabItem target="vod">VOD</TabItem>
         </Tab>
       </div>
-      <div className="p-2">
-        <span className="text-gray-400">v{__APP_VERSION__}</span>
+      <div className="p-2 flex justify-center items-center gap-1">
+        <span
+          title="更新紀錄"
+          className="text-gray-400  hover:text-blue-800 transition duration-300 ease-in-out cursor-pointer"
+          onClick={handleClickVersion}
+        >
+          v{__APP_VERSION__}
+        </span>
+        <FontAwesomeIcon
+          title="設定"
+          icon={faGear}
+          className="text-gray-400  hover:text-blue-800 transition duration-300 ease-in-out cursor-pointer"
+          onClick={handleClickOptions}
+        />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { Constants } from '@src/configs/constants';
 import { refreshAccessToken, validateToken } from './tokens';
 
 export default async function syncVod() {
@@ -11,7 +12,7 @@ export default async function syncVod() {
     },
     (items) => {
       const accessToken = items.twitchAccessToken.accessToken;
-      const API_URL = new URL(__APP_CONFIG_TWITCH_API__ + '/videos');
+      const API_URL = new URL(Constants.TWITCH_API_URL + '/videos');
       const clientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
       const searchParams = new URLSearchParams({
         user_id: '35154593',

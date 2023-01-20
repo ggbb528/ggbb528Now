@@ -1,3 +1,4 @@
+import { Constants } from '@src/configs/constants';
 import { sendLiveNotification } from './utils/notifications';
 import { checkStreams } from './utils/streams';
 import syncVod from './utils/vods';
@@ -49,7 +50,7 @@ export default function alarms() {
     switch (id) {
       case 'ggbb528':
         chrome.notifications.clear('ggbb528', function () {
-          chrome.tabs.create({ url: __APP_CONFIG_TWITCH_CHANNEL__ });
+          chrome.tabs.create({ url: Constants.TWITCH_CHANNEL_URL });
         });
         break;
       default:

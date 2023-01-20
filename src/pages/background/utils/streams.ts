@@ -1,3 +1,4 @@
+import { Constants } from '@src/configs/constants';
 import { refreshAccessToken, validateToken } from './tokens';
 
 export const Icons = {
@@ -26,7 +27,7 @@ export function checkStreams() {
     },
     (items) => {
       const accessToken = items.twitchAccessToken.accessToken;
-      const API_URL = new URL(__APP_CONFIG_TWITCH_API__ + '/streams');
+      const API_URL = new URL(Constants.TWITCH_API_URL + '/streams');
       const searchParams = new URLSearchParams({ user_login: 'ggbb528' });
       const clientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
       API_URL.search = searchParams.toString();
