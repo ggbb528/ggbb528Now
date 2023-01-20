@@ -44,9 +44,7 @@ function VodItem({ vod }: { vod: VOD }) {
           </div>
           <div className="flex flex-row  text-xs">
             <div className="w-1/2">觀看次數: {vod.view_count}</div>
-            <div className="w-1/2">
-              {moment(vod.published_at).format('YYYY-MM-DD HH:mm:ss')}
-            </div>
+            <div className="w-1/2">{moment(vod.published_at).fromNow()}</div>
           </div>
         </div>
       </div>

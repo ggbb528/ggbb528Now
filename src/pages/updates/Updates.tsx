@@ -15,7 +15,9 @@ export default function Updates(): JSX.Element {
           />
         </div>
         <div className="mx-4">
-          <h1 className="text-4xl">ggbb528now 更新紀錄</h1>
+          <h1 className="font-medium leading-tight text-5xl">
+            ggbb528now 更新紀錄
+          </h1>
         </div>
       </div>
       <ChangeLogSection />

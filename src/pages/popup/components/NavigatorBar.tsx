@@ -62,7 +62,7 @@ export default function NavigatorBar() {
           <TabItem target="ranking" active>
             LOL 牌位
           </TabItem>
-          <TabItem target="statistics">LOL 數據 </TabItem>
+          {/* <TabItem target="statistics">LOL 數據 </TabItem> */}
           <TabItem target="vod">VOD</TabItem>
         </Tab>
       </div>
@@ -77,7 +77,7 @@ export default function NavigatorBar() {
         <FontAwesomeIcon
           title="設定"
           icon={faGear}
-          className="text-gray-400  hover:text-blue-800 transition duration-300 ease-in-out cursor-pointer"
+          className="text-gray-400  hover:text-blue-800 transition duration-300 ease-in-out cursor-pointer hover:animate-spin"
           onClick={handleClickOptions}
         />
       </div>

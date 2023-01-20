@@ -25,10 +25,10 @@ export default function Popup(): JSX.Element {
         <Content className="flex-1 overflow-auto" />
         <NavigatorBar />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={false} position="top-left" />
       {import.meta.env.VITE_DEV_MODE && (
         <React.Suspense fallback={null}>
-          <ReactQueryDevtoolsProduction position="bottom-right" />
+          <ReactQueryDevtoolsProduction position="top-left" />
         </React.Suspense>
       )}
     </QueryClientProvider>
