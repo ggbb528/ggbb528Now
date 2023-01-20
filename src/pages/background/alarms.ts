@@ -1,4 +1,5 @@
 import { Constants } from '@src/configs/constants';
+import { OptionKeys } from '@src/configs/optionKeys';
 import { sendLiveNotification } from './utils/notifications';
 import { checkStreams } from './utils/streams';
 import syncVod from './utils/vods';
@@ -42,7 +43,18 @@ export default function alarms() {
 
   chrome.storage.onChanged.addListener(function (changes, areaName) {
     if (changes.ggbb528Open && changes.ggbb528Open.newValue == true) {
-      sendLiveNotification('ggbb528', 'ggbb528 開台囉!!!', '趕快前往實況台~~~');
+      chrome.storage.sync.get(
+        [OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name],
+        (result) => {
+          if (result[OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name]) {
+            sendLiveNotification(
+              'ggbb528',
+              'ggbb528 開台囉!!!',
+              '趕快前往實況台~~~'
+            );
+          }
+        }
+      );
     }
   });
 
