@@ -1,4 +1,3 @@
-import React from 'react';
 import moment from 'moment';
 import useOPGGChampions from '../hooks/useOPGGChampions';
 import useOPGGSummoners from '../hooks/useOPGGSummoners';
@@ -9,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 import Pill from './Pill';
 import { Account } from '../models/account-type';
+import useOPGGProfile from '../hooks/useOPGGProfile';
+import { LeagueStat } from '../models/profile-type';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -42,7 +43,12 @@ function ResultBadge({ result }: { result: string }) {
 }
 
 const getKDA = (k: number, d: number, a: number) => {
-  if (d === 0) return <FontAwesomeIcon icon={faInfinity} />;
+  if (d === 0)
+    return (
+      <span>
+        KDA: <FontAwesomeIcon icon={faInfinity} />
+      </span>
+    );
   return <span>KDA: {Math.round(((k + a) / d) * 100) / 100}</span>;
 };
 
@@ -94,15 +100,13 @@ function LoadingRows() {
   );
 }
 
-function TableBody({
-  isLoading,
-  isError,
-  data,
-}: {
-  isLoading: boolean;
-  isError: boolean;
-  data?: Datum[];
-}) {
+function TableBody({ server, summonerId }: Account) {
+  const { isLoading, isError, data } = useOPGGSummoners({
+    server,
+    summonerId,
+    limit: 10,
+  });
+
   if (isLoading || isError) return <LoadingRows />;
   return (
     <>
@@ -117,45 +121,111 @@ function TableBody({
   );
 }
 
-export default function RankingTable({ server, summonerId }: Account) {
-  const summoners = useOPGGSummoners({
-    server,
-    summonerId,
-    limit: 10,
+interface StatProps {
+  isLoading: boolean;
+  leagueStat?: LeagueStat;
+}
+
+function RankBadge({ isLoading, leagueStat }: StatProps) {
+  if (isLoading || !leagueStat) return <Skeleton className="h-4 w-12" />;
+
+  let tierString = '';
+  switch (`${leagueStat.tier_info.tier}`.toUpperCase()) {
+    case 'CHALLENGER':
+    case 'GRANDMASTER':
+    case 'MASTER':
+      tierString = `${leagueStat.tier_info.tier}`;
+      break;
+    default:
+      tierString = `${leagueStat.tier_info.tier} ${leagueStat.tier_info.division}`;
+  }
+
+  return <span className="text-blue-600">{tierString}</span>;
+}
+
+function LP({ isLoading, leagueStat }: StatProps) {
+  if (isLoading || !leagueStat) return <Skeleton className="h-4 w-12" />;
+
+  return <span>{leagueStat.tier_info.lp}</span>;
+}
+
+function WinRate({ isLoading, leagueStat }: StatProps) {
+  if (isLoading || !leagueStat) return <Skeleton className="h-4 w-12" />;
+
+  const { win, lose } = leagueStat;
+  if (win === null || lose === null || win === 0 || lose === 0)
+    return <span>N/A</span>;
+
+  return <span>{Math.round((win / (win + lose)) * 10000) / 100}%</span>;
+}
+
+function WinCount({ isLoading, leagueStat }: StatProps) {
+  if (isLoading || !leagueStat) return <Skeleton className="h-4 w-12" />;
+
+  return <span>{leagueStat.win}</span>;
+}
+
+function LoseCount({ isLoading, leagueStat }: StatProps) {
+  if (isLoading || !leagueStat) return <Skeleton className="h-4 w-12" />;
+
+  return <span>{leagueStat.lose}</span>;
+}
+
+export default function RankingTable(account: Account) {
+  const profile = useOPGGProfile({
+    server: account.server,
+    summonerId: account.summonerId,
   });
+
+  const isProfileLoading = profile.isError || profile.isError;
+  const soloRankStats = profile.data?.league_stats.find(
+    (x) => x.queue_info.game_type === 'SOLORANKED'
+  );
 
   return (
     <div className="px-2">
       <div className="flex flex-row justify-center items-center rounded bg-gray-100 px-2">
-        <div className="w-3/12 flex flex-col justify-center items-center gap-2">
+        <div className="w-3/12 flex flex-col justify-center items-center gap-1">
           <div>牌位</div>
           <div>
-            <Skeleton className="h-4 w-12" />
+            <RankBadge
+              isLoading={isProfileLoading}
+              leagueStat={soloRankStats}
+            />
           </div>
         </div>
         <div className="w-9/12 grid grid-cols-2 ">
           <div className="border-b border-black p-1 flex justify-center items-center">
             <div className="w-1/2">分數</div>
             <div className="w-1/2">
-              <Skeleton className="h-4 w-12" />
+              <LP isLoading={isProfileLoading} leagueStat={soloRankStats} />
             </div>
           </div>
           <div className="border-b  border-black p-1  flex justify-center items-center">
             <div className="w-1/2">勝率</div>
             <div className="w-1/2">
-              <Skeleton className="h-4 w-12" />
+              <WinRate
+                isLoading={isProfileLoading}
+                leagueStat={soloRankStats}
+              />
             </div>
           </div>
           <div className="p-1  flex justify-center items-center">
             <div className="w-1/2">勝場</div>
             <div className="w-1/2">
-              <Skeleton className="h-4 w-12" />
+              <WinCount
+                isLoading={isProfileLoading}
+                leagueStat={soloRankStats}
+              />
             </div>
           </div>
           <div className="p-1  flex justify-center items-center">
             <div className="w-1/2">敗場</div>
             <div className="w-1/2">
-              <Skeleton className="h-4 w-12" />
+              <LoseCount
+                isLoading={isProfileLoading}
+                leagueStat={soloRankStats}
+              />
             </div>
           </div>
         </div>
@@ -174,11 +244,7 @@ export default function RankingTable({ server, summonerId }: Account) {
             </tr>
           </thead>
           <tbody>
-            <TableBody
-              isLoading={summoners.isLoading}
-              isError={summoners.isError}
-              data={summoners.data}
-            />
+            <TableBody {...account} />
           </tbody>
         </table>
       </div>

@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { Datum } from '../models/summoner-type';
+import { Profile } from '../models/profile-type';
 
 const OPGG_API_URL =
-  'https://op.gg/api/v1.0/internal/bypass/games/{SERVER}/summoners/{SUMMONER_ID}';
+  'https://op.gg/api/v1.0/internal/bypass/summoners/{SERVER}/{SUMMONER_ID}';
 
-export default function useOPGGSummoners({
+export default function useOPGGProfile({
   limit = 10,
   lang = 'zh_TW',
   server,
@@ -17,16 +17,15 @@ export default function useOPGGSummoners({
 }) {
   // prettier-ignore
   const API_URL = OPGG_API_URL
-  .replace('{SERVER}', server)
-  .replace('{SUMMONER_ID}',summonerId);
+        .replace('{SERVER}', server)
+        .replace('{SUMMONER_ID}',summonerId);
 
   return useQuery({
-    queryKey: ['summoners', server, summonerId],
+    queryKey: ['profile', server, summonerId],
     queryFn: () =>
       fetch(
         `${API_URL}?${new URLSearchParams({
           hl: lang,
-          game_type: 'soloranked',
           limit: `${limit}`,
         })}`
       )
@@ -36,7 +35,7 @@ export default function useOPGGSummoners({
           }
           return response.json();
         })
-        .then((response) => response.data as Datum[]),
+        .then((response) => response.data as Profile),
     staleTime: 60000,
     cacheTime: 60000,
   });
