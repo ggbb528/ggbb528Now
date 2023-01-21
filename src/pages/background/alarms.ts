@@ -46,7 +46,7 @@ export default function alarms() {
       chrome.storage.sync.get(
         [OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name],
         (result) => {
-          if (result[OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name]) {
+          if (result[OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name] !== false) {
             sendLiveNotification(
               'ggbb528',
               'ggbb528 開台囉!!!',
@@ -68,5 +68,17 @@ export default function alarms() {
       default:
         break;
     }
+  });
+
+  // on installed
+  chrome.runtime.onInstalled.addListener(function () {
+    chrome.storage.sync.get(
+      [OptionKeys.OPTION_KEY_UPGRADE_NOTIFICATION.name],
+      (result) => {
+        if (result[OptionKeys.OPTION_KEY_UPGRADE_NOTIFICATION.name] !== false) {
+          chrome.tabs.create({ url: 'src/pages/updates/index.html' });
+        }
+      }
+    );
   });
 }
