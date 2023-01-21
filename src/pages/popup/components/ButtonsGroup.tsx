@@ -1,4 +1,5 @@
 import {
+  faDiscord,
   faFacebook,
   faTwitch,
   faYoutube,
@@ -27,7 +28,7 @@ function Button(props: ButtonProps) {
     <button
       {...props}
       type="button"
-      className={`w-1/4 py-1 border-black text-blue-600 font-medium text-xs leading-tight
+      className={`flex-1 py-1 border-black text-blue-600 font-medium text-xs leading-tight
         uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0
         transition duration-150 ease-in-out ${props.className}`}
       onClick={handleOnClick}
@@ -88,7 +89,7 @@ function Dropdown(props: DropdownProps) {
 export default function ButtonsGroup() {
   return (
     <div className="container flex items-center justify-center">
-      <div className="container inline-flex" role="group">
+      <div className="container flex flex-row" role="group">
         <Button
           className="border rounded-l"
           href={Constants.TWITCH_CHANNEL_URL}
@@ -112,13 +113,19 @@ export default function ButtonsGroup() {
           </DropdownItem>
         </Dropdown>
         <Button
-          className="border-t border-b"
+          className="border-t border-b border-r"
           href={Constants.YOUTUBE_CHANNEL_URL}
         >
           <FontAwesomeIcon icon={faYoutube} size={'2xl'} color={'#ff0000'} />
         </Button>
         <Button
-          className="border rounded-r"
+          className="border-t border-b border-r"
+          href={Constants.DISCORD_SERVER_URL}
+        >
+          <FontAwesomeIcon icon={faDiscord} size={'2xl'} color={'#5865f2'} />
+        </Button>
+        <Button
+          className="border-t border-b border-r rounded-r"
           href={Constants.FACEBOOK_FANPAGE_URL}
         >
           <FontAwesomeIcon icon={faFacebook} size={'2xl'} color={'#4267b2'} />
