@@ -1,7 +1,7 @@
 import moment from 'moment';
 import useOPGGChampions from '../hooks/useOPGGChampions';
 import useOPGGSummoners from '../hooks/useOPGGSummoners';
-import { Datum } from '../models/summoner-type';
+import { Datum, MyData } from '../models/summoner-type';
 import Skeleton from './Skeleton';
 import 'moment/dist/locale/zh-tw';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,12 +35,19 @@ function LoadingRow({ borderB = true }: { borderB?: boolean }) {
   );
 }
 
-function ResultBadge({ result }: { result: string }) {
-  if (result.toUpperCase() === 'WIN')
+enum GameType {
+  WIN = 'WIN',
+  LOSE = 'LOSE',
+  REMAKE = 'REMAKE',
+  UNKNOWN = 'UNKNOWN'
+}
+
+function ResultBadge({ gameType }: { gameType: GameType }) {
+  if (gameType === GameType.WIN)
     return <Pill className="text-white bg-blue-600">W</Pill>;
-  else if (result.toUpperCase() === 'LOSE')
+  else if (gameType === GameType.LOSE)
     return <Pill className="text-white bg-red-600">L</Pill>;
-  return <Pill className="bg-gray-500">R</Pill>;
+  return <Pill className="text-white bg-gray-500">R</Pill>;
 }
 
 const getKDA = (k: number, d: number, a: number) => {
@@ -53,22 +60,33 @@ const getKDA = (k: number, d: number, a: number) => {
   return <span>KDA: {Math.round(((k + a) / d) * 100) / 100}</span>;
 };
 
+
+function getGameResult({ is_remake, myData }: { is_remake: boolean; myData: MyData }) {
+  if (is_remake) return GameType.REMAKE;
+
+  const { result } = myData.stats;
+  if (result.toUpperCase() === 'WIN') return GameType.WIN;
+  else if (result.toUpperCase() === 'LOSE') return GameType.LOSE;
+
+  return GameType.UNKNOWN;
+}
+
 interface RecordRowProps extends Datum {
   borderB?: boolean;
 }
-function RecordRow({ borderB = true, myData, created_at }: RecordRowProps) {
+function RecordRow({ borderB = true, myData, created_at, is_remake }: RecordRowProps) {
   const champions = useOPGGChampions();
   const champion = champions.data?.find((x) => x.id === myData.champion_id);
-  const result = myData.stats.result;
 
   let bgColor = '';
-  if (result.toUpperCase() === 'WIN') bgColor = 'bg-blue-200';
-  else if (result.toUpperCase() === 'LOSE') bgColor = 'bg-red-100';
+  const gameType = getGameResult({ is_remake, myData });
+  if (gameType === GameType.WIN) bgColor = 'bg-blue-200';
+  else if (gameType === GameType.LOSE) bgColor = 'bg-red-100';
 
   return (
     <tr className={`h-7 ${borderB ? `border-b` : 'rounded-b'} ${bgColor}`}>
       <td className="p-1 text-xs whitespace-nowrap">
-        <ResultBadge result={result} />
+        <ResultBadge gameType={gameType} />
       </td>
       <td className="p-1 text-xs whitespace-nowrap">
         {moment(created_at).fromNow()}

@@ -117,7 +117,7 @@ export interface LeagueStat {
   is_fresh_blood: boolean;
   is_veteran: boolean;
   is_inactive: boolean;
-  series: null;
+  series: Series | null;
   updated_at: Date | null;
   league?: League;
 }
@@ -193,3 +193,10 @@ export interface TiersImageDatum {
   border_image_url: string;
   tier_mini_image_url: string;
 }
+
+export interface Series {
+  target: number;
+  win:    number;
+  lose:   number;
+}
+
