@@ -1,10 +1,7 @@
-name: build-test
+name: Build & Testing
 
 on:
-  push:
-    branches:
-      - main
-      - releases/*
+  push:    
     paths-ignore:
       - '**.md'
   pull_request:

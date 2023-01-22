@@ -1,6 +1,6 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Ggbb528now
 
-[![build-test](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml)
+[![Build & Testing](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/build-test.yml)
 [![Create Release](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml/badge.svg)](https://github.com/ggbb528/ggbb528now/actions/workflows/create-release.yml)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dhhfpfobgcgjpecokdfpdjnkhejelfko)](https://chrome.google.com/webstore/detail/ggbb528now/dhhfpfobgcgjpecokdfpdjnkhejelfko)
 
@@ -28,6 +28,10 @@
 
 [更新日誌](CHANGELOG.md)
 
+## 開發
+
+專案建置與開發方式請參考 [wiki](https://github.com/ggbb528/ggbb528now/wiki)
+
 ---
 
-This project was bootstrapped with [Chrome Extension CLI](https://github.com/dutiyesh/chrome-extension-cli)
+This project was bootstrapped with [Vite Web Extension](https://github.com/JohnBra/vite-web-extension)
