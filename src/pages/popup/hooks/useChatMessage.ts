@@ -7,11 +7,12 @@ export default function useChatMessage() {
 
   useEffect(() => {
     // fetch history
-    chrome.runtime.sendMessage(
+    chrome.runtime?.sendMessage(
       {
         type: 'CHAT_MESSAGE_HISTORY',
       },
-      ({ hisMessages }: { hisMessages: ChatMessage[] }) => {
+      (response: { hisMessages: ChatMessage[] }) => {
+        const hisMessages = response?.hisMessages || [];
         setMessages([...hisMessages]);
       }
     );
