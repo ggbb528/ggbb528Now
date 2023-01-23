@@ -1,4 +1,5 @@
 export const Constants = {
+  TWITCH_CHANNEL: 'ggbb528',
   TWITCH_CHANNEL_URL: 'https://www.twitch.tv/ggbb528',
   TWITCH_API_URL: 'https://api.twitch.tv/helix',
   TWITCH_AUTH_API_URL: 'https://id.twitch.tv/oauth2',

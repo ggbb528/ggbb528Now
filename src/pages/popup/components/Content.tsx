@@ -1,4 +1,5 @@
 import React from 'react';
+import TabChatMessage from './tab-contents/TabChatMessage';
 import TabRanking from './tab-contents/TabRanking';
 import TabStatistics from './tab-contents/TabStatistics';
 import TabVod from './tab-contents/TabVod';
@@ -26,7 +27,7 @@ function TabPane(props: TabPaneProps) {
 
 export default function Content({ className = '' }: { className?: string }) {
   return (
-    <div className={`tab-content ${className}`} id="tabs-tabContent">
+    <div className={`tab-content  ${className}`} id="tabs-tabContent">
       <TabPane target="ranking" active>
         <TabRanking />
       </TabPane>
@@ -35,6 +36,9 @@ export default function Content({ className = '' }: { className?: string }) {
       </TabPane>
       <TabPane target="vod">
         <TabVod />
+      </TabPane>
+      <TabPane target="chat" className="bg-gray-50 min-h-full p-1">
+        <TabChatMessage />
       </TabPane>
     </div>
   );
