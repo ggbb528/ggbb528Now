@@ -10,11 +10,11 @@ export function getSyncStorageValue(key: string) {
   });
 }
 
-export function setSyncStorageValue(key: string, value: any) {
+export function setSyncStorageValue(key: string, value: unknown) {
   chrome.storage.sync.set({ [key]: value });
 }
 
-export function getLocalStorageValue(key: string) {
+export function getLocalStorageValue<T>(key: string): Promise<T> {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get([key], (result) => {
       if (chrome.runtime.lastError) {
@@ -24,4 +24,8 @@ export function getLocalStorageValue(key: string) {
       resolve(result[key]);
     });
   });
+}
+
+export function setLocalStorageValue<T>(key: string, value: T) {
+  chrome.storage.local.set({ [key]: value });
 }

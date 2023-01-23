@@ -1,10 +1,32 @@
+import { getLocalStorageValue, setLocalStorageValue } from './storage';
+
 export class FixedLengthQueue<T> {
   private data: T[];
   private maxLength: number;
+  private localStorageKey: string;
 
-  constructor(maxLength: number) {
+  constructor(maxLength: number, localStorageKey: string) {
     this.data = [];
     this.maxLength = maxLength;
+    this.localStorageKey = localStorageKey;
+
+    // restore data from chrome.storage.local
+    this.restoreFromStorage();
+  }
+
+  async restoreFromStorage() {
+    try {
+      const storageData = await getLocalStorageValue<T[]>(this.localStorageKey);
+      if (storageData !== undefined) {
+        this.data = storageData;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  updateToStorage() {
+    setLocalStorageValue(this.localStorageKey, this.data);
   }
 
   enqueue(item: T): void {
@@ -12,10 +34,13 @@ export class FixedLengthQueue<T> {
       this.data.shift();
     }
     this.data.push(item);
+    this.updateToStorage();
   }
 
   dequeue(): T | undefined {
-    return this.data.shift();
+    const output = this.data.shift();
+    this.updateToStorage();
+    return output;
   }
 
   peek(): T | undefined {
@@ -28,6 +53,7 @@ export class FixedLengthQueue<T> {
 
   clear() {
     this.data = [];
+    this.updateToStorage();
   }
 
   get length(): number {
