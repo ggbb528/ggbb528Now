@@ -14,18 +14,20 @@ export default function ChangeLogItem({ version, date, catalogs }: ChangeLog) {
             {moment(date).format('MMMM DD, YYYY')}
           </time>
         </div>
-        {catalogs.map((catalog, i) => (
-          <div key={i} className="col-span-2">
-            <h4 className="font-medium leading-tight text-2xl mt-0 mb-2 text-black">
-              {catalog.title}
-            </h4>
-            <ul className="text-lg list-disc">
-              {catalog.items.map((item, j) => (
-                <li key={j}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div className="col-span-2 flex flex-col gap-4">
+          {catalogs.map((catalog, i) => (
+            <div key={i}>
+              <h4 className="font-medium leading-tight text-2xl mt-0 mb-2 text-black">
+                {catalog.title}
+              </h4>
+              <ul className="text-lg list-disc">
+                {catalog.items.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </article>
   );

@@ -3,6 +3,23 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.3',
+    date: moment('2023-01-23').toDate(),
+    catalogs: [
+      {
+        title: '# Feat',
+        items: [
+          '新增聊天室訊息, 紀錄最近的50筆留言',
+          '新增 Discord 連結',
+        ],
+      },
+      {
+        title: '# BugFix',
+        items: ['開台通知預設失效問題'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.2',
     date: moment('2023-01-20').toDate(),
     catalogs: [
