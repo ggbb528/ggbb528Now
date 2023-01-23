@@ -19,4 +19,9 @@ export const OptionKeys: {
     text: '開台通知',
     defaultValue: true,
   },
+  OPTION_KEY_CHAT_MESSAGE: {
+    name: 'OPTION_KEY_CHAT_MESSAGE',
+    text: '顯示聊天室訊息',
+    defaultValue: true,
+  },
 };

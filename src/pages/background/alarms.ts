@@ -1,6 +1,7 @@
 import { Constants } from '@src/configs/constants';
 import { OptionKeys } from '@src/configs/optionKeys';
 import { sendLiveNotification } from './utils/notifications';
+import { getOptionValue } from './utils/options';
 import { checkStreams } from './utils/streams';
 import syncVod from './utils/vods';
 
@@ -41,20 +42,19 @@ export default function alarms() {
     checkStreams();
   });
 
-  chrome.storage.onChanged.addListener(function (changes, areaName) {
+  chrome.storage.onChanged.addListener(async function (changes, areaName) {
     if (changes.ggbb528Open && changes.ggbb528Open.newValue == true) {
-      chrome.storage.sync.get(
-        [OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name],
-        (result) => {
-          if (result[OptionKeys.OPTION_KEY_LIVE_NOTIFICATION.name] !== false) {
-            sendLiveNotification(
-              'ggbb528',
-              'ggbb528 開台囉!!!',
-              '趕快前往實況台~~~'
-            );
-          }
-        }
+      const optionValue = await getOptionValue(
+        OptionKeys.OPTION_KEY_LIVE_NOTIFICATION
       );
+
+      if (optionValue !== false) {
+        sendLiveNotification(
+          'ggbb528',
+          'ggbb528 開台囉!!!',
+          '趕快前往實況台~~~'
+        );
+      }
     }
   });
 
@@ -71,14 +71,13 @@ export default function alarms() {
   });
 
   // on installed
-  chrome.runtime.onInstalled.addListener(function () {
-    chrome.storage.sync.get(
-      [OptionKeys.OPTION_KEY_UPGRADE_NOTIFICATION.name],
-      (result) => {
-        if (result[OptionKeys.OPTION_KEY_UPGRADE_NOTIFICATION.name] !== false) {
-          chrome.tabs.create({ url: 'src/pages/updates/index.html' });
-        }
-      }
+  chrome.runtime.onInstalled.addListener(async function () {
+    const optionValue = await getOptionValue(
+      OptionKeys.OPTION_KEY_UPGRADE_NOTIFICATION
     );
+
+    if (optionValue !== false) {
+      chrome.tabs.create({ url: 'src/pages/updates/index.html' });
+    }
   });
 }

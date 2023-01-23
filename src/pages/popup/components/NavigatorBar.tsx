@@ -1,7 +1,9 @@
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener';
 import { openURL } from '../utils/utility';
+import { OptionKeys } from '@src/configs/optionKeys';
 
 interface TabItemProps {
   target: string;
@@ -55,6 +57,10 @@ export default function NavigatorBar() {
     openURL('src/pages/options/index.html');
   };
 
+  const [enableChat] = useChromeSyncStorageListener(
+    OptionKeys.OPTION_KEY_CHAT_MESSAGE.name
+  );
+
   return (
     <div className="flex flex-row justify-start items-center">
       <div className="mr-auto">
@@ -64,6 +70,7 @@ export default function NavigatorBar() {
           </TabItem>
           {/* <TabItem target="statistics">LOL 數據 </TabItem> */}
           <TabItem target="vod">VOD</TabItem>
+          {enableChat !== false && <TabItem target="chat">聊天室訊息</TabItem>}
         </Tab>
       </div>
       <div className="p-2 flex justify-center items-center gap-1">
