@@ -70,7 +70,7 @@ export default function NavigatorBar() {
           </TabItem>
           {/* <TabItem target="statistics">LOL 數據 </TabItem> */}
           <TabItem target="vod">VOD</TabItem>
-          {enableChat !== false && <TabItem target="chat">聊天室訊息</TabItem>}
+          {enableChat !== false && <TabItem target="chat">聊天室</TabItem>}
         </Tab>
       </div>
       <div className="p-2 flex justify-center items-center gap-1">
