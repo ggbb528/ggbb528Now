@@ -42,7 +42,7 @@ export default async function chat() {
 
     client.on('message', (channel, tags, message, self) => {
       // "Alca: Hello, World!"
-      console.log(`${tags['display-name']}: ${message}`);
+      // console.log(`${tags['display-name']}: ${message}`);
 
       putMessage({
         id: crypto.randomUUID(),

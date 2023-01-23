@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
 
 function MessageItem({ color, displayName, message, emotes }: ChatMessage) {
-  console.log('emotes', emotes);
   return (
     <div className="p-1 text-left">
       <span className="font-bold mr-1" style={{ color }}>
