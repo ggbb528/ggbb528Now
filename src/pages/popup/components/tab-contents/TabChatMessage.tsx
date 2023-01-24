@@ -75,13 +75,13 @@ function MessageItem({
 }: ChatMessage) {
   const sendDate = new Date(parseInt(sendtime));
   return (
-    <div className="p-1 text-left flex flex-row justify-start">
+    <div className="p-1 text-left">
       <span className="pr-1">{moment(sendDate).format('HH:mm')}</span>
       <span className="font-bold whitespace-nowrap" style={{ color }}>
         {displayName}
       </span>
       <span>:</span>
-      <div className="break-all">{parseMessage(message, emotes)}</div>
+      <div className="break-all inline">{parseMessage(message, emotes)}</div>
     </div>
   );
 }
