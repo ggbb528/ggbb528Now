@@ -73,17 +73,8 @@ async function getTwitchChat() {
 }
 
 export default function chat() {
-  try {
-    chrome.alarms.create('STORE_CHAT_MESSAGE', {
-      when: Date.now() + 1000,
-      periodInMinutes: 60,
-    });
-
-    chrome.alarms.onAlarm.addListener(function (alarm) {
-      if (alarm.name === 'STORE_CHAT_MESSAGE') {
-        getTwitchChat();
-      }
-    });
+  try { 
+    getTwitchChat();
   } catch (e) {
     console.log(e);
   }

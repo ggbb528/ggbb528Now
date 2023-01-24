@@ -11,10 +11,15 @@ export interface ManifestType {
   icons?: chrome.runtime.ManifestIcons | undefined;
   action?: chrome.runtime.ManifestAction | undefined;
   author?: string | undefined;
+  browser_action?: chrome.runtime.ManifestAction | undefined;
+  page_action?: chrome.runtime.ManifestAction | undefined;
   background?:
     | {
-        service_worker: string;
+        scripts?: string[];
+        service_worker?: string;
         type?: 'module';
+        persistent? : boolean;
+        page?: string;
       }
     | undefined;
   chrome_settings_overrides?:
@@ -237,7 +242,7 @@ export interface ManifestType {
   update_url?: string | undefined;
   version_name?: string | undefined;
   web_accessible_resources?:
-    | (WebAccessibleResourceById | WebAccessibleResourceByMatch)[]
+    | (WebAccessibleResourceById | WebAccessibleResourceByMatch | string)[]    
     | undefined;
 }
 

@@ -2,22 +2,25 @@ import pkg from '../package.json';
 import { ManifestType } from '@src/manifest-type';
 
 const manifest: ManifestType = {
-  manifest_version: 3,
+  manifest_version: 2,
   name: pkg.displayName,
   version: pkg.version,
   description: pkg.description,
   options_page: 'src/pages/options/index.html',
-  permissions: ['alarms', 'storage', 'notifications'],
-  host_permissions: [
+  permissions: [
+    'alarms',
+    'storage',
+    'notifications',
     '*://*.twitch.tv/*',
     '*://static-cdn.jtvnw.net/*',
     '*://*.op.gg/',
   ],
   background: {
-    service_worker: 'src/pages/background/index.js',
-    type: 'module',
+    page: 'src/pages/background/index.html',
+    persistent: true,
   },
-  action: {
+  browser_action: {
+    default_title: '勝敗難免開台通知',
     default_popup: 'src/pages/popup/index.html',
     default_icon: 'icons/icon_32.png',
   },
@@ -37,16 +40,11 @@ const manifest: ManifestType = {
     },
   ],
   web_accessible_resources: [
-    {
-      resources: [
-        'contentStyle.css',
-        'icons/icon_16.png',
-        'icons/icon_32.png',
-        'icons/icon_48.png',
-        'icons/icon_128.png',
-      ],
-      matches: [],
-    },
+    'contentStyle.css',
+    'icons/icon_16.png',
+    'icons/icon_32.png',
+    'icons/icon_48.png',
+    'icons/icon_128.png',
   ],
 };
 

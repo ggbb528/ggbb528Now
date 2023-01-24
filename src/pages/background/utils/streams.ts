@@ -48,10 +48,10 @@ export function checkStreams() {
         })
         .then((response) => {
           if (response.data && response.data.length > 0) {
-            chrome.action.setIcon({ path: Icons.online });
+            chrome.browserAction.setIcon({ path: Icons.online });
             chrome.storage.local.set({ ggbb528Open: true });
           } else {
-            chrome.action.setIcon({ path: Icons.offline });
+            chrome.browserAction.setIcon({ path: Icons.offline });
             chrome.storage.local.set({ ggbb528Open: false });
           }
         });

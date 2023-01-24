@@ -28,7 +28,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         content: resolve(pagesDir, 'content', 'index.ts'),
-        background: resolve(pagesDir, 'background', 'index.ts'),
+        background: resolve(pagesDir, 'background', 'index.html'),
         popup: resolve(pagesDir, 'popup', 'index.html'),
         options: resolve(pagesDir, 'options', 'index.html'),
         updates: resolve(pagesDir, 'updates', 'index.html'),
