@@ -8,7 +8,11 @@ const manifest: ManifestType = {
   description: pkg.description,
   options_page: 'src/pages/options/index.html',
   permissions: ['alarms', 'storage', 'notifications'],
-  host_permissions: ['*://*.twitch.tv/*', '*://*.op.gg/'],
+  host_permissions: [
+    '*://*.twitch.tv/*',
+    '*://static-cdn.jtvnw.net/*',
+    '*://*.op.gg/',
+  ],
   background: {
     service_worker: 'src/pages/background/index.js',
     type: 'module',
