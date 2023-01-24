@@ -25,7 +25,8 @@ function TabPane(props: TabPaneProps) {
 
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
-          if (mutation.target.className.includes('show')) {
+          const { classList } = mutation.target as Element;
+          if (classList.contains('show')) {
             scrollToBottom();
           }
         }
@@ -44,7 +45,9 @@ function TabPane(props: TabPaneProps) {
   return (
     <div
       ref={divRef}
-      className={`tab-pane fade ${props.active ? 'show active' : ''} ${props.className || ''}`}
+      className={`tab-pane fade ${props.active ? 'show active' : ''} ${
+        props.className || ''
+      }`}
       id={`${props.target}`}
       role="tabpanel"
       aria-labelledby={`${props.target}-tab`}
@@ -67,7 +70,11 @@ export default function Content({ className = '' }: { className?: string }) {
       <TabPane target="vod">
         <TabVod />
       </TabPane>
-      <TabPane target="chat" startFromButtom={true} className="bg-gray-50 min-h-full p-1">
+      <TabPane
+        target="chat"
+        startFromButtom={true}
+        className="bg-gray-50 min-h-full p-1"
+      >
         <TabChatMessage />
       </TabPane>
     </div>
