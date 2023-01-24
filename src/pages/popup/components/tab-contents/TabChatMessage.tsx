@@ -81,7 +81,7 @@ function MessageItem({
         {displayName}
       </span>
       <span>:</span>
-      <div>{parseMessage(message, emotes)}</div>
+      <div className="break-all">{parseMessage(message, emotes)}</div>
     </div>
   );
 }
