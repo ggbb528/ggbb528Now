@@ -10,3 +10,8 @@ const head =
   document.getElementsByTagName('head')[0] ||
   document.documentElement;
 head.insertBefore(script, head.lastChild);
+
+// import tailwindCSS
+const link = document.createElement('script');
+link.setAttribute('src', 'https://cdn.tailwindcss.com');
+head.insertBefore(link, head.lastChild);
