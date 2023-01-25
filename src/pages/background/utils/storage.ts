@@ -1,4 +1,4 @@
-export function getSyncStorageValue(key: string) {
+export function getSyncStorageValue<T>(key: string): Promise<T> {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([key], (result) => {
       if (chrome.runtime.lastError) {
@@ -10,7 +10,7 @@ export function getSyncStorageValue(key: string) {
   });
 }
 
-export function setSyncStorageValue(key: string, value: unknown) {
+export function setSyncStorageValue<T>(key: string, value: T) {
   chrome.storage.sync.set({ [key]: value });
 }
 

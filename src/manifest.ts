@@ -39,11 +39,10 @@ const manifest: ManifestType = {
     },
   ],
   web_accessible_resources: [
+    'src/pages/content/content.js',
+    'assets/*.js',
     'contentStyle.css',
-    'icons/icon_16.png',
-    'icons/icon_32.png',
-    'icons/icon_48.png',
-    'icons/icon_128.png',
+    'icons/*.png',
   ],
 };
 

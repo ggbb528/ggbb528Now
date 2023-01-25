@@ -1,4 +1,4 @@
-import { Constants } from '@src/configs/constants';
+import { Constants } from '@configs/constants';
 import React, { useState } from 'react';
 import { Account } from '../../models/account-type';
 import Pill from '../Pill';

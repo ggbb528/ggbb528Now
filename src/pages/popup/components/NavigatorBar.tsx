@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener';
 import { openURL } from '../utils/utility';
-import { OptionKeys } from '@src/configs/optionKeys';
+import { OptionKeys } from '@configs/optionKeys';
 
 interface TabItemProps {
   target: string;

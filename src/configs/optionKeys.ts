@@ -24,4 +24,14 @@ export const OptionKeys: {
     text: '顯示聊天室訊息',
     defaultValue: true,
   },
+  OPTION_KEY_AUTO_CLAIM: {
+    name: 'OPTION_KEY_AUTO_CLAIM',
+    text: '自動取得我的CS吃兵數(忠誠點數)',
+    defaultValue: true,
+  },
+  OPTION_KEY_GGBB528_MOTTO: {
+    name: 'OPTION_KEY_GGBB528_MOTTO',
+    text: '勝敗經典語錄',
+    defaultValue: true,
+  },
 };

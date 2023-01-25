@@ -8,7 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 const root = resolve(__dirname, 'src');
 const pagesDir = resolve(root, 'pages');
 const assetsDir = resolve(root, 'assets');
-const configsDir = resolve(__dirname, 'configs');
+const configsDir = resolve(root, 'configs');
 const outDir = resolve(__dirname, 'dist');
 const publicDir = resolve(__dirname, 'public');
 
@@ -38,13 +38,17 @@ export default defineConfig({
     rollupOptions: {
       input: {
         content: resolve(pagesDir, 'content', 'index.ts'),
+        contentJS: resolve(pagesDir, 'content', 'content.ts'),
         background: resolve(pagesDir, 'background', 'index.html'),
         popup: resolve(pagesDir, 'popup', 'index.html'),
         options: resolve(pagesDir, 'options', 'index.html'),
         updates: resolve(pagesDir, 'updates', 'index.html'),
       },
       output: {
-        entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
+        entryFileNames: (chunk) =>
+          chunk.name !== 'contentJS'
+            ? `src/pages/${chunk.name}/index.js`
+            : 'src/pages/content/content.js',
       },
     },
   },

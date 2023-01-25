@@ -9,7 +9,7 @@ import React from 'react';
 import opggLogo from '@assets/img/opgglogo.svg';
 import { openURL } from '../utils/utility';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { Constants } from '@src/configs/constants';
+import { Constants } from '@configs/constants';
 
 // Button
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

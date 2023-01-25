@@ -1,4 +1,4 @@
-import { Constants } from '@src/configs/constants';
+import { Constants } from '@configs/constants';
 import tmi from 'tmi.js';
 import { OptionKeys } from './../../configs/optionKeys';
 import { getOptionValue } from './utils/options';
@@ -73,7 +73,7 @@ async function getTwitchChat() {
 }
 
 export default function chat() {
-  try { 
+  try {
     getTwitchChat();
   } catch (e) {
     console.log(e);
