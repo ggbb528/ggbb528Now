@@ -12,7 +12,6 @@ const manifest: ManifestType = {
     'storage',
     'notifications',
     '*://*.twitch.tv/*',
-    '*://static-cdn.jtvnw.net/*',
     '*://*.op.gg/',
   ],
   background: {

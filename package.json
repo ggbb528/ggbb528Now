@@ -1,7 +1,7 @@
 {
   "name": "ggbb528now",
   "displayName": "Ggbb528now",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "勝敗難免開台通知",
   "license": "MIT",
   "repository": {
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "nodemon",
-    "release": "bestzip ggbb528now.zip dist/*"
+    "release": "bestzip ggbb528now.zip dist/*",
+    "report": "npm run build && vite --open stats.html"
   },
   "type": "module",
   "dependencies": {
@@ -35,6 +36,7 @@
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.10",
+    "@types/rollup-plugin-visualizer": "^4.2.1",
     "@types/tmi.js": "^1.8.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
@@ -50,6 +52,7 @@
     "fs-extra": "^11.1.0",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.12",
+    "rollup-plugin-visualizer": "^5.9.0",
     "tailwindcss": "^3.0.24",
     "ts-node": "^10.9.1",
     "tw-elements": "^1.0.0-alpha13",

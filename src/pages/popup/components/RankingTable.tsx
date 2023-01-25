@@ -10,7 +10,7 @@ import Pill from './Pill';
 import { Account } from '../models/account-type';
 import useOPGGProfile from '../hooks/useOPGGProfile';
 import { LeagueStat } from '../models/profile-type';
-import { times } from 'lodash';
+import times from 'lodash/times';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -39,7 +39,7 @@ enum GameType {
   WIN = 'WIN',
   LOSE = 'LOSE',
   REMAKE = 'REMAKE',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }
 
 function ResultBadge({ gameType }: { gameType: GameType }) {
@@ -60,8 +60,13 @@ const getKDA = (k: number, d: number, a: number) => {
   return <span>KDA: {Math.round(((k + a) / d) * 100) / 100}</span>;
 };
 
-
-function getGameResult({ is_remake, myData }: { is_remake: boolean; myData: MyData }) {
+function getGameResult({
+  is_remake,
+  myData,
+}: {
+  is_remake: boolean;
+  myData: MyData;
+}) {
   if (is_remake) return GameType.REMAKE;
 
   const { result } = myData.stats;
@@ -74,7 +79,12 @@ function getGameResult({ is_remake, myData }: { is_remake: boolean; myData: MyDa
 interface RecordRowProps extends Datum {
   borderB?: boolean;
 }
-function RecordRow({ borderB = true, myData, created_at, is_remake }: RecordRowProps) {
+function RecordRow({
+  borderB = true,
+  myData,
+  created_at,
+  is_remake,
+}: RecordRowProps) {
   const champions = useOPGGChampions();
   const champion = champions.data?.find((x) => x.id === myData.champion_id);
 

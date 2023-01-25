@@ -31,32 +31,26 @@ function parseMessage(
 
   Object.entries(emotes).forEach(([id, positions]) => {
     for (const position of positions) {
-      const [start, end] = position.split('-');
+      const [start, end] = position.split('-').map((num) => parseInt(num, 10));
+
       replacements.push({
         emote: <ChatEmote emoteId={id} />,
-        start: parseInt(start, 10),
-        end: parseInt(end, 10),
+        start,
+        end,
       });
     }
   });
 
-  replacements.sort((r1, r2) => (r1.start < r2.start ? -1 : 1));
+  replacements.sort((a, b) => a.start - b.start);
 
-  const messageNodes: JSX.Element[] = [];
   let lastIndex = 0;
-  for (let i = 0; i < message.length; i++) {
-    const replacement = replacements[0];
-    if (replacement) {
-      if (i === replacement.start) {
-        if (lastIndex !== i) {
-          messageNodes.push(<Message message={message.slice(lastIndex, i)} />);
-        }
-        i = replacement.end + 1;
-        lastIndex = i;
-        messageNodes.push(replacement.emote);
-        replacements.shift();
-      }
-    }
+  const messageNodes = [];
+
+  for (let i = 0; i < replacements.length; i++) {
+    const { start, end, emote } = replacements[i];
+    messageNodes.push(<Message message={message.slice(lastIndex, start)} />);
+    messageNodes.push(emote);
+    lastIndex = end + 1;
   }
 
   if (lastIndex !== message.length) {

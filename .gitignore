@@ -394,3 +394,6 @@ public/contentStyle.css
 
 #release file
 ggbb528now.zip
+
+# rollup-plugin-visualizer 
+stats.html

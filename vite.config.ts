@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite';
+import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import makeManifest from './utils/plugins/make-manifest';
 import copyContentStyle from './utils/plugins/copy-content-style';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const root = resolve(__dirname, 'src');
 const pagesDir = resolve(root, 'pages');
@@ -20,7 +21,16 @@ export default defineConfig({
       '@configs': configsDir,
     },
   },
-  plugins: [react(), makeManifest(), copyContentStyle()],
+  plugins: [
+    react(),
+    makeManifest(),
+    copyContentStyle(),
+    visualizer({
+      gzipSize: true,
+      brotliSize: true,
+      template: 'treemap',
+    }) as PluginOption,
+  ],
   publicDir,
   build: {
     outDir,
