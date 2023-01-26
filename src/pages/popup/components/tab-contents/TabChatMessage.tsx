@@ -49,7 +49,7 @@ function parseMessage(
   }
 ) {
   const replacements: {
-    emote: JSX.Element;
+    element: JSX.Element;
     start: number;
     end: number;
   }[] = [];
@@ -59,7 +59,7 @@ function parseMessage(
   for (const link of links) {
     const { url, start, end } = link;
     replacements.push({
-      emote: <URLLink href={url} />,
+      element: <URLLink href={url} />,
       start,
       end,
     });
@@ -73,7 +73,7 @@ function parseMessage(
           .map((num) => parseInt(num, 10));
 
         replacements.push({
-          emote: <ChatEmote emoteId={id} />,
+          element: <ChatEmote emoteId={id} />,
           start,
           end,
         });
@@ -86,9 +86,9 @@ function parseMessage(
   let lastIndex = 0;
   const messageNodes = [];
   for (let i = 0; i < replacements.length; i++) {
-    const { start, end, emote } = replacements[i];
+    const { start, end, element } = replacements[i];
     messageNodes.push(<Message message={message.slice(lastIndex, start)} />);
-    messageNodes.push(emote);
+    messageNodes.push(element);
     lastIndex = end + 1;
   }
 
