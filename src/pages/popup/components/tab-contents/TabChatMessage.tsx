@@ -2,6 +2,7 @@ import { ChatMessage } from '@src/pages/background/chat';
 import moment from 'moment';
 import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
+import { openURL } from '../../utils/utility';
 
 function ChatEmote({ emoteId }: { emoteId: string }) {
   const CDN_URL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/light/2.0`;
@@ -15,37 +16,75 @@ function Message({ message }: { message: string }) {
   return <span>{message}</span>;
 }
 
+function URLLink({ href }: { href: string }) {
+  const handleOnClick = () => {
+    openURL(href);
+  };
+  return (
+    <a
+      className="text-purple-700 hover:underline"
+      href={href}
+      onClick={handleOnClick}
+    >
+      {href}
+    </a>
+  );
+}
+
+function findURLPosition(message: string) {
+  const httpRegex =
+    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/g;
+  const founds = [...message.matchAll(httpRegex)].map((match) => ({
+    url: match[0],
+    start: match.index || 0,
+    end: match[0].length + (match.index || 0),
+  }));
+  return founds;
+}
+
 function parseMessage(
   message: string,
   emotes?: {
     [emoteid: string]: string[];
   }
 ) {
-  if (!emotes) return <Message message={message} />;
-
   const replacements: {
     emote: JSX.Element;
     start: number;
     end: number;
   }[] = [];
 
-  Object.entries(emotes).forEach(([id, positions]) => {
-    for (const position of positions) {
-      const [start, end] = position.split('-').map((num) => parseInt(num, 10));
+  // check url link
+  const links = findURLPosition(message);
+  for (const link of links) {
+    const { url, start, end } = link;
+    replacements.push({
+      emote: <URLLink href={url} />,
+      start,
+      end,
+    });
+  }
 
-      replacements.push({
-        emote: <ChatEmote emoteId={id} />,
-        start,
-        end,
-      });
-    }
-  });
+  if (emotes) {
+    Object.entries(emotes).forEach(([id, positions]) => {
+      for (const position of positions) {
+        const [start, end] = position
+          .split('-')
+          .map((num) => parseInt(num, 10));
+
+        replacements.push({
+          emote: <ChatEmote emoteId={id} />,
+          start,
+          end,
+        });
+      }
+    });
+  }
 
   replacements.sort((a, b) => a.start - b.start);
 
   let lastIndex = 0;
   const messageNodes = [];
-
   for (let i = 0; i < replacements.length; i++) {
     const { start, end, emote } = replacements[i];
     messageNodes.push(<Message message={message.slice(lastIndex, start)} />);
