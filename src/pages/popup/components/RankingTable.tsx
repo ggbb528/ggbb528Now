@@ -1,7 +1,7 @@
 import moment from 'moment';
 import useOPGGChampions from '../hooks/useOPGGChampions';
 import useOPGGSummoners from '../hooks/useOPGGSummoners';
-import { Datum, MyData } from '../models/summoner-type';
+import { Datum, MyData, GameType as RankType } from '../models/summoner-type';
 import Skeleton from './Skeleton';
 import 'moment/dist/locale/zh-tw';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,7 @@ import { Account } from '../models/account-type';
 import useOPGGProfile from '../hooks/useOPGGProfile';
 import { LeagueStat } from '../models/profile-type';
 import times from 'lodash/times';
+import { useState } from 'react';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -84,6 +85,7 @@ function RecordRow({
   myData,
   created_at,
   is_remake,
+  queue_info,
 }: RecordRowProps) {
   const champions = useOPGGChampions();
   const champion = champions.data?.find((x) => x.id === myData.champion_id);
@@ -101,7 +103,14 @@ function RecordRow({
       <td className="p-1 text-xs whitespace-nowrap">
         {moment(created_at).fromNow()}
       </td>
-      <td className="p-1 text-xs whitespace-nowrap">{champion?.name}</td>
+      <td className="p-1 text-xs whitespace-nowrap">
+        <div className="relative inline-flex items-center">
+          {champion?.name}
+          {queue_info.game_type === RankType.FlexRanked && (
+            <div className="absolute inline-flex items-center justify-center w-1 h-1 text-xs bg-red-500 rounded-full -top-0 -right-1 dark:border-gray-900"></div>
+          )}
+        </div>
+      </td>
       <td className="p-1 text-xs whitespace-nowrap">
         {myData.stats.kill} / {myData.stats.death} / {myData.stats.assist}
       </td>
@@ -123,11 +132,16 @@ function LoadingRows() {
   );
 }
 
-function TableBody({ server, summonerId }: Account) {
+function TableBody({
+  server,
+  summonerId,
+  gameType,
+}: Account & { gameType: RankType }) {
   const { isLoading, isError, data } = useOPGGSummoners({
     server,
     summonerId,
     limit: 10,
+    gameType,
   });
 
   if (isLoading || isError) return <LoadingRows />;
@@ -194,7 +208,49 @@ function LoseCount({ isLoading, leagueStat }: StatProps) {
   return <span>{leagueStat.lose}</span>;
 }
 
+function Select({
+  rankType,
+  setRankType,
+}: {
+  rankType: RankType;
+  setRankType: React.Dispatch<React.SetStateAction<RankType>>;
+}) {
+  const options = [
+    {
+      label: '全部',
+      value: RankType.Total,
+    },
+    {
+      label: '單排積分',
+      value: RankType.SoloRanked,
+    },
+  ];
+
+  return (
+    <div className="flex justify-center items-center">
+      <div className="w-full">
+        <select
+          className="form-select form-select-sm appearance-none block w-full px-2 py-1 text-sm font-normal
+    text-gray-700bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
+    rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+          aria-label=".form-select-sm"
+          onChange={(option) => setRankType(option.target.value as RankType)}
+          value={rankType}
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+}
+
 export default function RankingTable(account: Account) {
+  const [rankType, setRankType] = useState<RankType>(RankType.Total);
+
   const profile = useOPGGProfile({
     server: account.server,
     summonerId: account.summonerId,
@@ -260,14 +316,21 @@ export default function RankingTable(account: Account) {
               <th
                 scope="col"
                 colSpan={5}
-                className="text-black text-xl py-1 border-b border-black"
+                className="text-black  py-1 border-b border-black"
               >
-                近10場積分記錄
+                <div className=" flex justify-start items-center">
+                  <div className="mx-2 w-1/3">
+                    <Select rankType={rankType} setRankType={setRankType} />
+                  </div>
+                  <div className="flex-1 text-xl text-center">
+                    近10場遊戲記錄
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
           <tbody>
-            <TableBody {...account} />
+            <TableBody {...account} gameType={rankType} />
           </tbody>
         </table>
       </div>

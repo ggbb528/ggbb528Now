@@ -135,7 +135,9 @@ export interface QueueInfo {
 }
 
 export enum GameType {
-  Soloranked = 'SOLORANKED',
+  SoloRanked = 'SOLORANKED',
+  FlexRanked = 'FLEXRANKED',
+  Total = 'TOTAL',
 }
 
 export enum QueueTranslate {
