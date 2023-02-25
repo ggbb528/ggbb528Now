@@ -87,6 +87,13 @@ function Dropdown(props: DropdownProps) {
 }
 
 export default function ButtonsGroup() {
+  const ServerName: {
+    [key: string]: string;
+  } = {
+    kr: '韓服',
+    tw: '台服',
+  };
+
   return (
     <div className="container flex items-center justify-center">
       <div className="container flex flex-row" role="group">
@@ -105,12 +112,11 @@ export default function ButtonsGroup() {
           <FontAwesomeIcon icon={faCaretDown} className="p-1" />
         </Button>
         <Dropdown ariaLabelledby="dropdownMenuButton">
-          <DropdownItem href={Constants.OPGG_KR_URL}>
-            韓服 - {Constants.LOL_KR_ACCOUNT_ID}
-          </DropdownItem>
-          <DropdownItem href={Constants.OPGG_TW_URL}>
-            台服 - {Constants.LOL_TW_ACCOUNT_ID}
-          </DropdownItem>
+          {Constants.OPGG_ACCOUNTS.map((account) => (
+            <DropdownItem key={account.summoner_id} href={account.url}>
+              {ServerName[account.server]} - {account.account_id}
+            </DropdownItem>
+          ))}
         </Dropdown>
         <Button
           className="border-t border-b border-r"

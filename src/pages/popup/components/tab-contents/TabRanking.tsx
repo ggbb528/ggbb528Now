@@ -1,79 +1,84 @@
 import { Constants } from '@src/configs/constants';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import useOPGGSpectates from '../../hooks/useOPGGSpectates';
 import { Account } from '../../models/account-type';
 import Pill from '../Pill';
 import RankingTable from '../RankingTable';
 
 interface ServerOptionButtonProps {
   className?: string;
-  children?: React.ReactNode;
   active?: boolean;
-  target: string;
-  OnClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  setAccount: React.Dispatch<React.SetStateAction<Account>>;
+  account: {
+    url: string;
+    summoner_id: string;
+    server: string;
+    account_id: string;
+  };
 }
 
 function ServerOptionButton({
   className = '',
-  children,
   active,
-  target,
-  OnClick,
+  account,
+  setAccount,
 }: ServerOptionButtonProps) {
+  const buttonEndRef = useRef<HTMLDivElement>(null);
+  const scrollToBtn = () => {
+    buttonEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const onClickBtn = () => {
+    setAccount({
+      server: account.server as 'kr' | 'tw',
+      summonerId: account.summoner_id,
+    });
+    scrollToBtn();
+  };
   return (
-    <li className="nav-item flex-auto text-center " role="presentation">
+    <li
+      className="nav-item flex-auto text-center cursor-pointer "
+      role="presentation"
+    >
       <a
-        href={`#pills-${target}`}
         className={`nav-link w-full block font-medium text-xs leading-tight uppercase rounded px-6 py-2 focus:outline-none focus:ring-0 
         ${active ? 'active' : ''} ${className}`}
-        id={`pills-${target}-tab`}
-        data-bs-toggle="pill"
-        data-bs-target={`#pills-${target}`}
         role="tab"
-        aria-controls={`pills-${target}`}
         aria-selected="true"
-        onClick={OnClick}
+        onClick={onClickBtn}
       >
-        {children}
+        <div className="flex whitespace-nowrap gap-1 items-center">
+          <Pill bgColor="bg-yellow-500">{account.server.toUpperCase()}</Pill>{' '}
+          {account.account_id}
+          <div ref={buttonEndRef}></div>
+        </div>
       </a>
     </li>
   );
 }
 
 function ServerOptionButtons({
+  account,
   setAccount,
 }: {
+  account: Account;
   setAccount: React.Dispatch<React.SetStateAction<Account>>;
 }) {
   return (
-    <div className="py-1 px-2">
+    <div className="py-1 px-2 overflow-x-auto scrollbar-hide">
       <ul
         className="nav nav-pills flex flex-row list-none gap-2"
         id="pills-tabFill"
         role="tablist"
       >
-        <ServerOptionButton
-          target="kr"
-          active
-          OnClick={() =>
-            setAccount({
-              server: 'kr',
-              summonerId: Constants.OPGG_KR_SUMMONER_ID,
-            })
-          }
-        >
-          <Pill bgColor="bg-yellow-500">KR</Pill> {Constants.LOL_KR_ACCOUNT_ID}
-        </ServerOptionButton>
-        <ServerOptionButton
-          target="tw"
-          OnClick={() =>
-            setAccount({
-              server: 'tw',
-              summonerId: Constants.OPGG_TW_SUMMONER_ID,
-            })
-          }
-        >
-          <Pill bgColor="bg-yellow-500">TW</Pill> {Constants.LOL_TW_ACCOUNT_ID}
-        </ServerOptionButton>
+        {Constants.OPGG_ACCOUNTS.map((accountInfo) => (
+          <ServerOptionButton
+            key={accountInfo.summoner_id}
+            active={account.summonerId === accountInfo.summoner_id}
+            account={accountInfo}
+            setAccount={setAccount}
+          ></ServerOptionButton>
+        ))}
       </ul>
     </div>
   );
@@ -107,12 +112,19 @@ function ServerTabContents(props: Account) {
 
 export default function TabRanking() {
   const [account, setAccount] = useState<Account>({
-    server: 'kr',
-    summonerId: Constants.OPGG_KR_SUMMONER_ID,
+    server: Constants.OPGG_ACCOUNTS[0].server as 'kr' | 'tw',
+    summonerId: Constants.OPGG_ACCOUNTS[0].summoner_id,
   });
+
+  const { data, error } = useOPGGSpectates({
+    server: Constants.OPGG_ACCOUNTS[0].server as 'kr' | 'tw',
+    summonerId: Constants.OPGG_ACCOUNTS[0].summoner_id,
+  });
+
+  console.log('err', error);
   return (
     <>
-      <ServerOptionButtons setAccount={setAccount} />
+      <ServerOptionButtons setAccount={setAccount} account={account} />
       <ServerTabContents {...account} />
     </>
   );
