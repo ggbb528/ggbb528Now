@@ -27,7 +27,7 @@ function ServerOptionButtons({
     if (nextIndex < 0) nextIndex += maxIndex;
 
     currentBtnRefs.current[nextIndex]?.scrollIntoView({
-      inline: 'start',
+      inline: 'center',
       block: 'nearest',
       behavior: 'smooth',
     });
