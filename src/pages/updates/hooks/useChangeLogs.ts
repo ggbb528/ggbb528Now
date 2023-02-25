@@ -3,12 +3,25 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.6',
+    date: moment('2023-02-25').toDate(),
+    catalogs: [
+      {
+        title: '# Add',
+        items: ['新增台服帳號 - 戀愛大師勝敗難免'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.5',
     date: moment('2023-02-11').toDate(),
     catalogs: [
       {
         title: '# Add',
-        items: ['聊天室網址超連結', 'LOL 牌位顯示包含彈性積分戰績(彈性積分戰績角色名稱右上方紅點標示)'],
+        items: [
+          '聊天室網址超連結',
+          'LOL 牌位顯示包含彈性積分戰績(彈性積分戰績角色名稱右上方紅點標示)',
+        ],
       },
     ],
   },
