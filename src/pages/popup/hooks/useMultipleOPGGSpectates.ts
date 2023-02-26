@@ -23,7 +23,7 @@ function useMultipleOPGGSpectates({
             .replace('{SUMMONER_ID}', summoner.summonerId);
 
       return {
-        queryKey: ['spectates', summoner.server, summoner.summonerId],        
+        queryKey: ['spectates', summoner.server, summoner.summonerId],
         queryFn: () =>
           fetch(
             `${API_URL}?${new URLSearchParams({
@@ -36,8 +36,10 @@ function useMultipleOPGGSpectates({
               }
               return response.json();
             })
-            .then((response) => ({...response.data, account: summoner} as Data))
-            .catch(error => {
+            .then(
+              (response) => ({ ...response.data, account: summoner } as Data)
+            )
+            .catch((error) => {
               console.log(error);
             }),
         staleTime: 60000,

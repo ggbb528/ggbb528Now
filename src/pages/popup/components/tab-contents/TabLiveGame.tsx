@@ -25,9 +25,11 @@ function CurrentGameTime({ createTime }: { createTime: Date }) {
     };
   }, []);
 
-  const gameTime = moment.utc(moment(time).diff(moment(createTime))).format('mm:ss');
+  const gameTime = moment
+    .utc(moment(time).diff(moment(createTime)))
+    .format('mm:ss');
 
-  return <span>遊戲時間: {gameTime}</span>
+  return <span>遊戲時間: {gameTime}</span>;
 }
 
 function getWinLosePercentage(win?: number, lose?: number) {
@@ -100,7 +102,10 @@ function TeamTable({
               player.summoner.summoner_id === account.summonerId;
 
             return (
-              <tr key={player.champion_id} className={`${isGGBB528 ? `${textColor} font-bold` : ''}`}>
+              <tr
+                key={player.champion_id}
+                className={`${isGGBB528 ? `${textColor} font-bold` : ''}`}
+              >
                 <td className="p-1 w-1/6">
                   {positionMap[player.position.toUpperCase()].name}
                 </td>
@@ -149,7 +154,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         account={account}
         champions={gameData.championsById}
         players={bluePlayers}
-        team='BLUE'
+        team="BLUE"
       />
       <div className="p-2 text-red-600 bg-red-50 font-bold flex gap-1 justify-between rounded my-1">
         <span>紅隊</span>
@@ -159,7 +164,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         account={account}
         champions={gameData.championsById}
         players={redPlayers}
-        team='RED'
+        team="RED"
       />
     </div>
   );
