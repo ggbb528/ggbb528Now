@@ -4,6 +4,9 @@ import React from 'react';
 import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener';
 import { openURL } from '../utils/utility';
 import { OptionKeys } from '@src/configs/optionKeys';
+import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
+import { Constants } from '@src/configs/constants';
+import Pill from './Pill';
 
 interface TabItemProps {
   target: string;
@@ -61,6 +64,18 @@ export default function NavigatorBar() {
     OptionKeys.OPTION_KEY_CHAT_MESSAGE.name
   );
 
+  const spectates = useMultipleOPGGSpectates({
+    summoners: Constants.OPGG_ACCOUNTS.map((account) => ({
+      server: account.server as 'kr' | 'tw',
+      summonerId: account.summoner_id,
+      accountId: account.account_id,
+    })),
+  });
+
+  const [liveSpectates] = spectates.filter(
+    (spectate) => spectate.status === 'success'
+  );
+
   return (
     <div className="flex flex-row justify-start items-center">
       <div className="mr-auto">
@@ -68,6 +83,17 @@ export default function NavigatorBar() {
           <TabItem target="ranking" active>
             LOL 牌位
           </TabItem>
+          {liveSpectates && (
+            <TabItem target="liveGame">
+              <div className="flex items-center justify-center gap-1">
+                <span>Live! </span>
+                <div className="inline-flex items-center justify-center h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                </div>
+              </div>
+            </TabItem>
+          )}
           {/* <TabItem target="statistics">LOL 數據 </TabItem> */}
           <TabItem target="vod">VOD</TabItem>
           {enableChat !== false && <TabItem target="chat">聊天室</TabItem>}

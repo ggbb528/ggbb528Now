@@ -25,5 +25,11 @@ export const Constants = {
       server: 'tw',
       account_id: '戀愛大師勝敗難免',
     },
+    {
+      url: 'https://www.op.gg/summoners/tw/%E6%84%9B%E9%BA%97%E7%B5%B2%E7%8F%AD%E9%95%B7',
+      summoner_id: 'k48ovJDMDPvINRRZJo4SekGEtrdr0bn-9df3ZYYbm0S9ZXJqyH2T7lFBgw',
+      server: 'tw',
+      account_id: '愛麗絲班長',
+    }
   ],
 };

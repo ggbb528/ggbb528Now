@@ -4,7 +4,14 @@ export interface Spectate {
   data: Data;
 }
 
+export interface Account{
+  server: 'kr' | 'tw';
+  summonerId: string;
+  accountId: string;
+}
+
 export interface Data {
+  account: Account; 
   game_id: string;
   created_at: Date;
   game_map: string;
@@ -150,16 +157,11 @@ export interface QueueInfo {
 }
 
 export interface TierInfo {
-  tier: Tier;
+  tier: string;
   division: number;
   lp?: number;
   tier_image_url: string;
   border_image_url: string;
-}
-
-export enum Tier {
-  Gold = 'GOLD',
-  Silver = 'SILVER',
 }
 
 export enum TeamKeyEnum {

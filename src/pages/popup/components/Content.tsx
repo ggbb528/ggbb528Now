@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import TabChatMessage from './tab-contents/TabChatMessage';
+import TabLiveGame from './tab-contents/TabLiveGame';
 import TabRanking from './tab-contents/TabRanking';
 import TabStatistics from './tab-contents/TabStatistics';
 import TabVod from './tab-contents/TabVod';
@@ -45,9 +46,8 @@ function TabPane(props: TabPaneProps) {
   return (
     <div
       ref={divRef}
-      className={`tab-pane fade ${props.active ? 'show active' : ''} ${
-        props.className || ''
-      }`}
+      className={`tab-pane fade ${props.active ? 'show active' : ''} ${props.className || ''
+        }`}
       id={`${props.target}`}
       role="tabpanel"
       aria-labelledby={`${props.target}-tab`}
@@ -63,6 +63,9 @@ export default function Content({ className = '' }: { className?: string }) {
     <div className={`tab-content  ${className}`} id="tabs-tabContent">
       <TabPane target="ranking" active>
         <TabRanking />
+      </TabPane>
+      <TabPane target="liveGame">
+        <TabLiveGame />
       </TabPane>
       <TabPane target="statistics">
         <TabStatistics />
