@@ -110,8 +110,8 @@ function TeamTable({
                   {positionMap[player.position.toUpperCase()].name}
                 </td>
                 <td className="p-1 ">{champions[player.champion_id].name}</td>
-                <td className="p-1 w-1/4">{getTier(tierInfo)}</td>
-                <td className="p-1 w-1/5">
+                <td className="p-1 ">{getTier(tierInfo)}</td>
+                <td className="p-1 w-1/6">
                   {getWinLosePercentage(
                     soloRankStatInfo?.win,
                     soloRankStatInfo?.lose
@@ -139,7 +139,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
   return (
     <div className="p-2">
       <div className="px-2 py-1 bg-gray-200 rounded font-bold text-base">
-        {account.accountId} 正在進行遊戲資訊
+        {account.accountId} 正在進行遊戲
       </div>
       <div className="p-2 bg-white border-b flex justify-center items-center gap-2">
         <Pill bgColor="bg-yellow-500">{account.server.toUpperCase()}</Pill>

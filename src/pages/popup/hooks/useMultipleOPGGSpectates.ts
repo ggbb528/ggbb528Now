@@ -45,6 +45,7 @@ function useMultipleOPGGSpectates({
         staleTime: 60000,
         cacheTime: 60000,
         retry: 6,
+        retryDelay: 5000,
       };
     }),
   });
