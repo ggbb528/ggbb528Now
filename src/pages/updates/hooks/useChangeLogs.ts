@@ -3,6 +3,16 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.7',
+    date: moment('2023-02-26').toDate(),
+    catalogs: [
+      {
+        title: '# Add',
+        items: ['新增台服帳號 - 愛麗絲班長', '新增即時遊戲資訊'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.6',
     date: moment('2023-02-25').toDate(),
     catalogs: [
