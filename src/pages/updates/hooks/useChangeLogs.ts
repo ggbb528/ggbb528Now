@@ -3,6 +3,16 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.8',
+    date: moment('2023-02-27').toDate(),
+    catalogs: [
+      {
+        title: '# Fixed',
+        items: ['修正即時遊戲頁面排版與錯誤資訊'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.7',
     date: moment('2023-02-26').toDate(),
     catalogs: [

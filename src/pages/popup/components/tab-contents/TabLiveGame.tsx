@@ -6,11 +6,13 @@ import {
   ChampionsByID,
   Data,
   Participant,
+  QueueInfo,
   TierInfo,
 } from '../../models/spectate-type';
 import 'moment/dist/locale/zh-tw';
 import Pill from '../Pill';
 import { useEffect, useState } from 'react';
+import Tooltip from '../Tooltip';
 moment.locale('zh-tw');
 
 function CurrentGameTime({ createTime }: { createTime: Date }) {
@@ -29,13 +31,21 @@ function CurrentGameTime({ createTime }: { createTime: Date }) {
     .utc(moment(time).diff(moment(createTime)))
     .format('mm:ss');
 
-  return <span>遊戲時間: {gameTime}</span>;
+  return (
+    <span>
+      遊戲時間:
+      <Tooltip message={moment(createTime).format('LLL')} position="bottom">
+        <span>{gameTime}</span>
+      </Tooltip>
+    </span>
+  );
 }
 
 function getWinLosePercentage(win?: number, lose?: number) {
   if (win === undefined || lose === undefined || win === 0 || lose === 0)
     return 'N/A';
-  else return Math.round((win / (win + lose)) * 10000) / 100 + ' %';
+
+  return Math.round((win / (win + lose)) * 10000) / 100 + ' %';
 }
 
 function getTier(tierInfo?: TierInfo) {
@@ -57,11 +67,13 @@ function getTier(tierInfo?: TierInfo) {
 
 function TeamTable({
   account,
+  queueInfo,
   players,
   champions,
   team,
 }: {
   account: Account;
+  queueInfo: QueueInfo;
   players: Participant[];
   champions: { [key: string]: ChampionsByID };
   team: string;
@@ -83,7 +95,7 @@ function TeamTable({
       : 1;
   });
 
-  const bgColor = team === 'BLUE' ? 'bg-blue-100' : 'bg-red-100';
+  const bgColor = team === 'BLUE' ? 'bg-blue-200' : 'bg-red-100';
   const textColor = team === 'BLUE' ? 'text-blue-500' : 'text-red-600';
 
   return (
@@ -92,7 +104,7 @@ function TeamTable({
         <tbody>
           {players.map((player) => {
             const soloRankStatInfo = player.summoner.league_stats.find(
-              (x) => x.queue_info.game_type === 'SOLORANKED'
+              (x) => x.queue_info.game_type === queueInfo.game_type
             );
             let tierInfo;
             if (soloRankStatInfo) {
@@ -111,7 +123,7 @@ function TeamTable({
                 </td>
                 <td className="p-1 ">{champions[player.champion_id].name}</td>
                 <td className="p-1 ">{getTier(tierInfo)}</td>
-                <td className="p-1 w-1/6">
+                <td className="p-1 w-1/5">
                   {getWinLosePercentage(
                     soloRankStatInfo?.win,
                     soloRankStatInfo?.lose
@@ -151,6 +163,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         <span>平均牌位: {getTier(blueTeam.average_tier_info)}</span>
       </div>
       <TeamTable
+        queueInfo={queue_info}
         account={account}
         champions={gameData.championsById}
         players={bluePlayers}
@@ -161,6 +174,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         <span>平均牌位: {getTier(redTeam.average_tier_info)}</span>
       </div>
       <TeamTable
+        queueInfo={queue_info}
         account={account}
         champions={gameData.championsById}
         players={redPlayers}

@@ -12,6 +12,7 @@ import useOPGGProfile from '../hooks/useOPGGProfile';
 import { LeagueStat } from '../models/profile-type';
 import times from 'lodash/times';
 import { useState } from 'react';
+import Tooltip from './Tooltip';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -101,13 +102,22 @@ function RecordRow({
         <ResultBadge gameType={gameType} />
       </td>
       <td className="p-1 text-xs whitespace-nowrap">
-        {moment(created_at).fromNow()}
+        <Tooltip message={moment(created_at).format('LLL')}>
+          {moment(created_at).fromNow()}
+        </Tooltip>
       </td>
       <td className="p-1 text-xs whitespace-nowrap">
         <div className="relative inline-flex items-center">
-          {champion?.name}
           {queue_info.game_type === RankType.FlexRanked && (
-            <div className="absolute inline-flex items-center justify-center w-1 h-1 text-xs bg-red-500 rounded-full -top-0 -right-1 dark:border-gray-900"></div>
+            <Tooltip message="彈性積分">
+              <span>
+                {champion?.name}
+                <div className="absolute inline-flex items-center justify-center w-1 h-1 text-xs bg-red-500 rounded-full -top-0 -right-1 dark:border-gray-900"></div>
+              </span>
+            </Tooltip>
+          )}
+          {queue_info.game_type !== RankType.FlexRanked && (
+            <span>{champion?.name}</span>
           )}
         </div>
       </td>
