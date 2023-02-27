@@ -3,12 +3,15 @@ import moment from 'moment';
 import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
 import { openURL } from '../../utils/utility';
+import Tooltip from '../Tooltip';
 
-function ChatEmote({ emoteId }: { emoteId: string }) {
+function ChatEmote({ emoteId, emoteCode }: { emoteId: string; emoteCode: string }) {
   const CDN_URL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/light/2.0`;
 
   return (
-    <img className="max-w-6 max-h-6 inline-block aspect-auto" src={CDN_URL} />
+    <Tooltip message={emoteCode}>
+      <img className="max-w-6 max-h-6 inline-block aspect-auto" src={CDN_URL} />
+    </Tooltip>
   );
 }
 
@@ -72,8 +75,10 @@ function parseMessage(
           .split('-')
           .map((num) => parseInt(num, 10));
 
+        const emoteCode = message.substring(start, end + 1);
+
         replacements.push({
-          element: <ChatEmote emoteId={id} />,
+          element: <ChatEmote emoteId={id} emoteCode={emoteCode} />,
           start,
           end,
         });
