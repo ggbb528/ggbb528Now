@@ -5,7 +5,13 @@ import useChatMessage from '../../hooks/useChatMessage';
 import { openURL } from '../../utils/utility';
 import Tooltip from '../Tooltip';
 
-function ChatEmote({ emoteId, emoteCode }: { emoteId: string; emoteCode: string }) {
+function ChatEmote({
+  emoteId,
+  emoteCode,
+}: {
+  emoteId: string;
+  emoteCode: string;
+}) {
   const CDN_URL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/light/2.0`;
 
   return (
@@ -115,7 +121,10 @@ function MessageItem({
   return (
     <div className="p-1 text-left">
       <span className="pr-1">{moment(sendDate).format('HH:mm')}</span>
-      <span className="font-bold whitespace-nowrap" style={{ color }}>
+      <span
+        className="font-bold whitespace-nowrap break-words"
+        style={{ color }}
+      >
         {displayName}
       </span>
       <span>:</span>

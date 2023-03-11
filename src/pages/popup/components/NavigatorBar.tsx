@@ -6,7 +6,6 @@ import { openURL } from '../utils/utility';
 import { OptionKeys } from '@src/configs/optionKeys';
 import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
 import { Constants } from '@src/configs/constants';
-import Pill from './Pill';
 import Tooltip from './Tooltip';
 
 interface TabItemProps {
