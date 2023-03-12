@@ -15,7 +15,7 @@ function IconGgbb528cheer() {
 export default function Header() {
   return (
     <header className="flex flex-col items-center justify-center text-black bg-purple-200 p-1">
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex items-center justify-center gap-1">
         <div className="flex items-center justify-center">
           {times(4, (id) => (
             <IconGgbb528cheer key={id} />
