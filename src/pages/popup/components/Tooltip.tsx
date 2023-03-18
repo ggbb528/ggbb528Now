@@ -5,10 +5,17 @@ function Tooltip({
   children,
   position = 'top',
 }: {
-  message: string;
+  message?: string;
   children: React.ReactNode;
   position?: 'top' | 'bottom';
 }) {
+  if (!message)
+    return (
+      <div className="group relative inline-flex justify-center">
+        <div className="cursor-default">{children}</div>
+      </div>
+    );
+
   return (
     <div className="group relative inline-flex justify-center">
       {position === 'top' && (

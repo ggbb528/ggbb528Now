@@ -13,6 +13,7 @@ import 'moment/dist/locale/zh-tw';
 import Pill from '../Pill';
 import { useEffect, useState } from 'react';
 import Tooltip from '../Tooltip';
+import { openURL } from '../../utils/utility';
 moment.locale('zh-tw');
 
 function CurrentGameTime({ createTime }: { createTime: Date }) {
@@ -121,8 +122,25 @@ function TeamTable({
                 <td className="p-1 w-1/6">
                   {positionMap[player.position.toUpperCase()].name}
                 </td>
-                <td className="p-1 ">{champions[player.champion_id].name}</td>
-                <td className="p-1 ">{getTier(tierInfo)}</td>
+                <td className="p-1">
+                  <Tooltip message={player.summoner.name}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() =>
+                        openURL(
+                          `https://www.op.gg/summoners/${account.server}/${player.summoner.name}`
+                        )
+                      }
+                    >
+                      {champions[player.champion_id].name}
+                    </div>
+                  </Tooltip>
+                </td>
+                <td className="p-1 ">
+                  <Tooltip message={tierInfo && `LP: ${tierInfo.lp || ''}`}>
+                    <div>{getTier(tierInfo)}</div>
+                  </Tooltip>
+                </td>
                 <td className="p-1 w-1/5">
                   {getWinLosePercentage(
                     soloRankStatInfo?.win,
