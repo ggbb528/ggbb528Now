@@ -3,6 +3,16 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.9',
+    date: moment('2023-04-23').toDate(),
+    catalogs: [
+      {
+        title: '# Add',
+        items: ['我艾希＊效應，VOD沒東西時顯示 ggbb528cry'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.8',
     date: moment('2023-02-27').toDate(),
     catalogs: [
