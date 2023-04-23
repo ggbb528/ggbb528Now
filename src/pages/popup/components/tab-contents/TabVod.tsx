@@ -4,9 +4,22 @@ import { useVodList } from '../../hooks/useVodList';
 import { VOD } from '../../models/vod-type';
 import moment from 'moment';
 import { openURL } from '../../utils/utility';
+import ggbb528cry from '@assets/img/ggbb528cry.png';
 
 const WIDTH = 350;
 const HEIGHT = 200;
+
+function EmptyReplacer() {
+  return (
+    <div className="w-full  flex justify-center pt-20">
+      <img
+        src={ggbb528cry}
+        className="pointer-events-none h-40 w-40 opacity-50"
+        alt="ggbb528cheer"
+      />
+    </div>
+  );
+}
 
 function VodItem({ vod }: { vod: VOD }) {
   const thumbnailURL = `${vod.thumbnail_url}`
@@ -60,6 +73,7 @@ function TabVod() {
       {vodList.map((vod) => (
         <VodItem key={vod.id} vod={vod} />
       ))}
+      {vodList.length === 0 && <EmptyReplacer />}
     </>
   );
 }
