@@ -30,6 +30,6 @@ export const Constants = {
       summoner_id: 'k48ovJDMDPvINRRZJo4SekGEtrdr0bn-9df3ZYYbm0S9ZXJqyH2T7lFBgw',
       server: 'tw',
       account_id: '愛麗絲班長',
-    }
+    },
   ],
 };
