@@ -90,10 +90,13 @@ function TeamTable({
   };
 
   players.sort((p1, p2) => {
-    return positionMap[p1.position.toUpperCase()].index <
-      positionMap[p2.position.toUpperCase()].index
-      ? -1
-      : 1;
+    const p1Position = p1?.position?.toUpperCase()
+      ? positionMap[p1.position.toUpperCase()].index
+      : -1;
+    const p2Position = p2?.position?.toUpperCase()
+      ? positionMap[p2.position.toUpperCase()].index
+      : -1;
+    return p1Position > p2Position ? -1 : p1Position < p2Position ? 1 : 0;
   });
 
   const bgColor = team === 'BLUE' ? 'bg-blue-200' : 'bg-red-100';
@@ -120,7 +123,8 @@ function TeamTable({
                 className={`${isGGBB528 ? `${textColor} font-bold` : ''}`}
               >
                 <td className="p-1 w-1/6">
-                  {positionMap[player.position.toUpperCase()].name}
+                  {player?.position &&
+                    positionMap[player.position.toUpperCase()].name}
                 </td>
                 <td className="p-1">
                   <Tooltip message={player.summoner.name}>
