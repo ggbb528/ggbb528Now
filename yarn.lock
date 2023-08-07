@@ -468,9 +468,9 @@
   version "1.0.3"
   resolved "https://registry.npmjs.org/@tsconfig/node16/-/node16-1.0.3.tgz"
 
-"@types/chrome@^0.0.180":
-  version "0.0.180"
-  resolved "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.180.tgz"
+"@types/chrome@^0.0.243":
+  version "0.0.243"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.243.tgz#a6752af287195b4abe0dfb72a172fcd728617c06"
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
