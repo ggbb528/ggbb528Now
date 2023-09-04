@@ -31,7 +31,7 @@
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.180",
+    "@types/chrome": "^0.0.245",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
