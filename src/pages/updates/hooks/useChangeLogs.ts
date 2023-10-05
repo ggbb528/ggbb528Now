@@ -3,6 +3,19 @@ import moment from 'moment';
 
 const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.10',
+    date: moment('2023-10-05').toDate(),
+    catalogs: [
+      {
+        title: '# Fixed',
+        items: [
+          '修正 Live Game Bug',
+          '移除 台服帳號 - 愛麗絲班長, 新增 台服帳號 - 心中有劍鋒芒畢現',
+        ],
+      },
+    ],
+  },
+  {
     version: 'v1.0.9',
     date: moment('2023-04-23').toDate(),
     catalogs: [
