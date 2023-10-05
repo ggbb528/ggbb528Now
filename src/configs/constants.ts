@@ -14,6 +14,12 @@ export const Constants = {
       account_id: '준 받',
     },
     {
+      url: 'https://www.op.gg/summoners/tw/%E5%BF%83%E4%B8%AD%E6%9C%89%E5%8A%8D%E9%8B%92%E8%8A%92%E7%95%A2%E7%8F%BE',
+      summoner_id: 'CGI6M7cncWXXbBhhw5umTfckRy3noEIDeliWBwfS0h_tbbxY5jEFOfnAag',
+      server: 'tw',
+      account_id: '心中有劍鋒芒畢現',
+    },
+    {
       url: 'https://www.op.gg/summoners/tw/Twitch%E5%8B%9D%E6%95%97%E9%9B%A3%E5%85%8D',
       summoner_id: 'CUqyc-fBVMFvy5tNAyj6IVSG_Sko3Tl1wk6M7H0vDA61NFVgBdOX5SN6LQ',
       server: 'tw',
@@ -24,12 +30,6 @@ export const Constants = {
       summoner_id: 'OPe4vNhqcBfYUBoVhkSOkXHyU_gzh0kYE2mmzX9pmq0CDGh8xAxGJ9ATiQ',
       server: 'tw',
       account_id: '戀愛大師勝敗難免',
-    },
-    {
-      url: 'https://www.op.gg/summoners/tw/%E6%84%9B%E9%BA%97%E7%B5%B2%E7%8F%AD%E9%95%B7',
-      summoner_id: 'k48ovJDMDPvINRRZJo4SekGEtrdr0bn-9df3ZYYbm0S9ZXJqyH2T7lFBgw',
-      server: 'tw',
-      account_id: '愛麗絲班長',
     },
   ],
 };
