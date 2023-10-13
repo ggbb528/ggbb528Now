@@ -10,6 +10,7 @@ import opggLogo from '@assets/img/opgglogo.svg';
 import { openURL } from '../utils/utility';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Constants } from '@src/configs/constants';
+import useGgbb528Accounts from '../hooks/useGgbb528Accounts';
 
 // Button
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -87,6 +88,7 @@ function Dropdown(props: DropdownProps) {
 }
 
 export default function ButtonsGroup() {
+  const { data: accounts } = useGgbb528Accounts();
   const ServerName: {
     [key: string]: string;
   } = {
@@ -112,7 +114,7 @@ export default function ButtonsGroup() {
           <FontAwesomeIcon icon={faCaretDown} className="p-1" />
         </Button>
         <Dropdown ariaLabelledby="dropdownMenuButton">
-          {Constants.OPGG_ACCOUNTS.map((account) => (
+          {accounts?.map((account) => (
             <DropdownItem key={account.summoner_id} href={account.url}>
               {ServerName[account.server]} - {account.account_id}
             </DropdownItem>

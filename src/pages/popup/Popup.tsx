@@ -6,7 +6,29 @@ import Content from './components/Content';
 import Header from './components/Header';
 import NavigatorBar from './components/NavigatorBar';
 
-const queryClient = new QueryClient();
+const isDev = import.meta.env.VITE_DEV_MODE;
+
+const APP_TITLE = '[ggbb528Now] ';
+
+const queryClient = new QueryClient({
+  logger: {
+    log: (...args) => {
+      if (isDev) {
+        console.log(APP_TITLE, args);
+      }
+    },
+    warn: (...args) => {
+      if (isDev) {
+        console.warn(APP_TITLE, args);
+      }
+    },
+    error: (...args) => {
+      if (isDev) {
+        console.error(APP_TITLE, args);
+      }
+    },
+  },
+});
 
 const ReactQueryDevtoolsProduction = React.lazy(() =>
   import('@tanstack/react-query-devtools/build/lib/index.prod.js').then(
