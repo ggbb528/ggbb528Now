@@ -1,4 +1,3 @@
-import { Constants } from '@src/configs/constants';
 import moment from 'moment';
 import useMultipleOPGGSpectates from '../../hooks/useMultipleOPGGSpectates';
 import {
@@ -207,13 +206,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
 }
 
 function TabLiveGame() {
-  const spectates = useMultipleOPGGSpectates({
-    summoners: Constants.OPGG_ACCOUNTS.map((account) => ({
-      server: account.server as 'kr' | 'tw',
-      summonerId: account.summoner_id,
-      accountId: account.account_id,
-    })),
-  });
+  const spectates = useMultipleOPGGSpectates();
 
   const [liveSpectates] = spectates.filter(
     (spectate) => spectate.status === 'success'

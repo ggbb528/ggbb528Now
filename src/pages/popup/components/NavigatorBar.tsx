@@ -1,12 +1,14 @@
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener';
 import { openURL } from '../utils/utility';
 import { OptionKeys } from '@src/configs/optionKeys';
 import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
-import { Constants } from '@src/configs/constants';
 import Tooltip from './Tooltip';
+import useGgbb528Accounts from '../hooks/useGgbb528Accounts';
+import useAccountLiveHistory from '../hooks/useAccountLiveHistory';
+import LiveIcon from './LiveIcon';
 
 interface TabItemProps {
   target: string;
@@ -64,17 +66,21 @@ export default function NavigatorBar() {
     OptionKeys.OPTION_KEY_CHAT_MESSAGE.name
   );
 
-  const spectates = useMultipleOPGGSpectates({
-    summoners: Constants.OPGG_ACCOUNTS.map((account) => ({
-      server: account.server as 'kr' | 'tw',
-      summonerId: account.summoner_id,
-      accountId: account.account_id,
-    })),
-  });
+  const { setLiveHistoryRecord } = useAccountLiveHistory();
+
+  const spectates = useMultipleOPGGSpectates();
 
   const [liveSpectates] = spectates.filter(
     (spectate) => spectate.status === 'success'
   );
+
+  useEffect(() => {
+    if (!liveSpectates?.data) return;
+
+    const summoner_id = liveSpectates.data.account.summonerId;
+    const last_game_start_time = liveSpectates.data.created_at;
+    setLiveHistoryRecord({ summoner_id, last_game_start_time });
+  }, [liveSpectates]);
 
   return (
     <div className="flex flex-row justify-start items-center">
@@ -87,10 +93,7 @@ export default function NavigatorBar() {
             <TabItem target="liveGame">
               <div className="flex items-center justify-center gap-1">
                 <span>Live! </span>
-                <div className="inline-flex items-center justify-center h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                </div>
+                <LiveIcon />
               </div>
             </TabItem>
           )}
