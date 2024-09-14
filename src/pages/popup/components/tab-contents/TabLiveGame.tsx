@@ -181,7 +181,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
       </div>
       <div className="p-2 text-blue-500 bg-blue-100 font-bold flex gap-1 justify-between rounded my-1">
         <span>藍隊</span>
-        <span>平均牌位: {getTier(blueTeam.average_tier_info)}</span>
+        <span>平均牌位: {getTier(blueTeam?.average_tier_info)}</span>
       </div>
       <TeamTable
         queueInfo={queue_info}
@@ -192,7 +192,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
       />
       <div className="p-2 text-red-600 bg-red-50 font-bold flex gap-1 justify-between rounded my-1">
         <span>紅隊</span>
-        <span>平均牌位: {getTier(redTeam.average_tier_info)}</span>
+        <span>平均牌位: {getTier(redTeam?.average_tier_info)}</span>
       </div>
       <TeamTable
         queueInfo={queue_info}

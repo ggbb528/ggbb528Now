@@ -3,6 +3,16 @@ import moment from 'moment';
 
 export const changeLogs: ChangeLog[] = [
   {
+    version: 'v1.0.12',
+    date: moment('2024-09-15').toDate(),
+    catalogs: [
+      {
+        title: '# Fixed',
+        items: ['升級至 Manifest V3', '修正輕微 bug'],
+      },
+    ],
+  },
+  {
     version: 'v1.0.11',
     date: moment('2023-10-15').toDate(),
     catalogs: [
