@@ -120,9 +120,11 @@ function MessageItem({
   const sendDate = new Date(parseInt(sendtime));
   return (
     <div className="p-1 text-left">
-      <span className="pr-1">{moment(sendDate).format('HH:mm')}</span>
+      <Tooltip message={moment(sendDate).format('LLL')}>
+        <span className="pr-1">{moment(sendDate).format('HH:mm')}</span>
+      </Tooltip>
       <span
-        className="font-bold whitespace-nowrap break-words"
+        className="font-bold whitespace-nowrap break-words cursor-pointer"
         style={{ color }}
       >
         {displayName}
