@@ -1,5 +1,5 @@
-import { Constants } from '@src/configs/constants';
-import React, { useRef, useState } from 'react';
+import { OPGG_ACCOUNTS } from '@src/configs/constants';
+import React, { useEffect, useRef, useState } from 'react';
 import { Account } from '../../models/account-type';
 import Pill from '../Pill';
 import RankingTable from '../RankingTable';
@@ -8,6 +8,10 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useGgbb528Accounts from '../../hooks/useGgbb528Accounts';
+import LiveIcon from '../LiveIcon';
+import useMultipleOPGGSpectates from '../../hooks/useMultipleOPGGSpectates';
+import useAccountLiveHistory from '../../hooks/useAccountLiveHistory';
 
 function ServerOptionButtons({
   account,
@@ -19,7 +23,34 @@ function ServerOptionButtons({
   const menuContainerRef = useRef<HTMLDivElement>(null);
   const currentBtnRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const maxIndex = Constants.OPGG_ACCOUNTS.length;
+  const { data: accounts } = useGgbb528Accounts();
+  const maxIndex = accounts?.length || 0;
+  const spectates = useMultipleOPGGSpectates();
+  const { histories } = useAccountLiveHistory();
+
+  const sortFn = (a: Account, b: Account) => {
+    const aHistory = histories?.find((h) => h.summoner_id === a.summoner_id);
+    const bHistory = histories?.find((h) => h.summoner_id === b.summoner_id);
+
+    if (aHistory && bHistory) {
+      const aLastGameTime = new Date(aHistory.last_game_start_time);
+      const bLastGameTime = new Date(bHistory.last_game_start_time);
+
+      return bLastGameTime.getTime() - aLastGameTime.getTime();
+    }
+
+    if (aHistory) return -1;
+    if (bHistory) return 1;
+    return 0;
+  };
+
+  useEffect(() => {
+    accounts?.sort(sortFn);
+  }, [accounts, histories]);
+
+  const [liveSpectates] = spectates.filter(
+    (spectate) => spectate.status === 'success'
+  );
 
   const scrollToIndex = (index: number) => {
     let nextIndex = index;
@@ -54,7 +85,7 @@ function ServerOptionButtons({
           id="pills-tabFill"
           role="tablist"
         >
-          {Constants.OPGG_ACCOUNTS.map((accountInfo, i) => (
+          {accounts?.map((accountInfo, i) => (
             <li
               key={accountInfo.summoner_id}
               className="nav-item flex-auto text-center cursor-pointer "
@@ -64,24 +95,25 @@ function ServerOptionButtons({
               <a
                 className={`nav-link w-full block font-medium text-xs leading-tight uppercase rounded px-6 py-2 focus:outline-none focus:ring-0 
                ${
-                 account.summonerId === accountInfo.summoner_id ? 'active' : ''
+                 account.summoner_id === accountInfo.summoner_id ? 'active' : ''
                }`}
                 role="tab"
                 aria-selected="true"
                 onClick={() => {
                   setAccount({
-                    server: accountInfo.server as 'kr' | 'tw',
-                    summonerId: accountInfo.summoner_id,
+                    ...accountInfo,
                   });
 
                   scrollToIndex(i);
                 }}
               >
-                <div className="flex whitespace-nowrap gap-1 items-center">
+                <div className="flex whitespace-nowrap gap-2 items-center">
                   <Pill bgColor="bg-yellow-500">
                     {accountInfo.server.toUpperCase()}
                   </Pill>
-                  {accountInfo.account_id}
+                  <span>{accountInfo.account_id}</span>
+                  {liveSpectates?.data?.account.summonerId ===
+                    accountInfo.summoner_id && <LiveIcon showTooltip={false} />}
                 </div>
               </a>
             </li>
@@ -127,10 +159,15 @@ function ServerTabContents(props: Account) {
 }
 
 export default function TabRanking() {
-  const [account, setAccount] = useState<Account>({
-    server: Constants.OPGG_ACCOUNTS[0].server as 'kr' | 'tw',
-    summonerId: Constants.OPGG_ACCOUNTS[0].summoner_id,
-  });
+  const { data: accounts } = useGgbb528Accounts();
+  const [account, setAccount] = useState<Account>(OPGG_ACCOUNTS[0]);
+
+  useEffect(() => {
+    if (!accounts) return;
+    if (accounts.length === 0) return;
+
+    setAccount(accounts[0]);
+  }, [accounts]);
 
   return (
     <>

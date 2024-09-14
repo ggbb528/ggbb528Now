@@ -144,12 +144,12 @@ function LoadingRows() {
 
 function TableBody({
   server,
-  summonerId,
+  summoner_id,
   gameType,
 }: Account & { gameType: RankType }) {
   const { isLoading, isError, data } = useOPGGSummoners({
     server,
-    summonerId,
+    summonerId: summoner_id,
     limit: 10,
     gameType,
   });
@@ -263,7 +263,7 @@ export default function RankingTable(account: Account) {
 
   const profile = useOPGGProfile({
     server: account.server,
-    summonerId: account.summonerId,
+    summonerId: account.summoner_id,
   });
 
   const isProfileLoading = profile.isError || profile.isError;

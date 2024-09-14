@@ -12,7 +12,8 @@ const manifest: ManifestType = {
     'storage',
     'notifications',
     '*://*.twitch.tv/*',
-    '*://*.op.gg/',
+    '*://*.op.gg/*',
+    '*://*.ggbb528.com/*',
   ],
   background: {
     page: 'src/pages/background/index.html',
