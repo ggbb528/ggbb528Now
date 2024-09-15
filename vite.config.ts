@@ -2,6 +2,7 @@ import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import makeManifest from './utils/plugins/make-manifest';
+import makeChangeLog from './utils/plugins/make-changlog';
 import copyContentStyle from './utils/plugins/copy-content-style';
 import { visualizer } from 'rollup-plugin-visualizer';
 
@@ -24,6 +25,7 @@ export default defineConfig({
   plugins: [
     react(),
     makeManifest(),
+    makeChangeLog(),
     copyContentStyle(),
     visualizer({
       gzipSize: true,
