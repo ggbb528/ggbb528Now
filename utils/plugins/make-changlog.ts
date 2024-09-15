@@ -10,21 +10,23 @@ const { resolve } = path;
 const outDir = resolve(__dirname, '..', '..');
 
 function jsonToMarkdown(changeLogs: ChangeLog[]): string {
-  return changeLogs
-    .map((log) => {
-      const formattedDate = new Date(log.date).toISOString().split('T')[0]; // "YYYY-MM-DD"
-      // Convert catalog items to Markdown list
-      const catalogMarkdown = log.catalogs
-        .map((catalog) => {
-          const title = catalog.title.replace('# ', '### '); // Convert "# " to "### "
-          const items = catalog.items.map((item) => `- ${item}`).join('\n');
-          return `${title}\n\n${items}`;
-        })
-        .join('\n\n');
+  return (
+    changeLogs
+      .map((log) => {
+        const formattedDate = new Date(log.date).toISOString().split('T')[0]; // "YYYY-MM-DD"
+        // Convert catalog items to Markdown list
+        const catalogMarkdown = log.catalogs
+          .map((catalog) => {
+            const title = catalog.title.replace('# ', '### '); // Convert "# " to "### "
+            const items = catalog.items.map((item) => `- ${item}`).join('\n');
+            return `${title}\n\n${items}`;
+          })
+          .join('\n\n');
 
-      return `## ${log.version} (${formattedDate})\n\n${catalogMarkdown}`;
-    })
-    .join('\n\n');
+        return `## ${log.version} (${formattedDate})\n\n${catalogMarkdown}`;
+      })
+      .join('\n\n') + '\n'
+  );
 }
 
 export default function makeChangeLog(): PluginOption {
