@@ -1,5 +1,4 @@
 import moment from 'moment';
-import React from 'react';
 import { ChangeLog } from '../models/changeLog-type';
 
 const parseMarkdownLinks = (text: string) => {

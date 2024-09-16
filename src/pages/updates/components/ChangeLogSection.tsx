@@ -1,6 +1,6 @@
-import React from 'react';
 import useChangeLogs from '../hooks/useChangeLogs';
 import ChangeLogItem from './ChangeLogItem';
+import { Separator } from '@/components/ui/separator';
 
 export default function ChangeLogSection() {
   const [changeLogs] = useChangeLogs();
@@ -8,8 +8,8 @@ export default function ChangeLogSection() {
     <section>
       {changeLogs.map((changeLog, index) => (
         <>
+          {index !== 0 && <Separator />}
           <ChangeLogItem key={index} {...changeLog} />
-          {index !== changeLogs.length - 1 && <hr />}
         </>
       ))}
     </section>
