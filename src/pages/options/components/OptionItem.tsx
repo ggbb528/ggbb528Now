@@ -1,4 +1,4 @@
-import { OptionKey } from '@src/configs/optionKeys';
+import { OptionKey } from '@/configs/optionKeys';
 import React from 'react';
 import useChromeSyncStorage from '../hooks/useChromeSyncStorage';
 

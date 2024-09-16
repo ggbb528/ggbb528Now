@@ -1,4 +1,4 @@
-import { OPGG_ACCOUNTS } from '@src/configs/constants';
+import { OPGG_ACCOUNTS } from '@/configs/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Account } from '../models/account-type';
 import useAccountLiveHistory from './useAccountLiveHistory';

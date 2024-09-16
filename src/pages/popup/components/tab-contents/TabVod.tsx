@@ -4,7 +4,7 @@ import { useVodList } from '../../hooks/useVodList';
 import { VOD } from '../../models/vod-type';
 import moment from 'moment';
 import { openURL } from '../../utils/utility';
-import ggbb528cry from '@assets/img/ggbb528cry.png';
+import ggbb528cry from '@/assets/img/ggbb528cry.png';
 
 const WIDTH = 350;
 const HEIGHT = 200;

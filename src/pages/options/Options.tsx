@@ -1,7 +1,7 @@
 import React from 'react';
-import '@pages/options/Options.css';
+import '@/pages/options/Options.css';
 import OptionItem from './components/OptionItem';
-import { OptionKeys } from '@src/configs/optionKeys';
+import { OptionKeys } from '@/configs/optionKeys';
 
 export default function Options(): JSX.Element {
   return (

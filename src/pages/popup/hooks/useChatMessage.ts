@@ -1,4 +1,4 @@
-import { ChatMessage } from '@src/pages/background/chat';
+import { ChatMessage } from '@/pages/background/chat';
 import useChromeLocalStorageListener from './useChromeLocalStorageListener';
 
 export default function useChatMessage() {

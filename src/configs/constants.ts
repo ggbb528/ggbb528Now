@@ -1,4 +1,4 @@
-import { Account } from '@src/pages/popup/models/account-type';
+import { Account } from '@/pages/popup/models/account-type';
 
 export const Constants = {
   TWITCH_CHANNEL: 'ggbb528',

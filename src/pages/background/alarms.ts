@@ -1,5 +1,5 @@
-import { Constants } from '@src/configs/constants';
-import { OptionKeys } from '@src/configs/optionKeys';
+import { Constants } from '@/configs/constants';
+import { OptionKeys } from '@/configs/optionKeys';
 import { sendLiveNotification } from './utils/notifications';
 import { getOptionValue } from './utils/options';
 import { checkStreams } from './utils/streams';

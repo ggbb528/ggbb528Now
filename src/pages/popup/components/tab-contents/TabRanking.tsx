@@ -1,4 +1,4 @@
-import { OPGG_ACCOUNTS } from '@src/configs/constants';
+import { OPGG_ACCOUNTS } from '@/configs/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { Account } from '../../models/account-type';
 import Pill from '../Pill';

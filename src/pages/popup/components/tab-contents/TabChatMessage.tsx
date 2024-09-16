@@ -1,4 +1,4 @@
-import { ChatMessage } from '@src/pages/background/chat';
+import { ChatMessage } from '@/pages/background/chat';
 import moment from 'moment';
 import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
