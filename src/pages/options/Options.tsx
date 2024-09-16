@@ -7,7 +7,7 @@ import { openURL } from '../popup/utils/utility';
 
 export default function Options(): JSX.Element {
   return (
-    <div className="container mx-auto pt-4 text-lg block max-w-sm">
+    <div className="container mx-auto text-lg block max-w-sm">
       <div className="flex flex-col items-start gap-4 p-4">
         {Object.keys(OptionKeys).map((key) => (
           <OptionItem key={key} {...OptionKeys[key]} />
