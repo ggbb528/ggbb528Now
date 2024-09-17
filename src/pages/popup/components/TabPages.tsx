@@ -7,11 +7,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '../../../components/custom-ui/tooltip';
 import { openURL } from '../utils/utility';
+import TabLiveGame from './tab-contents/TabLiveGame';
+import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener';
+import { OptionKeys } from '@/configs/optionKeys';
+import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
+import LiveIcon from '@/components/custom-ui/liveicon';
 
 export default function TabPages() {
   const [currentTab, setCurrentTab] = useState('ranking');
   const scrollDivRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
+
+  const [enableChat] = useChromeSyncStorageListener(
+    OptionKeys.OPTION_KEY_CHAT_MESSAGE.name
+  );
+
+  const spectates = useMultipleOPGGSpectates();
+
+  const [liveSpectates] = spectates.filter(
+    (spectate) => spectate.status === 'success'
+  );
 
   useEffect(() => {
     const updateScrollPositionToBottom = () => {
@@ -49,6 +64,9 @@ export default function TabPages() {
           <TabsContent value="ranking" key="tanking">
             <TabRankingProfile />
           </TabsContent>
+          <TabsContent value="livegame" key="livegame">
+            <TabLiveGame />
+          </TabsContent>
           <TabsContent value="vod" key="vod">
             <TabVOD />
           </TabsContent>
@@ -59,8 +77,16 @@ export default function TabPages() {
         </div>
         <TabsList className="flex justify-start">
           <TabsTrigger value="ranking">LOL牌位</TabsTrigger>
+          {!!liveSpectates && (
+            <TabsTrigger value="livegame">
+              <div className="flex items-center justify-center gap-1">
+                <span>Live! </span>
+                <LiveIcon account={liveSpectates.data.account} />
+              </div>
+            </TabsTrigger>
+          )}
           <TabsTrigger value="vod">VOD</TabsTrigger>
-          <TabsTrigger value="chats">聊天室</TabsTrigger>
+          {!!enableChat && <TabsTrigger value="chats">聊天室</TabsTrigger>}
           <div className="ml-auto p-2 flex justify-center items-center gap-1">
             <Tooltip message="更新紀錄">
               <span

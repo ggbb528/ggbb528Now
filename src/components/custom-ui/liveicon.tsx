@@ -1,11 +1,14 @@
+import { Account } from '@/pages/popup/models/spectate-type';
 import Tooltip from './tooltip';
 
 function LiveIcon({
   tooltipPos = 'top',
   showTooltip = true,
+  account,
 }: {
   tooltipPos?: 'top' | 'bottom';
   showTooltip?: boolean;
+  account?: Account;
 }) {
   const Icon = (
     <div className="inline-flex items-center justify-center h-3 w-3 relative">
@@ -16,8 +19,13 @@ function LiveIcon({
 
   if (!showTooltip) return Icon;
 
+  let message = '';
+  if (account)
+    message += `(${account.server.toUpperCase()}) ${account.accountId} `;
+  message += '正在遊戲中';
+
   return (
-    <Tooltip message="正在遊戲中" position={tooltipPos}>
+    <Tooltip message={message} position={tooltipPos}>
       {Icon}
     </Tooltip>
   );

@@ -29,6 +29,8 @@ import {
   TooltipTrigger,
   Tooltip,
 } from '@/components/ui/tooltip';
+import useMultipleOPGGSpectates from '../../hooks/useMultipleOPGGSpectates';
+import LiveIcon from '@/components/custom-ui/liveicon';
 moment.locale('zh-tw');
 
 enum GameType {
@@ -350,6 +352,12 @@ function AccountButton({
   actived: boolean;
   onClick: () => void;
 }) {
+  const spectates = useMultipleOPGGSpectates();
+
+  const [liveSpectates] = spectates.filter(
+    (spectate) => spectate.status === 'success'
+  );
+
   return (
     <Button
       variant={actived ? 'actived' : 'inactived'}
@@ -360,6 +368,9 @@ function AccountButton({
         {account.server}
       </Badge>
       <span>{account.account_id}</span>
+      {liveSpectates?.data?.account.summonerId === account.summoner_id && (
+        <LiveIcon showTooltip={false} />
+      )}
     </Button>
   );
 }
