@@ -3,10 +3,7 @@ const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   darkMode: ['class'],
-  content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    './node_modules/tw-elements/dist/js/**/*.js',
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       animation: {
@@ -82,7 +79,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('tw-elements/dist/plugin'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {

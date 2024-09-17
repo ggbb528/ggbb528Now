@@ -13,6 +13,13 @@ import { LeagueStat } from '../models/profile-type';
 import times from 'lodash/times';
 import { useState } from 'react';
 import Tooltip from './Tooltip';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from '@/components/ui/select';
+import { SelectValue } from '@radix-ui/react-select';
 moment.locale('zh-tw');
 
 function LoadingRow({ borderB = true }: { borderB?: boolean }) {
@@ -218,46 +225,6 @@ function LoseCount({ isLoading, leagueStat }: StatProps) {
   return <span>{leagueStat.lose}</span>;
 }
 
-function Select({
-  rankType,
-  setRankType,
-}: {
-  rankType: RankType;
-  setRankType: React.Dispatch<React.SetStateAction<RankType>>;
-}) {
-  const options = [
-    {
-      label: '全部',
-      value: RankType.Total,
-    },
-    {
-      label: '單排積分',
-      value: RankType.SoloRanked,
-    },
-  ];
-
-  return (
-    <div className="flex justify-center items-center">
-      <div className="w-full">
-        <select
-          className="form-select form-select-sm appearance-none block w-full px-2 py-1 text-sm font-normal
-    text-gray-700bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
-    rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-          aria-label=".form-select-sm"
-          onChange={(option) => setRankType(option.target.value as RankType)}
-          value={rankType}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
-}
-
 export default function RankingTable(account: Account) {
   const [rankType, setRankType] = useState<RankType>(RankType.Total);
 
@@ -270,6 +237,17 @@ export default function RankingTable(account: Account) {
   const soloRankStats = profile.data?.league_stats.find(
     (x) => x.queue_info.game_type === 'SOLORANKED'
   );
+
+  const options = [
+    {
+      label: '全部',
+      value: RankType.Total,
+    },
+    {
+      label: '單排積分',
+      value: RankType.SoloRanked,
+    },
+  ];
 
   return (
     <div className="px-2">
@@ -330,9 +308,25 @@ export default function RankingTable(account: Account) {
               >
                 <div className=" flex justify-start items-center">
                   <div className="mx-2 w-1/3">
-                    <Select rankType={rankType} setRankType={setRankType} />
+                    <Select
+                      value={rankType}
+                      onValueChange={(option) =>
+                        setRankType(option as RankType)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue></SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <div className="flex-1 text-xl text-center">
+                  <div className="flex-1 text-base text-center">
                     近10場遊戲記錄
                   </div>
                 </div>
