@@ -1,11 +1,11 @@
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import TabChatMessage from './tab-contents/TabChatMessage';
-import TabVod from './tab-contents/TabVod';
-import TabRanking from './tab-contents/TabRanking';
+import TabVOD from './tab-contents/TabVOD';
+import TabRankingProfile from './tab-contents/TabRankingProfile';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from './Tooltip';
+import Tooltip from '../../../components/custom-ui/tooltip';
 import { openURL } from '../utils/utility';
 
 export default function TabPages() {
@@ -47,10 +47,10 @@ export default function TabPages() {
       >
         <div ref={scrollDivRef} className="h-[27.75rem] overflow-auto">
           <TabsContent value="ranking" key="tanking">
-            <TabRanking />
+            <TabRankingProfile />
           </TabsContent>
           <TabsContent value="vod" key="vod">
-            <TabVod />
+            <TabVOD />
           </TabsContent>
           <TabsContent value="chats" key="chats" className="p-1">
             <TabChatMessage />

@@ -9,9 +9,9 @@ import {
   TierInfo,
 } from '../../models/spectate-type';
 import 'moment/dist/locale/zh-tw';
-import Pill from '../Pill';
+import Pill from '../../../../components/custom-ui/pill';
 import { useEffect, useState } from 'react';
-import Tooltip from '../Tooltip';
+import Tooltip from '../../../../components/custom-ui/tooltip';
 import { openURL } from '../../utils/utility';
 moment.locale('zh-tw');
 

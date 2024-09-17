@@ -10,9 +10,9 @@ import {
   faFacebook,
   faTwitch,
   faYoutube,
+  faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import opggLogo from '@/assets/img/opgglogo.svg';
 import useGgbb528Accounts from '../hooks/useGgbb528Accounts';
 import { openURL } from '../utils/utility';
 import { Separator } from '@/components/ui/separator';
@@ -22,6 +22,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import OPGGLogo from '@/assets/img/opgg.jpeg';
 
 export default function MenuBar() {
   const { data: accounts } = useGgbb528Accounts();
@@ -35,9 +36,9 @@ export default function MenuBar() {
       <Menubar className="flex justify-between">
         <MenubarMenu>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <MenubarTrigger
-                className="flex justify-center items-center"
+                className="flex-1 flex justify-center items-center"
                 onClick={() => openURL(Constants.TWITCH_CHANNEL_URL)}
               >
                 <FontAwesomeIcon
@@ -47,14 +48,19 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent>Twitch 頻道</TooltipContent>
+            <TooltipContent side="bottom">Twitch 頻道</TooltipContent>
           </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
         <MenubarMenu>
-          <MenubarTrigger className="flex justify-center items-center">
-            <img alt="opgg logo" src={opggLogo} className="h-[22px] w-[40px]" />
-          </MenubarTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <MenubarTrigger className="flex-1 flex justify-center items-center">
+                <img src={OPGGLogo} alt="OP.GG" className="rounded-full" />
+              </MenubarTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">LOL戰績</TooltipContent>
+          </Tooltip>
           <MenubarContent>
             {accounts?.map((account) => (
               <MenubarItem
@@ -68,30 +74,75 @@ export default function MenuBar() {
         </MenubarMenu>
         <Separator orientation="vertical" />
         <MenubarMenu>
-          <MenubarTrigger
-            className="flex justify-center items-center"
-            onClick={() => openURL(Constants.YOUTUBE_CHANNEL_URL)}
-          >
-            <FontAwesomeIcon icon={faYoutube} size={'xl'} color={'#ff0000'} />
-          </MenubarTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <MenubarTrigger
+                className="flex-1 flex justify-center items-center"
+                onClick={() => openURL(Constants.YOUTUBE_CHANNEL_URL)}
+              >
+                <FontAwesomeIcon
+                  icon={faYoutube}
+                  size={'xl'}
+                  color={'#ff0000'}
+                />
+              </MenubarTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">YouTube頻道</TooltipContent>
+          </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
         <MenubarMenu>
-          <MenubarTrigger
-            className="flex justify-center items-center"
-            onClick={() => openURL(Constants.DISCORD_SERVER_URL)}
-          >
-            <FontAwesomeIcon icon={faDiscord} size={'xl'} color={'#5865f2'} />
-          </MenubarTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <MenubarTrigger
+                className="flex-1 flex justify-center items-center"
+                onClick={() => openURL(Constants.DISCORD_SERVER_URL)}
+              >
+                <FontAwesomeIcon
+                  icon={faDiscord}
+                  size={'xl'}
+                  color={'#5865f2'}
+                />
+              </MenubarTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Discord</TooltipContent>
+          </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
         <MenubarMenu>
-          <MenubarTrigger
-            className="flex justify-center items-center"
-            onClick={() => openURL(Constants.FACEBOOK_FANPAGE_URL)}
-          >
-            <FontAwesomeIcon icon={faFacebook} size={'xl'} color={'#4267b2'} />
-          </MenubarTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <MenubarTrigger
+                className="flex-1 flex justify-center items-center"
+                onClick={() => openURL(Constants.FACEBOOK_FANPAGE_URL)}
+              >
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  size={'xl'}
+                  color={'#4267b2'}
+                />
+              </MenubarTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">臉書粉絲團</TooltipContent>
+          </Tooltip>
+        </MenubarMenu>
+        <Separator orientation="vertical" />
+        <MenubarMenu>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <MenubarTrigger
+                className="flex-1 flex justify-center items-center"
+                onClick={() => openURL(Constants.INSTAGRAM_URL)}
+              >
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  size={'xl'}
+                  color="#c13584"
+                />
+              </MenubarTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Instagram</TooltipContent>
+          </Tooltip>
         </MenubarMenu>
       </Menubar>
     </div>

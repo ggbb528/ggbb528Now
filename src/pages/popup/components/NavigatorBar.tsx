@@ -5,10 +5,10 @@ import useChromeSyncStorageListener from '../hooks/useChromeSyncStorageListener'
 import { openURL } from '../utils/utility';
 import { OptionKeys } from '@/configs/optionKeys';
 import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
-import Tooltip from './Tooltip';
+import Tooltip from '../../../components/custom-ui/tooltip';
 import useGgbb528Accounts from '../hooks/useGgbb528Accounts';
 import useAccountLiveHistory from '../hooks/useAccountLiveHistory';
-import LiveIcon from './LiveIcon';
+import LiveIcon from '../../../components/custom-ui/liveicon';
 
 interface TabItemProps {
   target: string;

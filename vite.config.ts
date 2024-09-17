@@ -48,6 +48,12 @@ export default defineConfig({
       output: {
         entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
       },
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
     },
   },
   define: {

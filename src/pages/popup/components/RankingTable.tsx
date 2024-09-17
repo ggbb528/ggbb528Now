@@ -2,17 +2,17 @@ import moment from 'moment';
 import useOPGGChampions from '../hooks/useOPGGChampions';
 import useOPGGSummoners from '../hooks/useOPGGSummoners';
 import { Datum, MyData, GameType as RankType } from '../models/summoner-type';
-import Skeleton from './Skeleton';
+import Skeleton from '@/components/custom-ui/skeleton';
 import 'moment/dist/locale/zh-tw';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
-import Pill from './Pill';
+import Pill from '@/components/custom-ui/pill';
 import { Account } from '../models/account-type';
 import useOPGGProfile from '../hooks/useOPGGProfile';
 import { LeagueStat } from '../models/profile-type';
 import times from 'lodash/times';
 import { useState } from 'react';
-import Tooltip from './Tooltip';
+import Tooltip from '../../../components/custom-ui/tooltip';
 import {
   Select,
   SelectContent,

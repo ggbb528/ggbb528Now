@@ -1,7 +1,7 @@
 import { OPGG_ACCOUNTS } from '@/configs/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { Account } from '../../models/account-type';
-import Pill from '../Pill';
+import Pill from '@/components/custom-ui/pill';
 import RankingTable from '../RankingTable';
 import {
   faChevronRight,
@@ -9,9 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useGgbb528Accounts from '../../hooks/useGgbb528Accounts';
-import LiveIcon from '../LiveIcon';
+import LiveIcon from '@/components/custom-ui/liveicon';
 import useMultipleOPGGSpectates from '../../hooks/useMultipleOPGGSpectates';
-import useAccountLiveHistory from '../../hooks/useAccountLiveHistory';
 
 function ServerOptionButtons({
   account,
@@ -26,27 +25,6 @@ function ServerOptionButtons({
   const { data: accounts } = useGgbb528Accounts();
   const maxIndex = accounts?.length || 0;
   const spectates = useMultipleOPGGSpectates();
-  const { histories } = useAccountLiveHistory();
-
-  const sortFn = (a: Account, b: Account) => {
-    const aHistory = histories?.find((h) => h.summoner_id === a.summoner_id);
-    const bHistory = histories?.find((h) => h.summoner_id === b.summoner_id);
-
-    if (aHistory && bHistory) {
-      const aLastGameTime = new Date(aHistory.last_game_start_time);
-      const bLastGameTime = new Date(bHistory.last_game_start_time);
-
-      return bLastGameTime.getTime() - aLastGameTime.getTime();
-    }
-
-    if (aHistory) return -1;
-    if (bHistory) return 1;
-    return 0;
-  };
-
-  useEffect(() => {
-    accounts?.sort(sortFn);
-  }, [accounts, histories]);
 
   const [liveSpectates] = spectates.filter(
     (spectate) => spectate.status === 'success'

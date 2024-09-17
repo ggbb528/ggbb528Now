@@ -1,7 +1,6 @@
 import { OPGG_ACCOUNTS } from '@/configs/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Account } from '../models/account-type';
-import useAccountLiveHistory from './useAccountLiveHistory';
 
 function useGgbb528Accounts() {
   return useQuery({

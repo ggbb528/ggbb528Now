@@ -8,6 +8,7 @@ export const Constants = {
   YOUTUBE_CHANNEL_URL: 'https://www.youtube.com/c/ggbb528',
   FACEBOOK_FANPAGE_URL: 'https://www.facebook.com/JeffeRy0821',
   DISCORD_SERVER_URL: 'https://discord.gg/XJeWYpUg8t',
+  INSTAGRAM_URL: 'https://www.instagram.com/jeffery0821_',
 };
 
 export const OPGG_ACCOUNTS: Account[] = [

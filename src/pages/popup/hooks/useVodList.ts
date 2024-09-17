@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
 import { VOD } from '../models/vod-type';
+import { useQuery } from '@tanstack/react-query';
 
-export const useVodList = () => {
-  const [vods, setVods] = useState<VOD[]>([]);
-
-  useEffect(() => {
-    chrome.storage?.local?.get('vodList', ({ vodList }) => {
-      if (Array.isArray(vodList)) {
-        setVods(vodList);
+export default function useVODList() {
+  const fetchVOD = async () => {
+    // store in vodList.vodList
+    return chrome.storage.local.get('vodList').then(({ vodList }) => {
+      if (!Array.isArray(vodList)) {
+        throw new Error('vodList must be an array');
       }
+      return vodList as VOD[];
     });
-  }, []);
+  };
 
-  return [vods] as const;
-};
+  return useQuery({
+    queryKey: ['vodList'],
+    queryFn: fetchVOD,
+    staleTime: 60000,
+  });
+}

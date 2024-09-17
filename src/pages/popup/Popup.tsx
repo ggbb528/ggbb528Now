@@ -19,7 +19,7 @@ const ReactQueryDevtoolsProduction = React.lazy(() =>
 export default function Popup(): JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={100}>
         <div className="absolute top-0 left-0 right-0 bottom-0 text-center h-full bg-white flex flex-col">
           <Header />
           <MenuBar />

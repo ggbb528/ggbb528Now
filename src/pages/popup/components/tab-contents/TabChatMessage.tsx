@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
 import { openURL } from '../../utils/utility';
-import Tooltip from '../Tooltip';
+import Tooltip from '../../../../components/custom-ui/tooltip';
 
 function ChatEmote({
   emoteId,

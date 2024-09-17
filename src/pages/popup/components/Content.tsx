@@ -3,7 +3,7 @@ import TabChatMessage from './tab-contents/TabChatMessage';
 import TabLiveGame from './tab-contents/TabLiveGame';
 import TabRanking from './tab-contents/TabRanking';
 import TabStatistics from './tab-contents/TabStatistics';
-import TabVod from './tab-contents/TabVod';
+import TabVod from './tab-contents/TabVOD';
 
 interface TabPaneProps {
   target: string;
@@ -46,8 +46,9 @@ function TabPane(props: TabPaneProps) {
   return (
     <div
       ref={divRef}
-      className={`tab-pane fade ${props.active ? 'show active' : ''} ${props.className || ''
-        }`}
+      className={`tab-pane fade ${props.active ? 'show active' : ''} ${
+        props.className || ''
+      }`}
       id={`${props.target}`}
       role="tabpanel"
       aria-labelledby={`${props.target}-tab`}
