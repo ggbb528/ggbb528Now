@@ -89,7 +89,7 @@ export default function TabVOD() {
   return (
     <>
       {isLoading && <LoadingReplacer />}
-      {vods && vods.map((vod) => <VodItem key={vod.id} vod={vod} />)}
+      {vods && vods.map((vod: VOD) => <VodItem key={vod.id} vod={vod} />)}
       {vods && vods.length === 0 && <EmptyReplacer />}
     </>
   );
