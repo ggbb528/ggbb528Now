@@ -40,6 +40,5 @@ export default function useOPGGSummoners({
         })
         .then((response) => response.data as Datum[]),
     staleTime: 60000,
-    cacheTime: 60000,
   });
 }

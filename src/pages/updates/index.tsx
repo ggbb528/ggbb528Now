@@ -1,8 +1,6 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-import '@assets/styles/tailwind.css';
-import 'tw-elements';
-import Updates from '@pages/updates/Updates';
+import '@/assets/styles/tailwind.css';
+import Updates from '@/pages/updates/Updates';
 
 function init() {
   const rootContainer = document.querySelector('#__root');

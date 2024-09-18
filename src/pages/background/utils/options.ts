@@ -1,4 +1,4 @@
-import { OptionKey } from '@src/configs/optionKeys';
+import { OptionKey } from '@/configs/optionKeys';
 import { getSyncStorageValue } from './storage';
 
 export async function getOptionValue(optionKey: OptionKey) {

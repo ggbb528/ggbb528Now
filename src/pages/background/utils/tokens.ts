@@ -1,4 +1,4 @@
-import { Constants } from '@src/configs/constants';
+import { Constants } from '@/configs/constants';
 export function refreshAccessToken() {
   const API_URL = new URL(Constants.TWITCH_AUTH_API_URL + '/token');
   const clientID = import.meta.env.VITE_TWITCH_CLIENT_ID;

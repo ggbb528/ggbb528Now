@@ -37,6 +37,5 @@ export default function useOPGGProfile({
         })
         .then((response) => response.data as Profile),
     staleTime: 60000,
-    cacheTime: 60000,
   });
 }

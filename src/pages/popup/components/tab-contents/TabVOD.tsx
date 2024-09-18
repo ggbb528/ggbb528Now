@@ -1,13 +1,31 @@
 import { faTwitch } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useVodList } from '../../hooks/useVodList';
+import useVODList from '@/pages/popup/hooks/useVODList';
 import { VOD } from '../../models/vod-type';
 import moment from 'moment';
 import { openURL } from '../../utils/utility';
-import ggbb528cry from '@assets/img/ggbb528cry.png';
+import ggbb528cry from '@/assets/img/ggbb528cry.png';
+import { Skeleton } from '@/components/ui/skeleton';
+import times from 'lodash/times';
 
 const WIDTH = 350;
 const HEIGHT = 200;
+
+function LoadingReplacer() {
+  return (
+    <div className="space-y-2 my-2">
+      {times(2, (id) => (
+        <div key={id} className="px-2 flex flex-col space-y-2">
+          <Skeleton className={`h-[150px] rounded-xl`} />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[300px] rounded-xl" />
+            <Skeleton className="h-4 w-[250px] rounded-xl" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function EmptyReplacer() {
   return (
@@ -65,17 +83,14 @@ function VodItem({ vod }: { vod: VOD }) {
   );
 }
 
-function TabVod() {
-  const [vodList] = useVodList();
+export default function TabVOD() {
+  const { data: vods, isLoading } = useVODList();
 
   return (
     <>
-      {vodList.map((vod) => (
-        <VodItem key={vod.id} vod={vod} />
-      ))}
-      {vodList.length === 0 && <EmptyReplacer />}
+      {isLoading && <LoadingReplacer />}
+      {vods && vods.map((vod: VOD) => <VodItem key={vod.id} vod={vod} />)}
+      {vods && vods.length === 0 && <EmptyReplacer />}
     </>
   );
 }
-
-export default TabVod;

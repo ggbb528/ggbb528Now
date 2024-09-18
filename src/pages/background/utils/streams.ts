@@ -1,4 +1,4 @@
-import { Constants } from '@src/configs/constants';
+import { Constants } from '@/configs/constants';
 import { refreshAccessToken, validateToken } from './tokens';
 
 export const Icons = {

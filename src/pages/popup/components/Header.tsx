@@ -1,5 +1,5 @@
 import React from 'react';
-import ggbb528cheer from '@assets/img/ggbb528cheer.gif';
+import ggbb528cheer from '@/assets/img/ggbb528cheer.gif';
 import times from 'lodash/times';
 
 function IconGgbb528cheer() {

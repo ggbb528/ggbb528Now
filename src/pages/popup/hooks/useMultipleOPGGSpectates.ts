@@ -40,7 +40,6 @@ function useMultipleOPGGSpectates(lang = 'zh_TW') {
           } as Data;
         },
         staleTime: 60000,
-        cacheTime: 60000,
         retry: 6,
         retryDelay: 5000,
       };

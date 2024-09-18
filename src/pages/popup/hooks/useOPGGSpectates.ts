@@ -34,7 +34,6 @@ function useOPGGSpectates({
         })
         .then((response) => response.data as Data),
     staleTime: 60000,
-    cacheTime: 60000,
   });
 }
 

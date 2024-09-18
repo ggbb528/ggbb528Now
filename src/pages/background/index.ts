@@ -17,7 +17,7 @@ try {
 }
 
 // set icon badge when it's dev mode
-if (import.meta.env.VITE_DEV_MODE === 'dev') {
+if (import.meta.env.VITE_DEV_MODE) {
   chrome.action.setBadgeBackgroundColor({ color: '#0c4a6e' });
   chrome.action.setBadgeText({ text: 'D' });
 }

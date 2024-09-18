@@ -1,6 +1,5 @@
-import React from 'react';
-import '@pages/updates/Updates.css';
-import ggbb528cheer from '@assets/img/ggbb528cheer.gif';
+import '@/pages/updates/Updates.css';
+import ggbb528cheer from '@/assets/img/ggbb528cheer.gif';
 import ChangeLogSection from './components/ChangeLogSection';
 
 export default function Updates(): JSX.Element {

@@ -1,9 +1,9 @@
-import { ChatMessage } from '@src/pages/background/chat';
+import { ChatMessage } from '@/pages/background/chat';
 import moment from 'moment';
 import { useEffect, useRef } from 'react';
 import useChatMessage from '../../hooks/useChatMessage';
 import { openURL } from '../../utils/utility';
-import Tooltip from '../Tooltip';
+import Tooltip from '../../../../components/custom-ui/tooltip';
 
 function ChatEmote({
   emoteId,
@@ -42,11 +42,11 @@ function URLLink({ href }: { href: string }) {
 
 function findURLPosition(message: string) {
   const httpRegex =
-    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/g;
+    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
   const founds = [...message.matchAll(httpRegex)].map((match) => ({
     url: match[0],
     start: match.index || 0,
-    end: match[0].length + (match.index || 0),
+    end: match[0].length + (match.index || 0) - 1,
   }));
   return founds;
 }
@@ -140,16 +140,20 @@ export default function TabChatMessage() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   useEffect(() => {
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+      });
+    };
+
     scrollToBottom();
   }, [messages]);
 
   return (
-    <div>
+    <div className="p-1">
       {messages?.map((message) => (
         <MessageItem key={message.id} {...message} />
       ))}

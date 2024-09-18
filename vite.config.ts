@@ -6,7 +6,7 @@ import makeChangeLog from './utils/plugins/make-changlog';
 import copyContentStyle from './utils/plugins/copy-content-style';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-const root = resolve(__dirname, 'src');
+const root = resolve(__dirname, './src');
 const pagesDir = resolve(root, 'pages');
 const assetsDir = resolve(root, 'assets');
 const configsDir = resolve(__dirname, 'configs');
@@ -16,10 +16,10 @@ const publicDir = resolve(__dirname, 'public');
 export default defineConfig({
   resolve: {
     alias: {
-      '@src': root,
-      '@assets': assetsDir,
-      '@pages': pagesDir,
-      '@configs': configsDir,
+      '@': root,
+      '@/assets': assetsDir,
+      '@/pages': pagesDir,
+      '@/configs': configsDir,
     },
   },
   plugins: [
@@ -47,6 +47,12 @@ export default defineConfig({
       },
       output: {
         entryFileNames: (chunk) => `src/pages/${chunk.name}/index.js`,
+      },
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
       },
     },
   },

@@ -19,7 +19,6 @@ export default function useOPGGChampions(lang = 'zh_TW') {
           return response.json();
         })
         .then((response) => response.data as Champion[]),
-    cacheTime: Infinity,
     staleTime: Infinity,
   });
 }
