@@ -2,7 +2,7 @@ import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import TabChatMessage from './tab-contents/TabChatMessage';
 import TabVOD from './tab-contents/TabVOD';
 import TabRankingProfile from './tab-contents/TabRankingProfile';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '../../../components/custom-ui/tooltip';
@@ -13,8 +13,15 @@ import { OptionKeys } from '@/configs/optionKeys';
 import useMultipleOPGGSpectates from '../hooks/useMultipleOPGGSpectates';
 import LiveIcon from '@/components/custom-ui/liveicon';
 
+enum TAB_PAGES {
+  RANKING = 'RANKING',
+  LIVEGAME = 'LIVEGAME',
+  VOD = 'VOD',
+  CHATS = 'CHATS',
+}
+
 export default function TabPages() {
-  const [currentTab, setCurrentTab] = useState('ranking');
+  const [currentTab, setCurrentTab] = useState(TAB_PAGES.RANKING);
   const scrollDivRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -28,65 +35,76 @@ export default function TabPages() {
     (spectate) => spectate.status === 'success'
   );
 
-  useEffect(() => {
-    const updateScrollPositionToBottom = () => {
-      if (currentTab === 'chats') {
-        endRef.current?.scrollIntoView({ block: 'end', inline: 'nearest' });
-      }
-    };
-
-    updateScrollPositionToBottom();
-
-    // MutationObserver to monitor changes in the content
-    const observer = new MutationObserver(updateScrollPositionToBottom);
-    if (scrollDivRef.current) {
-      observer.observe(scrollDivRef.current, {
-        childList: true,
-        subtree: true,
+  const updateScrollPositionToBottom = () => {
+    requestAnimationFrame(() => {
+      endRef.current?.scrollIntoView({
+        block: 'end',
+        inline: 'nearest',
+        behavior: 'instant',
       });
-    }
+    });
+  };
 
-    return () => {
-      if (scrollDivRef.current) {
-        observer.disconnect();
-      }
-    };
-  }, [currentTab]);
+  const onChangeTab = (tab: string) => {
+    setCurrentTab(tab);
+
+    if (tab === TAB_PAGES.CHATS) {
+      updateScrollPositionToBottom();
+    }
+  };
 
   return (
     <div className="flex-1">
       <Tabs
         value={currentTab}
-        onValueChange={setCurrentTab}
+        onValueChange={onChangeTab}
         className="h-full flex flex-col"
       >
         <div ref={scrollDivRef} className="h-[27.75rem] overflow-auto">
-          <TabsContent value="ranking" key="tanking">
+          <TabsContent
+            forceMount={true}
+            hidden={currentTab !== TAB_PAGES.RANKING}
+            value={TAB_PAGES.RANKING}
+          >
             <TabRankingProfile />
           </TabsContent>
-          <TabsContent value="livegame" key="livegame">
+          <TabsContent
+            forceMount={true}
+            hidden={currentTab !== TAB_PAGES.LIVEGAME}
+            value={TAB_PAGES.LIVEGAME}
+          >
             <TabLiveGame />
           </TabsContent>
-          <TabsContent value="vod" key="vod">
+          <TabsContent
+            forceMount={true}
+            hidden={currentTab !== TAB_PAGES.VOD}
+            value={TAB_PAGES.VOD}
+          >
             <TabVOD />
           </TabsContent>
-          <TabsContent value="chats" key="chats" className="p-1">
+          <TabsContent
+            forceMount={true}
+            hidden={currentTab !== TAB_PAGES.CHATS}
+            value={TAB_PAGES.CHATS}
+          >
             <TabChatMessage />
           </TabsContent>
           <div ref={endRef}></div>
         </div>
         <TabsList className="flex justify-start">
-          <TabsTrigger value="ranking">LOL牌位</TabsTrigger>
+          <TabsTrigger value={TAB_PAGES.RANKING}>LOL牌位</TabsTrigger>
           {!!liveSpectates && (
-            <TabsTrigger value="livegame">
+            <TabsTrigger value={TAB_PAGES.LIVEGAME}>
               <div className="flex items-center justify-center gap-1">
                 <span>Live! </span>
                 <LiveIcon account={liveSpectates.data?.account} />
               </div>
             </TabsTrigger>
           )}
-          <TabsTrigger value="vod">VOD</TabsTrigger>
-          {!!enableChat && <TabsTrigger value="chats">聊天室</TabsTrigger>}
+          <TabsTrigger value={TAB_PAGES.VOD}>VOD</TabsTrigger>
+          {!!enableChat && (
+            <TabsTrigger value={TAB_PAGES.CHATS}>聊天室</TabsTrigger>
+          )}
           <div className="ml-auto p-2 flex justify-center items-center gap-1">
             <Tooltip message="更新紀錄">
               <span

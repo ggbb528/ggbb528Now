@@ -153,7 +153,7 @@ export default function TabChatMessage() {
   }, [messages]);
 
   return (
-    <div>
+    <div className="p-1">
       {messages?.map((message) => (
         <MessageItem key={message.id} {...message} />
       ))}
