@@ -21,7 +21,7 @@ enum TAB_PAGES {
 }
 
 export default function TabPages() {
-  const [currentTab, setCurrentTab] = useState(TAB_PAGES.RANKING);
+  const [currentTab, setCurrentTab] = useState<TAB_PAGES>(TAB_PAGES.RANKING);
   const scrollDivRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +46,7 @@ export default function TabPages() {
   };
 
   const onChangeTab = (tab: string) => {
-    setCurrentTab(tab);
+    setCurrentTab(tab as TAB_PAGES);
 
     if (tab === TAB_PAGES.CHATS) {
       updateScrollPositionToBottom();
