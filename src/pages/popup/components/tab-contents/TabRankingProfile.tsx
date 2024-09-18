@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useGgbb528Accounts from '../../hooks/useGgbb528Accounts';
 import { Account } from '../../models/account-type';
 import { OPGG_ACCOUNTS } from '@/configs/constants';
@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/tooltip';
 import useMultipleOPGGSpectates from '../../hooks/useMultipleOPGGSpectates';
 import LiveIcon from '@/components/custom-ui/liveicon';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 moment.locale('zh-tw');
 
 enum GameType {
@@ -361,7 +362,7 @@ function AccountButton({
   return (
     <Button
       variant={actived ? 'actived' : 'inactived'}
-      className="flex justify-center items-center space-x-2 text-xs"
+      className="flex justify-center items-center space-x-2 text-xs w-full"
       onClick={onClick}
     >
       <Badge className="uppercase" variant="yellow">
@@ -384,16 +385,107 @@ function AccountsCarousel({
   currentAccount: Account;
   setCurrentAccount: React.Dispatch<React.SetStateAction<Account>>;
 }) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const accountBtnRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+
+  // Update the visibility of arrows based on scroll position
+  const updateArrowsVisibility = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 1);
+    }
+  };
+
+  // Scroll left and right functions
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    updateArrowsVisibility();
+    const handleScroll = () => updateArrowsVisibility();
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  const onClickAccountButton = (account: Account, index: number) => {
+    setCurrentAccount(account);
+    if (accountBtnRefs.current?.[index]) {
+      accountBtnRefs.current[index].scrollIntoView({
+        inline: 'center',
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
-    <div className="relative overflow-hidden flex space-x-2">
-      {accounts?.map((account) => (
-        <AccountButton
-          key={account.account_id}
-          account={account}
-          actived={currentAccount.account_id === account.account_id}
-          onClick={() => setCurrentAccount(account)}
-        />
-      ))}
+    <div
+      id="carousel-container"
+      className="relative overflow-hidden flex space-x-1 items-center justify-between"
+    >
+      {showLeftArrow && (
+        <Button
+          variant="transparent"
+          size="icon-xs"
+          className="absolute left-0"
+          onClick={scrollLeft}
+        >
+          <FaChevronLeft />
+        </Button>
+      )}
+      <div
+        ref={carouselRef}
+        id="carousel"
+        className="overflow-x-auto scrollbar-hide flex-1"
+      >
+        <div
+          id="carousel-items-container"
+          className="inline-flex space-x-2 justify-center items-center"
+        >
+          {accounts?.map((account, index) => (
+            <div
+              key={account.summoner_id}
+              className="min-w-[160px]"
+              ref={(el) => (accountBtnRefs.current[index] = el)}
+            >
+              <AccountButton
+                account={account}
+                actived={currentAccount.summoner_id === account.summoner_id}
+                onClick={() => onClickAccountButton(account, index)}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      {showRightArrow && (
+        <Button
+          variant="transparent"
+          size="icon-xs"
+          className="absolute right-0"
+          onClick={scrollRight}
+        >
+          <FaChevronRight />
+        </Button>
+      )}
     </div>
   );
 }

@@ -9,19 +9,20 @@ export const Constants = {
   FACEBOOK_FANPAGE_URL: 'https://www.facebook.com/JeffeRy0821',
   DISCORD_SERVER_URL: 'https://discord.gg/XJeWYpUg8t',
   INSTAGRAM_URL: 'https://www.instagram.com/jeffery0821_',
+  PROJECT_GITHUB_URL: 'https://github.com/ggbb528/ggbb528now',
 };
 
 export const OPGG_ACCOUNTS: Account[] = [
   {
-    url: 'https://www.op.gg/summoners/kr/%EC%A4%80%20%EB%B0%9B',
+    url: 'https://www.op.gg/summoners/kr/ShengBai-KR2',
     summoner_id: '8YQfn73hCIePhQZxcdzhtJFl3HBLPFGD6RM-QVvUMheuw1M',
     server: 'kr',
-    account_id: '준 받',
+    account_id: 'ShengBai',
   },
   {
-    url: 'https://www.op.gg/summoners/tw/Twitch%E5%8B%9D%E6%95%97%E9%9B%A3%E5%85%8D',
+    url: 'https://www.op.gg/summoners/tw/%E5%8B%9D%E6%95%97%E9%9B%A3%E5%85%8D-0821',
     summoner_id: 'CUqyc-fBVMFvy5tNAyj6IVSG_Sko3Tl1wk6M7H0vDA61NFVgBdOX5SN6LQ',
     server: 'tw',
-    account_id: 'Twitch勝敗難免',
+    account_id: '勝敗難免',
   },
 ];
