@@ -1,5 +1,20 @@
 [
   {
+    "version": "v2.0.0",
+    "date": "2024-09-18",
+    "catalogs": [
+      {
+        "title": "# Add",
+        "items": [
+          "升級各種套件",
+          "改用 shadcn/ui UI套件重製版面",
+          "修正 UI Bug",
+          "新增勝敗的 IG 連結"
+        ]
+      }
+    ]
+  },
+  {
     "version": "v1.0.12",
     "date": "2024-09-15",
     "catalogs": [
