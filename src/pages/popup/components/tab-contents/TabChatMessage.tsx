@@ -42,11 +42,11 @@ function URLLink({ href }: { href: string }) {
 
 function findURLPosition(message: string) {
   const httpRegex =
-    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)/g;
+    /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b(?:[-a-zA-Z0-9@:%_+.~#?&/=]*)/g;
   const founds = [...message.matchAll(httpRegex)].map((match) => ({
     url: match[0],
     start: match.index || 0,
-    end: match[0].length + (match.index || 0),
+    end: match[0].length + (match.index || 0) - 1,
   }));
   return founds;
 }

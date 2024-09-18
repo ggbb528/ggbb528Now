@@ -81,7 +81,7 @@ export default function TabPages() {
             <TabsTrigger value="livegame">
               <div className="flex items-center justify-center gap-1">
                 <span>Live! </span>
-                <LiveIcon account={liveSpectates.data.account} />
+                <LiveIcon account={liveSpectates.data?.account} />
               </div>
             </TabsTrigger>
           )}

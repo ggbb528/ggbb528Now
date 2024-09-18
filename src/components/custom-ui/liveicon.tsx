@@ -4,7 +4,7 @@ import Tooltip from './tooltip';
 function LiveIcon({
   tooltipPos = 'top',
   showTooltip = true,
-  account,
+  account = undefined,
 }: {
   tooltipPos?: 'top' | 'bottom';
   showTooltip?: boolean;

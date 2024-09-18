@@ -48,7 +48,7 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Twitch 頻道</TooltipContent>
+            <TooltipContent side="bottom">ggbb528 - Twitch 頻道</TooltipContent>
           </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
@@ -87,7 +87,9 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent side="bottom">YouTube頻道</TooltipContent>
+            <TooltipContent side="bottom">
+              勝敗難免 - YouTube 頻道
+            </TooltipContent>
           </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
@@ -105,7 +107,9 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Discord</TooltipContent>
+            <TooltipContent side="bottom">
+              勝敗難免作文博士補習班🖍
+            </TooltipContent>
           </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
@@ -123,7 +127,7 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent side="bottom">臉書粉絲團</TooltipContent>
+            <TooltipContent side="bottom">勝敗難免 - 臉書粉絲團</TooltipContent>
           </Tooltip>
         </MenubarMenu>
         <Separator orientation="vertical" />
@@ -141,7 +145,7 @@ export default function MenuBar() {
                 />
               </MenubarTrigger>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Instagram</TooltipContent>
+            <TooltipContent side="bottom">jeffery0821_@IG</TooltipContent>
           </Tooltip>
         </MenubarMenu>
       </Menubar>

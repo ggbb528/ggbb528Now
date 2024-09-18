@@ -429,7 +429,7 @@ function AccountsCarousel({
   const onClickAccountButton = (account: Account, index: number) => {
     setCurrentAccount(account);
     if (accountBtnRefs.current?.[index]) {
-      accountBtnRefs.current[index].scrollIntoView({
+      accountBtnRefs.current[index]?.scrollIntoView({
         inline: 'center',
         block: 'nearest',
         behavior: 'smooth',
