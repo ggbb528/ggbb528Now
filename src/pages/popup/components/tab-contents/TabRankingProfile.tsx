@@ -22,7 +22,6 @@ import 'moment/dist/locale/zh-tw';
 import useOPGGChampions from '../../hooks/useOPGGChampions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
-import times from 'lodash/times';
 import CustomTooltip from '@/components/custom-ui/tooltip';
 import {
   TooltipContent,
@@ -103,9 +102,9 @@ function LoadingTableRows({
 }) {
   return (
     <>
-      {times(rows, (idx) => (
+      {Array.from({ length: rows }).map((_, idx) => (
         <TableRow key={idx}>
-          {times(cols, (idy) => (
+          {Array.from({ length: cols }).map((_, idy) => (
             <TableCell key={idy}>
               <Skeleton className="h-5 w-full rounded-lg" />
             </TableCell>
