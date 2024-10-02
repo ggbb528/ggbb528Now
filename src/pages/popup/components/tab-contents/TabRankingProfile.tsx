@@ -232,10 +232,12 @@ function RankBadge({
     case 'CHALLENGER':
     case 'GRANDMASTER':
     case 'MASTER':
-      tierString = `${leagueStat.tier_info.tier}`;
+      tierString = `${leagueStat.tier_info.tier || ''}`;
       break;
     default:
-      tierString = `${leagueStat.tier_info.tier} ${leagueStat.tier_info.division}`;
+      tierString = `${leagueStat.tier_info.tier || ''} ${
+        leagueStat.tier_info.division || ''
+      }`;
   }
 
   return <span className="text-blue-600">{tierString}</span>;
