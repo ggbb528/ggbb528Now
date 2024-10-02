@@ -423,7 +423,7 @@ function AccountsCarousel({
         carousel.removeEventListener('scroll', handleScroll);
       }
     };
-  }, []);
+  }, [accounts]);
 
   const onClickAccountButton = (account: Account, index: number) => {
     setCurrentAccount(account);

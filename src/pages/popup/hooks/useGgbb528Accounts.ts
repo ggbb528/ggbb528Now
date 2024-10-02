@@ -2,14 +2,14 @@ import { OPGG_ACCOUNTS } from '@/configs/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Account } from '../models/account-type';
 
+const API_URL = 'https://api.ggbb528.com/api/lol/accounts.json';
+
 function useGgbb528Accounts() {
   return useQuery({
     queryKey: ['ggbb528Accounts'],
     queryFn: async () => {
       try {
-        const response = await fetch(
-          'https://api.ggbb528.com/api/lol/accounts.json'
-        );
+        const response = await fetch(API_URL + '?' + new Date().getTime());
 
         if (!response.ok) {
           throw new Error(response.statusText);
