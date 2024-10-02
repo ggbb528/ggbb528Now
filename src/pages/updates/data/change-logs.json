@@ -1,5 +1,15 @@
 [
   {
+    "version": "v2.0.1",
+    "date": "2024-10-02",
+    "catalogs": [
+      {
+        "title": "# Fixed",
+        "items": ["修正牌位顯示 null 問題", "修正帳號按鈕 UI Bug"]
+      }
+    ]
+  },
+  {
     "version": "v2.0.0",
     "date": "2024-09-18",
     "catalogs": [
