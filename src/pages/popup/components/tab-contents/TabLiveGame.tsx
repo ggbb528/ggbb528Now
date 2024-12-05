@@ -107,7 +107,7 @@ function TeamTable({
         <tbody>
           {players.map((player) => {
             const soloRankStatInfo = player.summoner.league_stats.find(
-              (x) => x.queue_info.game_type === queueInfo.game_type
+              (x) => x.queue_info?.game_type === queueInfo?.game_type
             );
             let tierInfo;
             if (soloRankStatInfo) {

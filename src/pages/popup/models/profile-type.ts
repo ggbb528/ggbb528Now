@@ -5,21 +5,29 @@ export interface Profile {
   summoner_id: string;
   acct_id: string;
   puuid: string;
+  game_name: string;
+  tagline: string;
   name: string;
   internal_name: string;
   profile_image_url: string;
   level: number;
   updated_at: Date;
   renewable_at: Date;
+  revision_at: Date;
   team_info: null;
+  player: null;
   lp_histories: LpHistory[];
   previous_seasons: PreviousSeason[];
+  previous_season_tiers: PreviousSeasonTier[];
+  current_season_high_tiers: CurrentSeasonHighTiers;
   league_stats: LeagueStat[];
+  recent_videos_added_count: number;
+  has_highlight: boolean;
+  highlight_info: null;
   most_champions: MostChampions;
+  ranked_most_champions: RankedMostChampions;
   recent_champion_stats: RecentChampionStat[];
   ladder_rank: LadderRank;
-  recent_soloranked_analysis: RecentSolorankedAnalysis[];
-  recent_normal_analysis: unknown[];
   championsById: { [key: string]: ChampionsByID };
   seasonsById: { [key: string]: Season };
   seasons: Season[];
@@ -32,6 +40,13 @@ export interface ChampionsByID {
   name: string;
   image_url: string;
   evolve: Evolve[];
+  blurb: string;
+  title: string;
+  tags: Tag[];
+  lore: string;
+  partype: string;
+  info: Info;
+  stats: { [key: string]: number };
   enemy_tips: string[];
   ally_tips: string[];
   skins: Skin[];
@@ -45,24 +60,33 @@ export interface Evolve {
   image_url: string;
 }
 
+export interface Info {
+  attack: number;
+  defense: number;
+  magic: number;
+  difficulty: number;
+}
+
 export interface Passive {
   name: string;
   description: string;
   image_url: string;
-  video_url: string;
+  video_url: null | string;
 }
 
 export interface Skin {
   id: number;
+  champion_id: number;
   name: string;
   has_chromas: boolean;
   splash_image: string;
   loading_image: string;
   tiles_image: string;
   centered_image: string;
-  skin_video_url: null;
+  skin_video_url: null | string;
   prices: Price[] | null;
   sales: Sale[] | null;
+  release_date: Date | null;
 }
 
 export interface Price {
@@ -90,10 +114,11 @@ export interface Spell {
   max_rank: number;
   range_burn: number[];
   cooldown_burn: number[];
+  cooldown_burn_float: number[];
   cost_burn: number[];
   tooltip: string;
   image_url: string;
-  video_url: string;
+  video_url: null | string;
 }
 
 export enum Key {
@@ -103,13 +128,51 @@ export enum Key {
   W = 'W',
 }
 
+export enum Tag {
+  Assassin = 'Assassin',
+  Fighter = 'Fighter',
+  Mage = 'Mage',
+  Marksman = 'Marksman',
+  Support = 'Support',
+  Tank = 'Tank',
+}
+
+export interface CurrentSeasonHighTiers {
+  season_id: number;
+  rank_entries: CurrentSeasonHighTiersRankEntry[];
+}
+
+export interface CurrentSeasonHighTiersRankEntry {
+  game_type: GameType;
+  high_rank_info: RankInfo;
+}
+
+export enum GameType {
+  Flexranked = 'FLEXRANKED',
+  Soloranked = 'SOLORANKED',
+}
+
+export interface RankInfo {
+  tier: Tier;
+  division: number;
+  lp: number;
+  created_at: Date;
+}
+
+export enum Tier {
+  Diamond = 'DIAMOND',
+  Gold = 'GOLD',
+  Grandmaster = 'GRANDMASTER',
+  Master = 'MASTER',
+}
+
 export interface LadderRank {
   rank: number;
   total: number;
 }
 
 export interface LeagueStat {
-  queue_info: QueueInfo;
+  game_type: string;
   tier_info: TierInfo;
   win: number | null;
   lose: number | null;
@@ -117,7 +180,7 @@ export interface LeagueStat {
   is_fresh_blood: boolean;
   is_veteran: boolean;
   is_inactive: boolean;
-  series: Series | null;
+  series: null;
   updated_at: Date | null;
   league?: League;
 }
@@ -129,16 +192,11 @@ export interface League {
   translate: string;
 }
 
-export interface QueueInfo {
-  id: number;
-  queue_translate: string;
-  game_type: string;
-}
-
 export interface TierInfo {
-  tier: null | string;
+  tier: Tier | null;
   division: number | null;
   lp: number | null;
+  level: null;
   tier_image_url: string;
   border_image_url: null | string;
 }
@@ -152,16 +210,48 @@ export interface LpHistory {
 export interface MostChampions {
   game_type: string;
   season_id: number;
+  year: null;
   play: number;
   win: number;
   lose: number;
-  champion_stats: { [key: string]: number }[];
+  champion_stats: { [key: string]: number | null }[];
+}
+
+export interface PreviousSeasonTier {
+  season_id: number;
+  rank_entries: PreviousSeasonTierRankEntry[];
+}
+
+export interface PreviousSeasonTierRankEntry {
+  game_type: GameType;
+  rank_info: RankInfo | null;
+  high_rank_info: null;
 }
 
 export interface PreviousSeason {
   season_id: number;
   tier_info: TierInfo;
-  created_at: Date;
+}
+
+export interface RankedMostChampions {
+  game_type: string;
+  season_id: number;
+  play: number;
+  win: number;
+  lose: number;
+  my_champion_stats: Stat[];
+  opponent_champion_stats: Stat[];
+}
+
+export interface Stat {
+  id: number;
+  play: number;
+  win: number;
+  lose: number;
+  game_second: number;
+  basic: { [key: string]: number };
+  extend: { [key: string]: number };
+  match_up_stats?: Stat[];
 }
 
 export interface RecentChampionStat {
@@ -173,17 +263,11 @@ export interface RecentChampionStat {
   assist: number;
 }
 
-export interface RecentSolorankedAnalysis {
-  key: string;
-  value: number;
-  avgInTier: number;
-  percentInTop: number;
-}
-
 export interface Season {
   id: number;
   value: number;
   display_value: number;
+  split: number | null;
   is_preseason: boolean;
 }
 
@@ -193,10 +277,3 @@ export interface TiersImageDatum {
   border_image_url: string;
   tier_mini_image_url: string;
 }
-
-export interface Series {
-  target: number;
-  win:    number;
-  lose:   number;
-}
-

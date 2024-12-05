@@ -154,7 +154,7 @@ function GameHistoryTable({ account }: { account: Account }) {
     const championName =
       champions.find((champion) => champion.id === championId)?.name || '';
 
-    if (game.queue_info.game_type === RankType.FlexRanked) {
+    if (game.queue_info?.game_type === RankType.FlexRanked) {
       return (
         <CustomTooltip message="彈性積分" position="bottom">
           <span>
@@ -302,7 +302,7 @@ function RankingProfile({ account }: { account: Account }) {
   });
 
   const soloRankStats = profile?.league_stats.find(
-    (x) => x.queue_info.game_type === 'SOLORANKED'
+    (x) => x.game_type === 'SOLORANKED'
   );
 
   return (
