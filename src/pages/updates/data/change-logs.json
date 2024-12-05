@@ -1,5 +1,15 @@
 [
   {
+    "version": "v2.0.2",
+    "date": "2024-12-05",
+    "catalogs": [
+      {
+        "title": "# Fixed",
+        "items": ["OPGG API 更新導致程式錯誤"]
+      }
+    ]
+  },
+  {
     "version": "v2.0.1",
     "date": "2024-10-02",
     "catalogs": [
