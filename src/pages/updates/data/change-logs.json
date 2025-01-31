@@ -1,5 +1,15 @@
 [
   {
+    "version": "v2.0.3",
+    "date": "2025-01-31",
+    "catalogs": [
+      {
+        "title": "# Fixed",
+        "items": ["更新 OPGG Live Game API"]
+      }
+    ]
+  },
+  {
     "version": "v2.0.2",
     "date": "2024-12-05",
     "catalogs": [
