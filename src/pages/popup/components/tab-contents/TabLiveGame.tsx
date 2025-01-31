@@ -5,8 +5,8 @@ import {
   ChampionsByID,
   Data,
   Participant,
-  QueueInfo,
-  TierInfo,
+  AverageTierInfo,
+  GameType,
 } from '../../models/spectate-type';
 import 'moment/dist/locale/zh-tw';
 import Pill from '../../../../components/custom-ui/pill';
@@ -48,7 +48,7 @@ function getWinLosePercentage(win?: number, lose?: number) {
   return Math.round((win / (win + lose)) * 10000) / 100 + ' %';
 }
 
-function getTier(tierInfo?: TierInfo) {
+function getTier(tierInfo?: AverageTierInfo) {
   if (!tierInfo) return 'N/A';
 
   let tierString = '';
@@ -67,13 +67,13 @@ function getTier(tierInfo?: TierInfo) {
 
 function TeamTable({
   account,
-  queueInfo,
+  game_type,
   players,
   champions,
   team,
 }: {
   account: Account;
-  queueInfo: QueueInfo;
+  game_type: GameType;
   players: Participant[];
   champions: { [key: string]: ChampionsByID };
   team: string;
@@ -107,7 +107,7 @@ function TeamTable({
         <tbody>
           {players.map((player) => {
             const soloRankStatInfo = player.summoner.league_stats.find(
-              (x) => x.queue_info?.game_type === queueInfo?.game_type
+              (x) => x.game_type === game_type
             );
             let tierInfo;
             if (soloRankStatInfo) {
@@ -167,7 +167,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
   );
   const [redTeam] = gameData.teams.filter((x) => x.key === 'RED');
   const [blueTeam] = gameData.teams.filter((x) => x.key === 'BLUE');
-  const queue_info = gameData.queue_info;
+  const game_type = gameData.game_type;
 
   return (
     <div className="p-2">
@@ -176,7 +176,7 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
       </div>
       <div className="p-2 bg-white border-b flex justify-center items-center gap-2">
         <Pill bgColor="bg-yellow-500">{account.server.toUpperCase()}</Pill>
-        <span className="border-x px-2">{queue_info.queue_translate}</span>
+        <span className="border-x px-2">{game_type}</span>
         <CurrentGameTime createTime={gameData.created_at} />
       </div>
       <div className="p-2 text-blue-500 bg-blue-100 font-bold flex gap-1 justify-between rounded my-1">
@@ -184,8 +184,8 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         <span>平均牌位: {getTier(blueTeam?.average_tier_info)}</span>
       </div>
       <TeamTable
-        queueInfo={queue_info}
         account={account}
+        game_type={game_type}
         champions={gameData.championsById}
         players={bluePlayers}
         team="BLUE"
@@ -195,8 +195,8 @@ function LiveGameStatus({ gameData }: { gameData: Data }) {
         <span>平均牌位: {getTier(redTeam?.average_tier_info)}</span>
       </div>
       <TeamTable
-        queueInfo={queue_info}
         account={account}
+        game_type={game_type}
         champions={gameData.championsById}
         players={redPlayers}
         team="RED"
